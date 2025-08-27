@@ -6,7 +6,7 @@ export default function Chat() {
   const navigate = useNavigate();
   return (
     <>
-      <h3>test</h3>
+      <h3>Chat</h3>
     </>
   );
 }

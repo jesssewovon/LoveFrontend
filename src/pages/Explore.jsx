@@ -7,7 +7,7 @@ export default function Explore() {
     <>
       <Header showBackButton={true} title={"Explore"} showWishList={false}/>
       <div className="page-content space-top p-b60">
-        
+        Explore
       </div>
     </>
   );
