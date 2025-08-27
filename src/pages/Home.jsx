@@ -76,7 +76,13 @@ export default function Home({ savedScroll, onSaveScroll }) {
     <>
         <Header showBackButton={false} showWishList={true}/>
         <div className="page-content space-top p-b65">
-    			Home
+    			<div className="container fixed-full-area">
+    				<div className="dzSwipe_card-cont dz-gallery-slider">
+    					{items.map((item) => (
+    				        <SwipeCard onSwipe={handleSwipe} key={item.id} user={item}/>
+    				    ))}
+    				</div>
+    			</div>
     		</div>
     </>
   );
