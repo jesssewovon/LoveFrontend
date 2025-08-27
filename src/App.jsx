@@ -54,7 +54,11 @@ function App() {
           <SideBar/>
           <NavigatorSetter /> {/* ✅ makes navigate available everywhere */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={
+              <KeepAlive>
+                <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
+              </KeepAlive>
+            } />
             <Route path="/about" element={<About />} />
             <Route path="/scroll-page" element={
               <KeepAlive>

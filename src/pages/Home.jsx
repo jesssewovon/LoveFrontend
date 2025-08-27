@@ -1,7 +1,5 @@
 import { Link } from 'react-router';
 
-import { useTheme } from "../ThemeContext";
-
 import SwipeCard from "../components/SwipeCard";
 
 import { useState, useRef } from "react";
@@ -10,12 +8,25 @@ import { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { useActivate, useUnactivate } from "react-activation";
+
 import api from "../api"
 
 import Header from '../components/Header';
 
-export default function Home() {
-  const { theme } = useTheme();
+export default function Home({ savedScroll, onSaveScroll }) {
+  useActivate(() => {
+    //alert('activated')
+    // restore scroll when component mounts
+    //alert('savedScroll: '+savedScroll)
+    window.scrollTo(0, savedScroll || 0);
+    return () => {
+      //console.log('onSaveScroll')
+      // save scroll before unmount
+      onSaveScroll(window.scrollY);
+    };
+    console.log("PageA re-activated");
+  });
 
   const handleSwipe = (direction, tt) => {
     console.log("Swiped:", direction, tt);
