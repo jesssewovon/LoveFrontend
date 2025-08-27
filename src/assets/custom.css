@@ -1,0 +1,5 @@
+div:where(.swal2-container) {
+  display: grid;
+  position: fixed;
+  z-index: 106000;
+}

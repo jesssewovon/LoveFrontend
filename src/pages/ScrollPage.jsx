@@ -96,8 +96,8 @@ export default function ScrollPage({ savedScroll, onSaveScroll }) {
   return (
     <>
         <Header showBackButton={false} showWishList={true}/>
-        <div class="page-content space-top p-b65">
-    			<div class="container">
+        <div className="page-content space-top p-b65">
+    			<div className="container">
     					<p>ScrollPage</p>
               {loading?(<p>Intro loading</p>):(
                 <>

@@ -15,10 +15,10 @@ function Header({title, showBackButton, showWishList, classes}) {
 									<i className="icon feather icon-grid"></i>
 								</a>)
 								:(<>
-									<a onClick={() => navigate(-1)} class="back-btn">
-										<i class="icon feather icon-chevron-left"></i>
+									<a onClick={() => navigate(-1)} className="back-btn">
+										<i className="icon feather icon-chevron-left"></i>
 									</a>
-									{title!=''?(<h6 class="title">{title}</h6>):''}
+									{title!=''?(<h6 className="title">{title}</h6>):''}
 								</>)
 							}
 						</div>

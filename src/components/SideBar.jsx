@@ -48,77 +48,77 @@ export default function SideBar() {
 					{isLoggedIn?
 						(<>
 							<a href="profile.html" class="author-box">
-						<div class="dz-media">
+						<div className="dz-media">
 							<img src="../src/assets/images/user/pic1.jpg" alt="author-image"/>
 						</div>
-						<div class="dz-info">
-							<h5 class="name">John Doe</h5>
+						<div className="dz-info">
+							<h5 className="name">John Doe</h5>
 							<span>example@gmail.com</span>
 						</div>
 							</a>
-							<ul class="nav navbar-nav">	
+							<ul className="nav navbar-nav">	
 								<li>
 									<NavLink to="/" className={({ isActive }) =>
 							            isActive ? "nav-link active" : "nav-link"
 							        }>
-										<span class="dz-icon">
-											<i class="icon feather icon-home"></i>
+										<span className="dz-icon">
+											<i className="icon feather icon-home"></i>
 										</span>
 										<span>Home</span>
 									</NavLink>
 								</li>
 								<li>
 									<a class="nav-link" href="../package.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-heart"></i>
+										<span className="dz-icon">
+											<i className="icon feather icon-heart"></i>
 										</span>
 										<span>W3Dating Package</span>
 									</a>
 								</li>
 								<li>
-									<a class="nav-link" href="../package-list.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-list"></i>
+									<a className="nav-link" href="../package-list.html">
+										<span className="dz-icon">
+											<i className="icon feather icon-list"></i>
 										</span>
 										<span>Package List</span>
 									</a>
 								</li>
 								<li>
-									<a class="nav-link" href="../index.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-wind"></i>
+									<a className="nav-link" href="../index.html">
+										<span className="dz-icon">
+											<i className="icon feather icon-wind"></i>
 										</span>
 										<span>Welcome</span>
 									</a>
 								</li>
 								<li>
-									<a class="nav-link" href="../components/components.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-grid"></i>
+									<a className="nav-link" href="../components/components.html">
+										<span className="dz-icon">
+											<i className="icon feather icon-grid"></i>
 										</span>
 										<span>Components</span>
 									</a>
 								</li>
 								<li>
-									<a class="nav-link" href="setting.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-settings"></i>
+									<a className="nav-link" href="setting.html">
+										<span className="dz-icon">
+											<i className="icon feather icon-settings"></i>
 										</span>
 										<span>Settings</span>
 									</a>
 								</li>
 								<li>
-									<a class="nav-link" href="profile.html">
-										<span class="dz-icon">
-											<i class="icon feather icon-user"></i>
+									<a className="nav-link" href="profile.html">
+										<span className="dz-icon">
+											<i className="icon feather icon-user"></i>
 										</span>
 										<span>Profile</span>
 									</a>
 								</li>
 								<li>
-									<a onClick={() => handleLogout()} class="nav-link">
-										<span class="dz-icon">
-											<i class="icon feather icon-log-out"></i>
+									<a onClick={() => handleLogout()} className="nav-link">
+										<span className="dz-icon">
+											<i className="icon feather icon-log-out"></i>
 										</span>
 										<span>Logout</span>
 										<Loader/>
@@ -129,32 +129,32 @@ export default function SideBar() {
 						):
 						(
 						  
-						  <div class="mt-4 mx-2">
-		                    <button disabled={isLoading} onClick={() => handleLogin()} class="btn mb-2 me-2 btn-icon icon-start w-100 btn-primary">
+						  <div className="mt-4 mx-2">
+		                    <button disabled={isLoading} onClick={() => handleLogin()} className="btn mb-2 me-2 btn-icon icon-start w-100 btn-primary">
 								{t('log_in_first')}
 								<Loader/>
 							</button>
 		                  </div>
 						)
 					}
-					<div class="sidebar-bottom">
-						<ul class="app-setting">
+					<div className="sidebar-bottom">
+						<ul className="app-setting">
 							<li>
-								<div class="mode">
-									<span class="dz-icon">                        
-										<i class="icon feather icon-moon"></i>
+								<div className="mode">
+									<span className="dz-icon">                        
+										<i className="icon feather icon-moon"></i>
 									</span>					
 									<span>Dark Mode</span>
-									<div class="custom-switch">
-										<input type="checkbox" class="switch-input theme-btn" id="toggle-dark-menu" checked={isDarkTheme} onChange={() => dispatch(setIsDarkTheme(!isDarkTheme))}/>
-										<label class="custom-switch-label" for="toggle-dark-menu"></label>
+									<div className="custom-switch">
+										<input type="checkbox" className="switch-input theme-btn" id="toggle-dark-menu" checked={isDarkTheme} onChange={() => dispatch(setIsDarkTheme(!isDarkTheme))}/>
+										<label className="custom-switch-label" for="toggle-dark-menu"></label>
 									</div>					
 								</div>
 							</li>
 						</ul>
-						<div class="app-info">
-							<h6 class="name"> - Dating App</h6>
-							<span class="ver-info">App Version 1.0.0</span>
+						<div className="app-info">
+							<h6 className="name"> - Dating App</h6>
+							<span className="ver-info">App Version 1.0.0</span>
 						</div>
 					</div>
 				</div>

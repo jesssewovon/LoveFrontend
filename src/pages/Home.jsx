@@ -64,9 +64,9 @@ export default function Home() {
   return (
     <>
         <Header showBackButton={false} showWishList={true}/>
-        <div class="page-content space-top p-b65">
-    			<div class="container fixed-full-area">
-    				<div class="dzSwipe_card-cont dz-gallery-slider">
+        <div className="page-content space-top p-b65">
+    			<div className="container fixed-full-area">
+    				<div className="dzSwipe_card-cont dz-gallery-slider">
     					{items.map((item) => (
     				        <SwipeCard onSwipe={handleSwipe} key={item.id} user={item}/>
     				    ))}

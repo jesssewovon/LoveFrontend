@@ -123,36 +123,36 @@ export default function SwipeCard({ onSwipe, user, children }) {
       }}
       onMouseDown={handleDragStart}
       onTouchStart={handleDragStart}>
-        <div class="dz-media">
+        <div className="dz-media">
           <img src={user.imageFirst} alt="" style={{objectFit: "cover",width: "600px", height: "100%", borderRadius: "18px"}} />
         </div>
-        <div class="dz-content">
-          <div class="left-content">
-            <span class="badge badge-primary d-inline-flex gap-1 mb-2"><i class="icon feather icon-map-pin"></i>Nearby</span>
-            <h4 class="title"><a href="profile-detail.html">{user.libelle} , 24</a></h4>
-            <p class="mb-0"><i class="icon feather icon-map-pin"></i> 3 miles away</p>
+        <div className="dz-content">
+          <div className="left-content">
+            <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
+            <h4 className="title"><a href="profile-detail.html">{user.libelle} , 24</a></h4>
+            <p className="mb-0"><i className="icon feather icon-map-pin"></i> 3 miles away</p>
           </div>
-          <a onClick={() => handleSwipe("to-upside")} class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
+          <a onClick={() => handleSwipe("to-upside")} className="dz-icon dz-sp-like"><i className="flaticon flaticon-star-1"></i></a>
         </div>
         <div
           className="dzSwipe_card__option dzReject"
           style={{ opacity: position.x < 0 ? Math.abs(position.x) / 100 : 0 }}
         >
-          <i class="fa-solid fa-xmark"></i>
+          <i className="fa-solid fa-xmark"></i>
         </div>
         <div
           className="dzSwipe_card__option dzLike"
           style={{ opacity: position.x > 0 ? position.x / 100 : 0 }}
         >
-          <i class="fa-solid fa-check"></i>
+          <i className="fa-solid fa-check"></i>
         </div>
         <div
           className="dzSwipe_card__option dzSuperlike"
           style={{ opacity: position.y > 0 ? position.y / 100 : 0 }}
         >
-          ⭐ <h5 class="title mb-0">Super Like</h5>
+          ⭐ <h5 className="title mb-0">Super Like</h5>
         </div>
-        <div class="dzSwipe_card__drag"></div>
+        <div className="dzSwipe_card__drag"></div>
       {/* Card content */}
       {children}
 
