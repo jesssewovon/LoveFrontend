@@ -62,8 +62,15 @@ export default function Home({ savedScroll, onSaveScroll }) {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <SwipeDeck key={JSON.stringify(users)} users={users} onSwipe={handleSwipe} />
-        </div>
+        <>
+        <Header showBackButton={false} showWishList={true} />
+            <div className="page-content space-top p-b65">
+                <div className="container fixed-full-area">
+                    <div className="flex items-center justify-center h-screen bg-gray-100">
+                        <SwipeDeck key={JSON.stringify(users)} users={users} onSwipe={handleSwipe} />
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
