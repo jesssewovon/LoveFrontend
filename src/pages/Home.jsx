@@ -1,91 +1,69 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
-import { useActivate } from "react-activation";
+import SwipeDeck from "../components/SwipeDeck";
 
 import api from "../api";
 import Header from "../components/Header";
-import SwipeCard from "../components/SwipeCard";
 
 export default function Home({ savedScroll, onSaveScroll }) {
-  const vars = useSelector((state) => state.vars);
-
-  const [items, setItems] = useState([]);
+  const [users, setUsers] = useState([
+    
+  ]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const loaderRef = useRef(null);
-
-  // Restore scroll on activation
-  useActivate(() => {
-    window.scrollTo(0, savedScroll || 0);
-    return () => onSaveScroll(window.scrollY);
-  });
-
-  // Memoized swipe handler to avoid re-renders
-  const handleSwipe = useCallback((direction, tt) => {
-    console.log("Swiped:", direction, tt);
-  }, []);
 
   // Fetch API data
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await api.get(`index-loading?page=${page}`);
-      setItems((prev) => [...prev, ...res.data.products.data]);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [page]);
+    const fetchData = useCallback(async () => {
+      try {
+        setLoading(true);
+        const res = await api.get(`index-loading?page=${page}`);
+        setUsers((prev) => [...prev, ...res.data.products.data]);
+      } catch (err) {
+        alert('error')
+        console.error(err);
+      } finally {
+        console.log('users', users)
+        alert('finally')
+        setLoading(false);
+      }
+    }, [page]);
 
-  // Load data on page change
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  // IntersectionObserver for infinite scroll
-  useEffect(() => {
-    if (!loaderRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !loading) {
-          setPage((prev) => prev + 1);
+    // fetch users from API
+    const fetchUsers = async (page = 1) => {
+        setLoading(true);
+        try {
+        const res = await api.get(`index-loading?page=${page}`);
+        setUsers((prev) => [...prev, ...res.data.products.data]); // adjust to your API structure
+        } catch (err) {
+        console.error("Error fetching users:", err);
         }
-      },
-      { threshold: 1 }
-    );
+        console.log('users', users)
+        setLoading(false);
+    };
 
-    observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, [loading]);
+    const fetchData__ = async () => {
+        setLoading(true);
+        const res = await api.get(`index-loading?page=${page}`)
+        .then((res) => setUsers((prev) => [...prev, ...res.data.products.data]))
+        .catch((err) => console.error(err));
+        setLoading(false);
+    };
+  
+    // Load data on page change
+    useEffect(() => {
+      fetchData__();
+    }, [page]);
 
-  return (
-    <>
-      <Header showBackButton={false} showWishList={true} />
-      <div className="page-content space-top p-b65">
-        <div className="container fixed-full-area">
-          <div className="dzSwipe_card-cont dz-gallery-slider">
-            {items.map((item) => (
-              <div
-                className="dzSwipe_card">
-                  <div className="dz-media">
-                    <img src={item.imageFirst} alt="" style={{objectFit: "cover",width: "600px", height: "100%", borderRadius: "18px"}} />
-                  </div>
-                  <div className="dz-content">
-                    <div className="left-content">
-                      <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
-                      <h4 className="title"><a href="profile-detail.html">{item.libelle} , 24</a></h4>
-                      <p className="mb-0"><i className="icon feather icon-map-pin"></i> 3 miles away</p>
-                    </div>
-                    <a onClick={() => {}} className="dz-icon dz-sp-like"><i className="flaticon flaticon-star-1"></i></a>
-                  </div>
-              </div>
-            ))}
-            <div ref={loaderRef} className="h-4" /> {/* sentinel for infinite scroll */}
-          </div>
+    const handleSwipe = (direction, user) => {
+        if (direction === "up") {
+        console.log(`Super liked 💙 ${user.name}`);
+        } else {
+        console.log(`Swiped ${direction} on ${user.name}`);
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-center h-screen bg-gray-100">
+            <SwipeDeck key={JSON.stringify(users)} users={users} onSwipe={handleSwipe} />
         </div>
-      </div>
-    </>
-  );
+    );
 }

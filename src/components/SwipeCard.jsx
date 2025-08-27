@@ -1,163 +1,58 @@
-import { useState, useRef } from "react";
-import classNames from "classnames"; // npm install classnames
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useState } from "react";
 
-export default function SwipeCard({ onSwipe, user, children }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [animating, setAnimating] = useState(false);
-  const [hide, setHide] = useState(false);
-  const [direction, setDirection] = useState("");
-  const [transform, setTransform] = useState("");
-  const cardRef = useRef(null);
+export default function SwipeCard({ user, onSwipe, disabled }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  const decisionVal = 80;
+  const rotate = useTransform(x, [-200, 200], [-20, 20]);
+  const opacity = useTransform(x, [-200, 0, 200], [0, 1, 0]);
 
-  // Drag start
-  const handleDragStart = (e) => {
-    //console.log('e', e)
-    if (animating) return;
-    const startX = e.pageX || e.touches[0].pageX;
-    const startY = e.pageY || e.touches[0].pageY;
+  const [isSwiped, setIsSwiped] = useState(false);
 
-    const handleMove = (moveEvent) => {
-      const x = moveEvent.pageX || moveEvent.touches[0].pageX;
-      const y = moveEvent.pageY || moveEvent.touches[0].pageY;
-      //setPosition({ x: x - startX, y: startY - y });
-      position.x = x - startX
-      position.y = startY - y
-      //console.log('swipp', x - startX, moveEvent, position)
-      //alert('swipp')
-      setTransform(`translate(${position.x}px, -${position.y}px) rotate(${position.x / 10}deg)`)
-    };
+  const handleDragEnd = (_, info) => {
+    if (disabled) return;
 
-    const handleEnd = () => {
-      document.removeEventListener("mousemove", handleMove);
-      document.removeEventListener("touchmove", handleMove);
-      document.removeEventListener("mouseup", handleEnd);
-      document.removeEventListener("touchend", handleEnd);
-
-      releaseCard();
-    };
-
-    document.addEventListener("mousemove", handleMove);
-    document.addEventListener("touchmove", handleMove);
-    document.addEventListener("mouseup", handleEnd);
-    document.addEventListener("touchend", handleEnd);
-  };
-
-  // Release logic
-  const releaseCard = () => {
-    let { x, y } = position;
-
-    //console.log('position', position)
-
-    //alert('releaseCard '+decisionVal+"-"+x+"-"+y)
-
-    if (Math.abs(x) > Math.abs(y)) {
-      // Horizontal swipe
-      if (x >= decisionVal) handleSwipe("to-right");
-      else if (x <= -decisionVal) handleSwipe("to-left");
-      else resetCard();
-    } else {
-      // Vertical swipe
-      if (y >= decisionVal) handleSwipe("to-upside");
-      else if (y <= -decisionVal) handleSwipe("to-downside");
-      else resetCard();
+    if (info.offset.x > 150) {
+      setIsSwiped(true);
+      onSwipe?.("right", user);
+    } else if (info.offset.x < -150) {
+      setIsSwiped(true);
+      onSwipe?.("left", user);
+    } else if (info.offset.y < -150) {
+      setIsSwiped(true);
+      onSwipe?.("up", user);
     }
-    setTimeout(() => {
-      document.querySelectorAll('.dzSwipe_card').forEach(card => {
-        card.removeAttribute("style");        // clear inline style
-        card.classList.remove("reset");       // remove 'reset' class
-
-        card.querySelectorAll('.dzSwipe_card__option').forEach(option => {
-          option.removeAttribute("style");    // clear inline style
-        });
-      });
-    }, 600);
   };
 
-  const handleSwipe = (direction) => {
-    setAnimating(true);
-    setDirection(direction);
-    if (onSwipe) {
-      setHide(true)
-      onSwipe(direction, "moikjn")
-    };
-
-    // animate out
-    const endPos =
-      direction === "to-right"
-        ? { x: 500, y: position.y }
-        : direction === "to-left"
-        ? { x: -500, y: position.y }
-        : direction === "to-upside"
-        ? { x: position.x, y: 500 }
-        : { x: position.x, y: -500 };
-
-    setPosition(endPos);
-
-    setTimeout(() => {
-      setAnimating(false);
-      setDirection("")
-      setPosition({ x: 0, y: 0 });
-    }, 300);
-    //alert('handleSwipe end: '+direction)
-  };
-
-  const resetCard = () => {
-    setAnimating(true);
-    setPosition({ x: 0, y: 0 });
-    setTimeout(() => setAnimating(false), 300);
-  };
-
-  /*const transform = `translate(${position.x}px, -${position.y}px) rotate(${
-    position.x / 10
-  }deg)`;*/
+  if (isSwiped) return null;
 
   return (
-    <div
-      ref={cardRef}
-      className={classNames("dzSwipe_card", { inactive: animating }, hide?"below":"")}
-      style={{
-        transform,
-        transition: animating ? "all 0.3s ease" : "none",
-      }}
-      onMouseDown={handleDragStart}
-      onTouchStart={handleDragStart}>
-        <div className="dz-media">
-          <img src={user.imageFirst} alt="" style={{objectFit: "cover",width: "600px", height: "100%", borderRadius: "18px"}} />
-        </div>
-        <div className="dz-content">
-          <div className="left-content">
-            <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
-            <h4 className="title"><a href="profile-detail.html">{user.libelle} , 24</a></h4>
-            <p className="mb-0"><i className="icon feather icon-map-pin"></i> 3 miles away</p>
-          </div>
-          <a onClick={() => handleSwipe("to-upside")} className="dz-icon dz-sp-like"><i className="flaticon flaticon-star-1"></i></a>
-        </div>
-        <div
-          className="dzSwipe_card__option dzReject"
-          style={{ opacity: position.x < 0 ? Math.abs(position.x) / 100 : 0 }}
-        >
-          <i className="fa-solid fa-xmark"></i>
-        </div>
-        <div
-          className="dzSwipe_card__option dzLike"
-          style={{ opacity: position.x > 0 ? position.x / 100 : 0 }}
-        >
-          <i className="fa-solid fa-check"></i>
-        </div>
-        <div
-          className="dzSwipe_card__option dzSuperlike"
-          style={{ opacity: position.y > 0 ? position.y / 100 : 0 }}
-        >
-          ⭐ <h5 className="title mb-0">Super Like</h5>
-        </div>
-        <div className="dzSwipe_card__drag"></div>
-      {/* Card content */}
-      {children}
+    <motion.div
+      className="w-full h-full bg-white rounded-2xl shadow-lg flex flex-col items-center justify-start overflow-hidden cursor-grab"
+      style={{ x, y, rotate, opacity, width: "100%", height: "100%" }}
+      drag={disabled ? false : true}
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={0.2}
+      onDragEnd={handleDragEnd}
+    >
+      {/* Image */}
+      <motion.img
+        src={user.imageFirst}
+        alt={user.libelle}
+        className="w-full h-3/4 object-cover cursor-grab"
+        style={{ x, y, rotate, opacity, width: "100%", height: "75%", objectFit: 'cover' }}
+        drag={disabled ? false : true}
+        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        dragElastic={0.2}
+        onDragEnd={handleDragEnd}
+      />
 
-      {/* Overlays */}
-      
-    </div>
+      {/* User info */}
+      <div className="p-4 w-full text-center">
+        <h2 className="text-lg font-bold">{user.libelle}</h2>
+        <p className="text-gray-600">{user.id} years</p>
+      </div>
+    </motion.div>
   );
 }
