@@ -18,6 +18,9 @@ jobs:
         node-version: [20.x]
 
     steps:
+      - name: Debug Secrets
+        run: echo "Server is ${{ secrets.LOVE_TESTNET_FTP_SERVER }}"
+        
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -34,8 +37,6 @@ jobs:
 
       - name: 📂 Sync files to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      - name: Debug Secrets
-        run: echo "Server is ${{ secrets.LOVE_TESTNET_FTP_SERVER }}"
         with:
           server: ${{ secrets.LOVE_TESTNET_FTP_SERVER }}
           username: ${{ secrets.LOVE_TESTNET_FTP_USERNAME }}
