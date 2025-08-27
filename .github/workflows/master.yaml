@@ -19,8 +19,8 @@ jobs:
 
     steps:
       - name: Debug Secrets
-        run: echo "Server is ${{ secrets.LOVE_TESTNET_FTP_SERVER }}"
-        
+        run: echo "Server is ${{ secrets.LOVE_TESTNET_FTP_SERVER }}" 
+
       - name: Checkout Repository
         uses: actions/checkout@v3
 
