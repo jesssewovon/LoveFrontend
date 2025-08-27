@@ -13,13 +13,13 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
   const handleDragEnd = (_, info) => {
     if (disabled) return;
 
-    if (info.offset.x > 50) {
+    if (info.offset.x > 80) {
       setIsSwiped(true);
       onSwipe?.("right", user);
-    } else if (info.offset.x < -50) {
+    } else if (info.offset.x < -80) {
       setIsSwiped(true);
       onSwipe?.("left", user);
-    } else if (info.offset.y < -50) {
+    } else if (info.offset.y < -80) {
       setIsSwiped(true);
       onSwipe?.("up", user);
     }
