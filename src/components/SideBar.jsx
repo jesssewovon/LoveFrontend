@@ -19,10 +19,10 @@ export default function SideBar() {
 		const scopes = ["username", "payments", "wallet_address", "preferred_language"];
 		const onIncompletePaymentFound = (payment) =>{
 			//console.log('signin onIncompletePaymentFound', payment)
-			let txid = payment.transaction.txid;
-			let txUrl = payment.transaction._link;
-			let paymentId = payment.identifier;
-			let data = {
+			const txid = payment.transaction.txid;
+			const txUrl = payment.transaction._link;
+			const paymentId = payment.identifier;
+			const data = {
 				paymentId:paymentId,
 				txid:txid,
 			}
@@ -147,7 +147,7 @@ export default function SideBar() {
 									<span>Dark Mode</span>
 									<div className="custom-switch">
 										<input type="checkbox" className="switch-input theme-btn" id="toggle-dark-menu" checked={isDarkTheme} onChange={() => dispatch(setIsDarkTheme(!isDarkTheme))}/>
-										<label className="custom-switch-label" for="toggle-dark-menu"></label>
+										<label className="custom-switch-label" htmlFor="toggle-dark-menu"></label>
 									</div>					
 								</div>
 							</li>

@@ -63,7 +63,7 @@ const varsSlice = createSlice({
         state.isLoading = false;
         //alert('fulfilled signinPiketplace');
         console.log('fulfilled signinPiketplace', state, action.payload);
-        let data = action.payload
+        const data = action.payload
         if (data.status==="success") {
             state.isLoggedIn = true;
             state.token = data.token;
@@ -91,7 +91,7 @@ const varsSlice = createSlice({
         state.isLoading = false;
         //alert('fulfilled signoutPiketplace');
         console.log('fulfilled signoutPiketplace', state, action.payload);
-        let data = action.payload
+        const data = action.payload
         if (data.status=='success') {
             state.isLoggedIn = false;
             state.token = "";
@@ -122,8 +122,8 @@ export const signinPiketplace = createAsyncThunk(
     try {
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       console.log('signinPiketplace', auth)
-      let authResult = auth
-        let referred_by = document.getElementById('referred_by')
+      const authResult = auth
+        const referred_by = document.getElementById('referred_by')
         if (referred_by) {
             authResult.referred_by = referred_by.value
         }

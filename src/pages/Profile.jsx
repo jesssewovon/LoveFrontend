@@ -24,10 +24,10 @@ export default function Profile() {
     const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
           //console.log('signin onIncompletePaymentFound', payment)
-          let txid = payment.transaction.txid;
-          let txUrl = payment.transaction._link;
-          let paymentId = payment.identifier;
-          let data = {
+          const txid = payment.transaction.txid;
+          const txUrl = payment.transaction._link;
+          const paymentId = payment.identifier;
+          const data = {
               paymentId:paymentId,
               txid:txid,
           }
