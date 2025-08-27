@@ -67,7 +67,20 @@ export default function Home({ savedScroll, onSaveScroll }) {
         <div className="container fixed-full-area">
           <div className="dzSwipe_card-cont dz-gallery-slider">
             {items.map((item) => (
-              <SwipeCard key={item.id} user={item} onSwipe={handleSwipe} />
+              <div
+                className="dzSwipe_card">
+                  <div className="dz-media">
+                    <img src={item.imageFirst} alt="" style={{objectFit: "cover",width: "600px", height: "100%", borderRadius: "18px"}} />
+                  </div>
+                  <div className="dz-content">
+                    <div className="left-content">
+                      <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
+                      <h4 className="title"><a href="profile-detail.html">{item.libelle} , 24</a></h4>
+                      <p className="mb-0"><i className="icon feather icon-map-pin"></i> 3 miles away</p>
+                    </div>
+                    <a onClick={() => {}} className="dz-icon dz-sp-like"><i className="flaticon flaticon-star-1"></i></a>
+                  </div>
+              </div>
             ))}
             <div ref={loaderRef} className="h-4" /> {/* sentinel for infinite scroll */}
           </div>
