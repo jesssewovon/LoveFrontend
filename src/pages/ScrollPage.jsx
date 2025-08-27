@@ -97,7 +97,19 @@ export default function ScrollPage({ savedScroll, onSaveScroll }) {
     <>
         <Header showBackButton={false} showWishList={true}/>
         <div className="page-content space-top p-b65">
-    			Scroll
+    			<div className="container">
+    					<p>ScrollPage</p>
+              {loading?(<p>Intro loading</p>):(
+                <>
+                  {items.map((item) => (
+                      <p>{item.id}</p>
+                  ))}
+                </>
+              )}
+              <div ref={loaderRef} className="p-4 m-2 text-center text-gray-500">
+                Loading more...
+              </div>
+    			</div>
     		</div>
     </>
   );
