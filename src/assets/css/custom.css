@@ -1,0 +1,6 @@
+.swal2-container {
+  z-index: 1060000!important;
+}
+.swal2-container, .swal2-container h1, .swal2-container h2, .swal2-container h3, .swal2-container h4{
+    color: inherit!important;
+}
