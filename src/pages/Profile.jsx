@@ -46,9 +46,9 @@ export default function Profile() {
             (<div className="profile-area">
               <div className="main-profile">
                 <div className="about-profile">
-                  <a href="setting.html" className="setting dz-icon">
+                  <Link to="/" className="setting dz-icon">
                     <i className="flaticon flaticon-setting"></i>
-                  </a>
+                  </Link>
                   <div className="media rounded-circle">
                     <img src="../src/assets/images/user/pic1.jpg" alt="profile-image"/>
                     <svg className="radial-progress m-b20" data-percentage="40" viewBox="0 0 80 80">
@@ -57,9 +57,9 @@ export default function Profile() {
                     </svg>
                     <div className="data-fill"><span>40%</span></div>
                   </div>
-                  <a href="edit-profile.html" className="edit-profile dz-icon">
+                  <Link to="/" className="edit-profile dz-icon">
                     <i className="flaticon flaticon-pencil-2"></i>
-                  </a>
+                  </Link>
                 </div>
                 <div className="profile-detail">
                   <h5 className="name">Richard, 20</h5>
@@ -70,7 +70,7 @@ export default function Profile() {
                 <div className="col-4">
                   <div className="card style-2">
                     <div className="card-body">
-                      <a href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"> 
+                      <Link to="/" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"> 
                         <div className="card-icon">
                           <i className="flaticon flaticon-star-1"></i>
                         </div>
@@ -78,7 +78,7 @@ export default function Profile() {
                           <p>0 Super Likes</p>
                         </div>
                         <i className="icon feather icon-plus"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export default function Profile() {
                 <div className="col-4">
                   <div className="card style-2">
                     <div className="card-body">
-                      <a href="subscription.html">
+                      <Link to="/">
                         <div className="card-icon">
                           <i className="flaticon flaticon-bell"></i>
                         </div>
@@ -106,7 +106,7 @@ export default function Profile() {
                           <p>Subscriptions</p>
                         </div>
                         <i className="icon feather icon-plus"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -117,21 +117,21 @@ export default function Profile() {
                     <div className="dz-content">
                       <h5 className="title">Get Dating Plus</h5>
                       <p>Get Unlimited Likes, Passport and more!</p>
-                      <a href="subscription.html" className="btn rounded-xl">Get Dating Plus</a>
+                      <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
                     </div>
                   </div>
                   <div className="swiper-slide">
                     <div className="dz-content">
                       <h5 className="title">Get Dating Gold</h5>
                       <p>Get Unlimited Likes, Passport and more!</p>
-                      <a href="subscription.html" className="btn rounded-xl">Get Dating Gold</a>
+                      <Link to="/" className="btn rounded-xl">Get Dating Gold</Link>
                     </div>
                   </div>
                   <div className="swiper-slide">
                     <div className="dz-content">
                       <h5 className="title">Get Dating Platinum</h5>
                       <p>Get Unlimited Likes, Passport and more!</p>
-                      <a href="subscription.html" className="btn rounded-xl">Get Dating Platinum</a>
+                      <Link to="/" className="btn rounded-xl">Get Dating Platinum</Link>
                     </div>
                   </div>
                 </div>

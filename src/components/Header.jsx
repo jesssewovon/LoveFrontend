@@ -11,13 +11,13 @@ function Header({title, showBackButton, showWishList, classes}) {
 					<div className="header-content">
 						<div className={`left-content ${showBackButton?'me-3':''}`}>
 							{
-								!showBackButton?(<a className={`menu-toggler`} onClick={() => setSideBarStatus(!isSideBarOpen)}>
+								!showBackButton?(<span className={`menu-toggler`} onClick={() => setSideBarStatus(!isSideBarOpen)}>
 									<i className="icon feather icon-grid"></i>
-								</a>)
+								</span>)
 								:(<>
-									<a onClick={() => navigate(-1)} className="back-btn">
+									<span onClick={() => navigate(-1)} className="back-btn">
 										<i className="icon feather icon-chevron-left"></i>
-									</a>
+									</span>
 									{title!=''?(<h6 className="title">{title}</h6>):''}
 								</>)
 							}
@@ -30,9 +30,9 @@ function Header({title, showBackButton, showWishList, classes}) {
 							}
 						</div>
 						<div className="right-content dz-meta">
-							<a href="filter.html" className="filter-icon">
+							<Link to="/" className="filter-icon">
 								<i className="flaticon flaticon-settings-sliders"></i>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
