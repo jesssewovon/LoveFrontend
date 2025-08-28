@@ -1,36 +1,32 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SwipeCard from "./SwipeCard";
 
-export default function SwipeDeck({ users, onSwipe }) {
+export default function SwipeDeck({ key, users = [], onSwipe }) {
   const [cards, setCards] = useState(users);
 
-  const handleSwipe = (direction, user) => {
-    // remove top card
+  // 🔄 Sync local cards whenever parent `users` changes
+  useEffect(() => {
+    setCards(users);
+  }, [users]);
+
+  const handleCardSwipe = (direction, user) => {
+    onSwipe(direction, user, cards.length);
+    // remove swiped card from local stack
     setCards((prev) => prev.filter((c) => c.id !== user.id));
-    // bubble up swipe event
-    onSwipe?.(direction, user);
   };
 
   return (
-    <div className="relative w-[600px] h-[800px]" style={{position: "relative", width: "300px", height: "400px"}}>
-      {cards.map((user, index) => {
-        const isTop = index === cards.length - 1;
-        return (
-          <div
+    <div className="relative w-[350px] h-[500px]">
+      {cards
+        .map((user, index) => (
+          <SwipeCard
             key={user.id}
-            className="absolute top-0 left-0 w-full h-full"
-            style={{ zIndex: index, position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
-          >
-            <SwipeCard
-              user={user}
-              onSwipe={handleSwipe}
-              disabled={!isTop} // only top card can move
-            />
-          </div>
-        );
-      })}
+            user={user}
+            onSwipe={handleCardSwipe}
+            style={{ zIndex: cards.length - index }}
+          />
+        ))
+        .reverse()}
     </div>
   );
 }

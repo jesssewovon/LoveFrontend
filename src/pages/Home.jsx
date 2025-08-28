@@ -28,36 +28,32 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, [page]);
 
     // fetch users from API
-    const fetchUsers = async (page = 1) => {
+    const fetchUsers = async () => {
         setLoading(true);
         try {
         const res = await api.get(`index-loading?page=${page}`);
-        setUsers((prev) => [...prev, ...res.data.products.data]); // adjust to your API structure
+        setUsers(res.data.products.data); // adjust to your API structure
         } catch (err) {
         console.error("Error fetching users:", err);
         }
         console.log('users', users)
         setLoading(false);
     };
-
-    const fetchData__ = async () => {
-        setLoading(true);
-        const res = await api.get(`index-loading?page=${page}`)
-        .then((res) => setUsers((prev) => [...prev, ...res.data.products.data]))
-        .catch((err) => console.error(err));
-        setLoading(false);
-    };
   
     // Load data on page change
     useEffect(() => {
-      fetchData__();
+      fetchUsers();
     }, [page]);
 
-    const handleSwipe = (direction, user) => {
-        if (direction === "up") {
-        console.log(`Super liked 💙 ${user.name}`);
-        } else {
-        console.log(`Swiped ${direction} on ${user.name}`);
+    const handleSwipe = (dir, user, nb) => {
+        console.log("Swiped", dir, user);
+        //if (dir === "right") api.post(`/like/${user.id}`);
+        //if (dir === "left") api.post(`/dislike/${user.id}`);
+        //if (dir === "up") api.post(`/superlike/${user.id}`);
+
+        // 🔄 when deck gets empty, fetch next page
+        if (nb === 1) {
+            setPage((p) => p + 1);
         }
     };
 
