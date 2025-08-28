@@ -67,13 +67,14 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
         src={user.imageFirst}
         alt={user.libelle}
         effect="blur"
-        style={{ x, y, rotate, opacity, width: "100%", height: "100%", objectFit: 'cover' }}
+        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%' }}
         drag={disabled ? false : true}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragElastic={0.5}
         onDragEnd={handleDragEnd}
         width={'100%'}
         height={'100%'}
+        placeholderSrc={"./src/assets/loader.gif"}
       />
 
       {/* User info */}
