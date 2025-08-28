@@ -74,7 +74,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
         onDragEnd={handleDragEnd}
         width={'100%'}
         height={'100%'}
-        placeholderSrc={"./src/assets/loader.gif"}
+        placeholderSrc={"/loader.gif"}
       />
 
       {/* User info */}

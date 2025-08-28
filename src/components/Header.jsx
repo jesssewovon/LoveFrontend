@@ -25,7 +25,7 @@ function Header({title, showBackButton, showWishList, classes}) {
 						<div className="mid-content header-logo">
 							{showWishList?
 								(<Link to="scroll-page">
-									<img src={"/images/logo.png"} alt=""/>
+									<img src="/images/logo.png" alt=""/>
 								</Link>):""
 							}
 						</div>
