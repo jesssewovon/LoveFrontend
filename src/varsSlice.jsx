@@ -43,6 +43,9 @@ const varsSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setIsDarkTheme: (state, action) => {
       state.isDarkTheme = action.payload;
       if (state.isDarkTheme===true) {
@@ -169,5 +172,5 @@ export const signoutPiketplace = createAsyncThunk(
   }
 ); */
 
-export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn, loggedUserOut } = varsSlice.actions;
+export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn, setIsLoading, loggedUserOut } = varsSlice.actions;
 export default varsSlice.reducer;
