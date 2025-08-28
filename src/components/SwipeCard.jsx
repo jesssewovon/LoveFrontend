@@ -3,6 +3,8 @@ import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css"; // nice blur effect
 
+import '../assets/scss/pages/_tinder-swiper.scss';
+
 export default function SwipeCard({ user, onSwipe, disabled }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -86,31 +88,40 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
                 <h4 className="title" style={{color: 'white'}}><a>{user.libelle} , {user.id}</a></h4>
                 <p className="mb-0"><i className="icon feather icon-map-pin"></i> {user.id} miles away</p>
             </div>
-            <a href="javascript:void(0);" className="dz-icon dz-sp-like"><i className="flaticon flaticon-star-1"></i></a>
+            <a className="dz-icon dz-sp-like" style={{width: "50px", height: "50px", borderRadius: "50%", background :"var(--btn-gradient)", color: "#fff"}}>
+                <i className="flaticon flaticon-star-1" style={{fontSize: "28px"}}></i>
+            </a>
         </div>
       </div>
       {/* ❌ LEFT */}
       <motion.div
-        className="absolute top-10 left-5 px-4 py-2 border-4 border-red-500 text-red-500 text-2xl font-bold rounded-xl rotate-[-20deg]"
-        style={{ opacity: opacityLeft, position: "absolute", top: "10px", left: "5px" }}
+        className="absolute top-10 right-5 px-4 py-4 border-4 border-green-500 text-green-500 text-2xl font-bold rounded-xl rotate-[20deg]"
+        style={{ opacity: opacityLeft, position: "absolute", top: "20px", right: "5px" }}
       >
         ❌ Reject
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "50px", width: "50px", borderRadius: "50%", backgroundColor: "black"}}>
+            ❌
+        </div>
       </motion.div>
 
       {/* ❤️ RIGHT */}
       <motion.div
-        className="absolute top-10 right-5 px-4 py-2 border-4 border-green-500 text-green-500 text-2xl font-bold rounded-xl rotate-[20deg]"
-        style={{ opacity: opacityRight, position: "absolute", top: "10px", right: "5px" }}
+        className="absolute top-10 left-5 px-4 py-4 border-4 border-red-500 text-red-500 text-2xl font-bold rounded-xl rotate-[-20deg]"
+        style={{ opacity: opacityRight, position: "absolute", top: "20px", left: "5px" }}
       >
         ❤️ Like
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "50px", width: "50px", borderRadius: "50%", backgroundColor: "#A8D789"}}>
+            <i class="fa-solid fa-check" style={{fontSize: "20px", color: "#fff"}}></i>
+        </div>
       </motion.div>
 
       {/* ⭐️ UP */}
       <motion.div
         className="absolute top-20 left-1/2 -translate-x-1/2 px-4 py-2 border-4 border-blue-500 text-blue-500 text-2xl font-bold rounded-xl"
-        style={{ opacity: opacityUp, position: "absolute", top: "20px", left: "50%", transform: "translateX: calc(1/2 * -100%) calc(1/2 * -100%)" }}
+        style={{ opacity: opacityUp, position: "absolute", top: "30%", left: "40%", transform: "translateX: calc(1/2 * -100%) calc(1/2 * -100%)" }}
       >
-        ⭐️ Super Like
+        <span className="py-2 px-2" style={{background: "green"}}>⭐️ Super Like</span>
+        
       </motion.div>
     </motion.div>
   );
