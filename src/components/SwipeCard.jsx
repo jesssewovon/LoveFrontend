@@ -70,6 +70,8 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragElastic={0.5}
         onDragEnd={handleDragEnd}
+        width={'100%'}
+        height={'100%'}
       />
 
       {/* User info */}
