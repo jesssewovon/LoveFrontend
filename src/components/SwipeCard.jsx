@@ -37,7 +37,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
   return (
     <motion.div
       className="w-full h-full bg-white rounded-2xl shadow-lg flex flex-col items-center justify-start overflow-hidden cursor-grab"
-      style={{ x, y, rotate, opacity, width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}
+      style={{ x, y, rotate, opacity, width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", borderRadius: "20px", position: "relative" }}
       //drag={disabled ? false : true}
       drag
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -53,15 +53,15 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
         src={user.imageFirst}
         alt={user.libelle}
         className="w-full h-3/4 object-cover cursor-grab"
-        style={{ x, y, rotate, opacity, width: "100%", height: "75%", objectFit: 'cover' }}
+        style={{ x, y, rotate, opacity, width: "100%", height: "100%", objectFit: 'cover' }}
         drag={disabled ? false : true}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-        dragElastic={0.2}
+        dragElastic={0.5}
         onDragEnd={handleDragEnd}
       />
 
       {/* User info */}
-      <div className="p-4 w-full text-center">
+      <div className="p-4 w-full text-center" style={{width: "100%", position: "absolute", bottom: "0", background: "rgba(0,0,0,0.5)"}}>
         <h2 className="text-lg font-bold">{user.libelle}</h2>
         <p className="text-gray-600">{user.id} years</p>
       </div>
@@ -84,7 +84,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       {/* ⭐️ UP */}
       <motion.div
         className="absolute top-20 left-1/2 -translate-x-1/2 px-4 py-2 border-4 border-blue-500 text-blue-500 text-2xl font-bold rounded-xl"
-        style={{ opacity: opacityUp }}
+        style={{ opacity: opacityUp, position: "absolute", top: "20px", left: "50%", transform: "translateX: calc(1/2 * -100%) calc(1/2 * -100%)" }}
       >
         ⭐️ Super Like
       </motion.div>
