@@ -116,13 +116,13 @@ export default function SideBar() {
 									</Link>
 								</li>
 								<li>
-									<span onClick={() => handleLogout()} className="nav-link">
+									<a onClick={() => handleLogout()} className="nav-link">
 										<span className="dz-icon">
 											<i className="icon feather icon-log-out"></i>
 										</span>
 										<span>Logout</span>
 										<Loader/>
-									</span>
+									</a>
 								</li>
 							</ul>
 						</>
