@@ -1,5 +1,7 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css"; // nice blur effect
 
 export default function SwipeCard({ user, onSwipe, disabled }) {
   const x = useMotionValue(0);
@@ -49,10 +51,20 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       }}
     >
       {/* Image */}
-      <motion.img
+      {/* <motion.img
         src={user.imageFirst}
         alt={user.libelle}
         className="w-full h-3/4 object-cover cursor-grab"
+        style={{ x, y, rotate, opacity, width: "100%", height: "100%", objectFit: 'cover' }}
+        drag={disabled ? false : true}
+        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        dragElastic={0.5}
+        onDragEnd={handleDragEnd}
+      /> */}
+      <LazyLoadImage
+        src={user.imageFirst}
+        alt={user.libelle}
+        effect="blur"
         style={{ x, y, rotate, opacity, width: "100%", height: "100%", objectFit: 'cover' }}
         drag={disabled ? false : true}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
