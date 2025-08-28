@@ -61,9 +61,19 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       />
 
       {/* User info */}
-      <div className="p-4 w-full text-center" style={{width: "100%", position: "absolute", bottom: "0", background: "rgba(0,0,0,0.5)"}}>
+      {/* <div className="p-4 w-full text-center" style={{width: "100%", height: "20%", display: "flex", alignItems: "flex-end", position: "absolute", bottom: "0", background: "linear-gradient(180deg, rgba(30, 34, 46, 0.00) 37.50%, rgba(30, 34, 46, 0.67) 44.84%, #1E222E 56.23%, #1E222E 100%)"}}>
         <h2 className="text-lg font-bold">{user.libelle}</h2>
         <p className="text-gray-600">{user.id} years</p>
+      </div> */}
+      <div class="dz-content" style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundImage: "linear-gradient(180deg, rgba(49, 70, 133, 0) 67.50%, rgba(30, 34, 46, 0.67) 84.84%, #1E222E 96.23%, #1E222E 100%)"}}>
+        <div class="dz-content" style={{width: "100%", display: "flex", justifyContent: "space-between", padding: "0 15px", position: "absolute", bottom: "15px"}}>
+            <div class="left-content">
+                <span class="badge badge-primary d-inline-flex gap-1 mb-2"><i class="icon feather icon-map-pin"></i>Nearby</span>
+                <h4 class="title"><a href="profile-detail.html">{user.libelle} , {user.id}</a></h4>
+                <p class="mb-0"><i class="icon feather icon-map-pin"></i> {user.id} miles away</p>
+            </div>
+            <a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
+        </div>
       </div>
       {/* ❌ LEFT */}
       <motion.div
