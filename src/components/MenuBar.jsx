@@ -5,7 +5,7 @@ export default function MenuBar() {
     	<>
 	    	<div className="menubar-area footer-fixed">
 				<div className="toolbar-inner menubar-nav">
-					<NavLink to="/" className={({ isActive }) =>
+					<NavLink to="/home" className={({ isActive }) =>
 			            isActive ? "nav-link active" : "nav-link"
 			        }>
 						<i className="flaticon flaticon-dog-house"></i>
