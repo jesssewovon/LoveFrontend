@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 
 import { Routes, Route, useNavigate } from 'react-router';
 
+import Landing from './pages/Landing';
 import Home from './pages/Home';
 import About from './pages/About';
 import ScrollPage from './pages/ScrollPage';
@@ -15,7 +16,6 @@ import Chat from './pages/Chat';
 
 import Header from './components/Header';
 import SideBar from './components/SideBar';
-import MenuBar from './components/MenuBar';
 
 import { ThemeProvider } from "./ThemeContext";
 
@@ -54,7 +54,8 @@ function App() {
           <SideBar/>
           <NavigatorSetter /> {/* ✅ makes navigate available everywhere */}
           <Routes>
-            <Route path="/" element={
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={
               <KeepAlive>
                 <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
               </KeepAlive>
@@ -71,7 +72,6 @@ function App() {
             <Route path="/explore" element={<Explore />} />
             <Route path="/chat" element={<Chat />} />
           </Routes>
-          <MenuBar/>
         </AliveScope>
       </ThemeProvider>
     </>

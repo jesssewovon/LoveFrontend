@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import api from "../api";
 import Header from "../components/Header";
+import MenuBar from '../components/MenuBar';
 import Loader from "../components/Loader";
 import { setIsLoading } from "../varsSlice";
 
@@ -35,7 +36,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-        const res = await api.get(`index-loading?page=${page}`);
+        //const res = await api.get(`index-loading?page=${page}`);
+        const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
         setUsers(res.data.products.data); // adjust to your API structure
         } catch (err) {
         console.error("Error fetching users:", err);
@@ -64,11 +66,12 @@ export default function Home({ savedScroll, onSaveScroll }) {
         return (
             <>
                 <Header showBackButton={false} showWishList={true} />
+                <MenuBar/>
                 <div className="page-content space-top p-b65">
                     <div className="container fixed-full-area">
                         <div className="flex items-center justify-center h-screen bg-gray-100">
                             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="50" height="50" xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle stroke-dasharray="164.93361431346415 56.97787143782138" r="35" stroke-width="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
+                                <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
                             </div>
                         </div>
                     </div>
@@ -79,7 +82,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     return (
         <>
-        <Header showBackButton={false} showWishList={true} />
+            <Header showBackButton={false} showWishList={true} />
+            <MenuBar/>
             <div className="page-content space-top p-b65">
                 <div className="container fixed-full-area">
                     <div className="flex items-center justify-center h-screen bg-gray-100">

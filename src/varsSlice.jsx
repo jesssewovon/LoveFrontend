@@ -9,7 +9,7 @@ const MySwal = withReactContent(Swal);
 import i18n from "./i18n"; // your i18n config
 
 import api from "./api"
-
+import { navigate } from "./navigationService";
 
 const varsSlice = createSlice({
   name: "vars",
@@ -78,6 +78,7 @@ const varsSlice = createSlice({
               showConfirmButton: false,
               timer: 1500
             });
+            navigate('/home')
         }
       })
       .addCase(signinPiketplace.rejected, (state, action) => {
@@ -107,6 +108,7 @@ const varsSlice = createSlice({
               showConfirmButton: false,
               timer: 1500
             });
+            navigate('/')
         }
       })
       .addCase(signoutPiketplace.rejected, (state, action) => {
@@ -121,7 +123,21 @@ const varsSlice = createSlice({
 
 export const signinPiketplace = createAsyncThunk(
   'auth/signinPiketplace',
-  async ({ scopes, onIncompletePaymentFound }, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue, dispatch }) => {
+    const scopes = ["username", "payments", "wallet_address", "preferred_language"];
+    const onIncompletePaymentFound = (payment) =>{
+        //console.log('signin onIncompletePaymentFound', payment)
+        const txid = payment.transaction.txid;
+        const txUrl = payment.transaction._link;
+        const paymentId = payment.identifier;
+        const data = {
+            paymentId:paymentId,
+            txid:txid,
+        }
+        //self.executePaymentCompletion(data)
+        //We're not allowed to cancel a payment after approve
+        //this.dispatch('cancelPayment', data)
+    };
     try {
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       console.log('signinPiketplace', auth)
@@ -151,7 +167,6 @@ export const signoutPiketplace = createAsyncThunk(
   'auth/signoutPiketplace',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      alert('ffffff nfffffffff')
       const res = await api.post('/signout')
       return res.data
     } catch (error) {

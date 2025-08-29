@@ -1,11 +1,13 @@
 import { Link } from 'react-router';
 
 import Header from '../components/Header';
+import MenuBar from '../components/MenuBar';
 
 export default function Explore() {
   return (
     <>
       <Header showBackButton={true} title={"Explore"} showWishList={false}/>
+      <MenuBar/>
       <div className="page-content space-top p-b60">
         <div className="container">
           <div className="row g-3">

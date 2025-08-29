@@ -112,7 +112,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       >
         ❤️ Like
         <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "50px", width: "50px", borderRadius: "50%", backgroundColor: "#A8D789"}}>
-            <i class="fa-solid fa-check" style={{fontSize: "20px", color: "#fff"}}></i>
+            <i className="fa-solid fa-check" style={{fontSize: "20px", color: "#fff"}}></i>
         </div>
       </motion.div>
 

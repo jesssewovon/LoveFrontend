@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_APP_BASE_URL: https://testnet-backend.piketplace.com
-      VITE_APP_BACKEND_URL: https://testnet-backend.piketplace.com/api/v1
+      VITE_APP_BASE_URL: https://delivery-testnet.piketplace.com
+      VITE_APP_BACKEND_URL: https://delivery-testnet.piketplace.com/api/v1
 
     strategy:
       matrix:

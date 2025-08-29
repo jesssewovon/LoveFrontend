@@ -1,11 +1,13 @@
 import { Link } from 'react-router';
 
 import Header from '../components/Header';
+import MenuBar from '../components/MenuBar';
 
 export default function ChatList() {
   return (
     <>
       <Header showBackButton={true} title={"New Matches"} showWishList={false}/>
+      <MenuBar/>
       <div className="page-content space-top p-b60">
         <div className="container">
           <div className="swiper chat-swiper">

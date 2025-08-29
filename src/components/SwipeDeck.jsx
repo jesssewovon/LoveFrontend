@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SwipeCard from "./SwipeCard";
 
-export default function SwipeDeck({ key, users = [], onSwipe }) {
+export default function SwipeDeck({ users = [], onSwipe }) {
   const [cards, setCards] = useState(users);
 
   // 🔄 Sync local cards whenever parent `users` changes

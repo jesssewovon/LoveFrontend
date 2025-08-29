@@ -6,8 +6,11 @@ import { loggedUserOut } from "./varsSlice";
 
 import { navigate } from "./navigationService";
 
+//axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL
+
 const api = axios.create({
-  baseURL: "https://testnet-backend.piketplace.com/api/v1",
+  //baseURL: "https://testnet-backend.piketplace.com/api/v1",
+  baseURL: import.meta.env.VITE_APP_BACKEND_URL,
   //withCredentials: true, // send cookies
   headers: {
     "Content-Type": "application/json",

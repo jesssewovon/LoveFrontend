@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import Header from '../components/Header';
+import MenuBar from '../components/MenuBar';
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,7 +22,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const { isLoggedIn, isLoading } = useSelector((state) => state.vars);
   const handleLogin = async () => {
-    const scopes = ["username", "payments", "wallet_address", "preferred_language"];
+      const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
           //console.log('signin onIncompletePaymentFound', payment)
           const txid = payment.transaction.txid;
@@ -40,6 +41,7 @@ export default function Profile() {
   return (
     <>
       <Header showBackButton={true} title={"Profile"} showWishList={false} classes={"bg-white"}/>
+      <MenuBar/>
       <div className="page-content space-top p-b60">
         <div className="container pt-0"> 
           {isLoggedIn?
