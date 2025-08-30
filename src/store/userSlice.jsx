@@ -71,13 +71,13 @@ const userSlice = createSlice({
             state.isLoggedIn = true;
             state.token = data.token;
             state.user = data.current_user_for_automatic_update;
-            MySwal.fire({
+            /* MySwal.fire({
               title: "Hello!",
               text: "Connexion",
               icon: "success",
               showConfirmButton: false,
               timer: 1500
-            });
+            }); */
             if(data.redirectTo) {
                 navigate(data.redirectTo)
             }else{
@@ -104,14 +104,14 @@ const userSlice = createSlice({
             state.isLoggedIn = false;
             state.token = "";
             state.user = null;
-            MySwal.fire({
+            /* MySwal.fire({
               title: <p>Hello React JSX!</p>,
               text: "Deconnexion",
               icon: "success",
               //confirmButtonText: "Cool",
               showConfirmButton: false,
               timer: 1500
-            });
+            }); */
             navigate('/')
         }
       })
