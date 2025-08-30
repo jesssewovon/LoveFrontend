@@ -14,6 +14,7 @@ export default function Landing() {
         dispatch(signinPiketplace());
     };
     useEffect(() => {
+      setIsLoading(false)
       if (isLoggedIn) {
         //navigate('/home')
       }
