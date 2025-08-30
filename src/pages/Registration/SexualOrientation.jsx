@@ -106,7 +106,7 @@ export default function SexualOrientation() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.sexual_orientation.length==0} onClick={() => navigate('/registration/interested-gender')} class="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.sexual_orientation.length==0} onClick={() => navigate('/registration/interested-gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>

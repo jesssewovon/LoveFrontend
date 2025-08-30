@@ -91,7 +91,7 @@ export default function InterestedGender() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.date_filter_gender==""} onClick={() => navigate('/registration/relationship-goal')} class="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.date_filter_gender==""} onClick={() => navigate('/registration/relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>
