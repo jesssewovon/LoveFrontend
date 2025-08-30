@@ -4,7 +4,7 @@ import { useTheme } from "../ThemeContext";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setIsDarkTheme, signinPiketplace, signoutPiketplace } from "../varsSlice";
+import { setIsDarkTheme, signinPiketplace, signoutPiketplace } from "../store/userSlice";
 import { useTranslation } from 'react-i18next';
 
 import Loader from './Loader';
@@ -13,7 +13,7 @@ export default function SideBar() {
 	const {t} = useTranslation()
 	const { isSideBarOpen, setSideBarStatus } = useTheme();
 	const dispatch = useDispatch();
-    const { isDarkTheme, user, isLoggedIn, isLoading } = useSelector((state) => state.vars);
+    const { isDarkTheme, user, isLoggedIn, isLoading } = useSelector((state) => state.user);
 
 	const handleLogin = () => {
 		const scopes = ["username", "payments", "wallet_address", "preferred_language"];

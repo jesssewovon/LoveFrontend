@@ -13,6 +13,8 @@ import WishList from './pages/WishList';
 import ChatList from './pages/ChatList';
 import Explore from './pages/Explore';
 import Chat from './pages/Chat';
+import FirstName from './pages/Registration/FirstName';
+import BirthDate from './pages/Registration/BirthDate';
 
 import Header from './components/Header';
 import SideBar from './components/SideBar';
@@ -23,7 +25,7 @@ import { AliveScope, KeepAlive } from "react-activation";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setIsDarkTheme, setIsLoggedIn } from "./varsSlice";
+import { setIsDarkTheme, setIsLoggedIn } from "./store/userSlice";
 
 import React from "react";
 import { setNavigator } from "./navigationService";
@@ -42,7 +44,7 @@ function App() {
     console.log("Swiped:", direction);
   };
   const dispatch = useDispatch();
-  const { isDarkTheme, user } = useSelector((state) => state.vars);
+  const { isDarkTheme, user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(setIsDarkTheme(isDarkTheme))
     //dispatch(setIsLoggedIn(false))
@@ -71,6 +73,8 @@ function App() {
             <Route path="/chat-list" element={<ChatList />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/registration/firstname" element={<FirstName />} />
+            <Route path="/registration/birth-date" element={<BirthDate />} />
           </Routes>
         </AliveScope>
       </ThemeProvider>

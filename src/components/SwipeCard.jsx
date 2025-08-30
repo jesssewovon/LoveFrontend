@@ -55,7 +55,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       {/* Image */}
       {/* <motion.img
         src={user.imageFirst}
-        alt={user.libelle}
+        alt={user.firstname}
         className="w-full h-3/4 object-cover cursor-grab"
         style={{ x, y, rotate, opacity, width: "100%", height: "100%", objectFit: 'cover' }}
         drag={disabled ? false : true}
@@ -65,7 +65,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       /> */}
       <LazyLoadImage
         src={user.imageFirst}
-        alt={user.libelle}
+        alt={user.firstname}
         effect="blur"
         style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%' }}
         drag={disabled ? false : true}
@@ -79,14 +79,14 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
 
       {/* User info */}
       {/* <div className="p-4 w-full text-center" style={{width: "100%", height: "20%", display: "flex", alignItems: "flex-end", position: "absolute", bottom: "0", background: "linear-gradient(180deg, rgba(30, 34, 46, 0.00) 37.50%, rgba(30, 34, 46, 0.67) 44.84%, #1E222E 56.23%, #1E222E 100%)"}}>
-        <h2 className="text-lg font-bold">{user.libelle}</h2>
+        <h2 className="text-lg font-bold">{user.firstname}</h2>
         <p className="text-gray-600">{user.id} years</p>
       </div> */}
       <div className="" style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundImage: "linear-gradient(180deg, rgba(49, 70, 133, 0) 67.50%, rgba(30, 34, 46, 0.67) 84.84%, #1E222E 96.23%, #1E222E 100%)"}}>
         <div className="dz-content" style={{width: "100%", display: "flex", justifyContent: "space-between", padding: "0 15px", position: "absolute", bottom: "15px"}}>
             <div className="left-content">
                 <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
-                <h4 className="title" style={{color: 'white'}}><a>{user.libelle} , {user.id}</a></h4>
+                <h4 className="title" style={{color: 'white'}}><a>{user.firstname} , {user.id}</a></h4>
                 <p className="mb-0"><i className="icon feather icon-map-pin"></i> {user.id} miles away</p>
             </div>
             <a className="dz-icon dz-sp-like" style={{width: "50px", height: "50px", borderRadius: "50%", background :"var(--btn-gradient)", color: "#fff"}}>

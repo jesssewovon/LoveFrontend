@@ -6,39 +6,23 @@ import api from "../api";
 import Header from "../components/Header";
 import MenuBar from '../components/MenuBar';
 import Loader from "../components/Loader";
-import { setIsLoading } from "../varsSlice";
+import { setIsLoading } from "../store/userSlice";
 
 export default function Home({ savedScroll, onSaveScroll }) {
-  const { isLoading } = useSelector((state) => state.vars);
+  const { isLoading } = useSelector((state) => state.user);
   const [users, setUsers] = useState([
     
   ]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Fetch API data
-    const fetchData = useCallback(async () => {
-      try {
-        setLoading(true);
-        const res = await api.get(`index-loading?page=${page}`);
-        setUsers((prev) => [...prev, ...res.data.products.data]);
-      } catch (err) {
-        alert('error')
-        console.error(err);
-      } finally {
-        console.log('users', users)
-        alert('finally')
-        setLoading(false);
-      }
-    }, [page]);
-
     // fetch users from API
     const fetchUsers = async () => {
         setLoading(true);
         try {
-        //const res = await api.get(`index-loading?page=${page}`);
-        const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
-        setUsers(res.data.products.data); // adjust to your API structure
+        const res = await api.get(`home-profiles-load?page=${page}`);
+        //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
+        setUsers(res.data.profiles.data); // adjust to your API structure
         } catch (err) {
         console.error("Error fetching users:", err);
         }

@@ -6,13 +6,13 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal);
 
-import i18n from "./i18n"; // your i18n config
+import i18n from "../i18n"; // your i18n config
 
-import api from "./api"
-import { navigate } from "./navigationService";
+import api from "../api"
+import { navigate } from "../navigationService";
 
-const varsSlice = createSlice({
-  name: "vars",
+const userSlice = createSlice({
+  name: "user",
   initialState: {
     user: null,   // user profile data
     isLoggedIn: false,
@@ -78,7 +78,11 @@ const varsSlice = createSlice({
               showConfirmButton: false,
               timer: 1500
             });
-            navigate('/home')
+            if(data.redirectTo) {
+                navigate(data.redirectTo)
+            }else{
+                navigate('/home')
+            }
         }
       })
       .addCase(signinPiketplace.rejected, (state, action) => {
@@ -187,5 +191,7 @@ export const signoutPiketplace = createAsyncThunk(
   }
 ); */
 
-export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn, setIsLoading, loggedUserOut } = varsSlice.actions;
-export default varsSlice.reducer;
+export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
+  setIsLoading, loggedUserOut
+} = userSlice.actions;
+export default userSlice.reducer;

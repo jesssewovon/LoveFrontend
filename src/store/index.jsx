@@ -5,18 +5,20 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage
 import { combineReducers } from "redux";
 
 /*import cartReducer from "./cartSlice";*/
-import varsReducer from "./varsSlice";
+import userReducer from "./userSlice";
+import profileFormReducer from "./profileFormSlice";
 
 const persistConfig = {
   key: "root",
   storage,
   //whitelist: ["cart", "auth"], // only persist these reducers
-  whitelist: ["vars"], // only persist these reducers
+  whitelist: ["user", "profileForm"], // only persist these reducers
 };
 
 const rootReducer = combineReducers({
   /*cart: cartReducer,*/
-  vars: varsReducer,
+  user: userReducer,
+  profileForm: profileFormReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

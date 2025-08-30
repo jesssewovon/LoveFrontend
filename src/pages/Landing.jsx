@@ -2,14 +2,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import api from "../api";
-import { setIsLoading, signinPiketplace } from "../varsSlice";
+import { setIsLoading, signinPiketplace } from "../store/userSlice";
 import { navigate } from "../navigationService";
 
 import Loader from '../components/Loader';
 
 export default function Landing() {
     const dispatch = useDispatch();
-    const { isLoading, isLoggedIn } = useSelector((state) => state.vars);
+    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const findSomeone = async () => {
         dispatch(signinPiketplace());
     };

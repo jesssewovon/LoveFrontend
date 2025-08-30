@@ -5,7 +5,7 @@ import MenuBar from '../components/MenuBar';
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { signinPiketplace } from '../varsSlice';
+import { signinPiketplace } from '../store/userSlice';
 import { useTranslation } from "react-i18next";
 import { useEffect } from 'react';
 
@@ -20,7 +20,7 @@ export default function Profile() {
     i18n.changeLanguage("fr")
   }, [i18n])
   const dispatch = useDispatch();
-  const { isLoggedIn, isLoading } = useSelector((state) => state.vars);
+  const { isLoggedIn, isLoading } = useSelector((state) => state.user);
   const handleLogin = async () => {
       const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
