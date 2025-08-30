@@ -19,6 +19,8 @@ export default function BirthDate() {
     });
 
     const handleChange = (e) => {
+        console.log("e.target.value", e.target.value)
+        alert(e.target.value)
         dispatch(updateField({ field: e.target.name, value: e.target.value }));
     };
 
