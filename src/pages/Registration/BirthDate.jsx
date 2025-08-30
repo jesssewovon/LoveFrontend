@@ -48,7 +48,7 @@ export default function BirthDate() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.birthdate==""} onClick={() => navigate('/registration/gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.birthdate==""} onClick={() => navigate('/registration-gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>

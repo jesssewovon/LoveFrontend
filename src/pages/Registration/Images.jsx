@@ -114,7 +114,7 @@ export default function Images() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.images?.length==0} onClick={() => navigate('/registration/relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.images?.length==0} onClick={() => navigate('/registration-relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>

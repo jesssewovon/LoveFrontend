@@ -78,13 +78,13 @@ function App() {
             <Route path="/chat-list" element={<ChatList />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/registration/firstname" element={<FirstName />} />
-            <Route path="/registration/birth-date" element={<BirthDate />} />
-            <Route path="/registration/gender" element={<Gender />} />
-            <Route path="/registration/sexual-orientation" element={<SexualOrientation />} />
-            <Route path="/registration/interested-gender" element={<InterestedGender />} />
-            <Route path="/registration/relationship-goal" element={<RelationshipGoal />} />
-            <Route path="/registration/images" element={<Images />} />
+            <Route path="/registration-firstname" element={<FirstName />} />
+            <Route path="/registration-birth-date" element={<BirthDate />} />
+            <Route path="/registration-gender" element={<Gender />} />
+            <Route path="/registration-sexual-orientation" element={<SexualOrientation />} />
+            <Route path="/registration-interested-gender" element={<InterestedGender />} />
+            <Route path="/registration-relationship-goal" element={<RelationshipGoal />} />
+            <Route path="/registration-images" element={<Images />} />
           </Routes>
         </AliveScope>
       </ThemeProvider>

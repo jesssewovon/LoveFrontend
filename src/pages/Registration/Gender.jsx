@@ -91,7 +91,7 @@ export default function Gender() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm?.gender==""} onClick={() => navigate('/registration/sexual-orientation')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm?.gender==""} onClick={() => navigate('/registration-sexual-orientation')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>
