@@ -54,6 +54,9 @@ const userSlice = createSlice({
         document.body.classList.remove("theme-dark");
       }
     },
+    setBodyClass: (state, action) => {
+        document.body.classList.add(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder

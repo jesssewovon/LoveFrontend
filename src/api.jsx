@@ -22,7 +22,7 @@ api.interceptors.request.use(
   (config) => {
     // Example: add token if exists
     //const token = localStorage.getItem("token");
-    const token = store.getState().vars?.token; // 👈 access store var
+    const token = store.getState().user?.token; // 👈 access store var
     //alert(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

@@ -15,6 +15,11 @@ import Explore from './pages/Explore';
 import Chat from './pages/Chat';
 import FirstName from './pages/Registration/FirstName';
 import BirthDate from './pages/Registration/BirthDate';
+import Gender from './pages/Registration/Gender';
+import SexualOrientation from './pages/Registration/SexualOrientation';
+import InterestedGender from './pages/Registration/InterestedGender';
+import RelationshipGoal from './pages/Registration/RelationshipGoal';
+import Images from './pages/Registration/Images';
 
 import Header from './components/Header';
 import SideBar from './components/SideBar';
@@ -75,6 +80,11 @@ function App() {
             <Route path="/chat" element={<Chat />} />
             <Route path="/registration/firstname" element={<FirstName />} />
             <Route path="/registration/birth-date" element={<BirthDate />} />
+            <Route path="/registration/gender" element={<Gender />} />
+            <Route path="/registration/sexual-orientation" element={<SexualOrientation />} />
+            <Route path="/registration/interested-gender" element={<InterestedGender />} />
+            <Route path="/registration/relationship-goal" element={<RelationshipGoal />} />
+            <Route path="/registration/images" element={<Images />} />
           </Routes>
         </AliveScope>
       </ThemeProvider>

@@ -1,0 +1,114 @@
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import api from "../../api";
+import { setIsLoading, signinPiketplace } from "../../store/userSlice";
+import { navigate } from "../../navigationService";
+
+import { updateField, resetForm } from "../../store/profileFormSlice";
+
+export default function SexualOrientation() {
+    const dispatch = useDispatch();
+    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
+    var profileForm = useSelector((state) => state.profileForm);
+    
+    const [checkedState, setCheckedState] = useState(profileForm.sexual_orientation);
+
+    const handleOnChange = (position) => {
+        const updatedCheckedState = checkedState.map((item, index) => {
+            if (index === position) {
+                //const it = { ...item, value: !item.value }
+                const it = {name: item.name, value: !item.value }
+                console.log('it', it)
+                return it
+            }
+            return item
+        });
+        /* const updatedTabCheckBoxes = checkedState.map((item, index) =>
+            index === position ? !item : item
+        ); */
+
+        setCheckedState(updatedCheckedState);
+        dispatch(updateField({ field: "sexual_orientation", value: updatedCheckedState }));
+    }
+
+    useEffect(() => {
+      if (isLoggedIn) {
+        //navigate('/home')
+      }
+    });
+
+    return (
+        <>
+            <div className="page-content">
+                <div className="container">
+                    <div className="account-area">
+                        <a onClick={() => navigate(-1)} className="back-btn dz-flex-box">
+                            <i className="icon feather icon-chevron-left"></i>
+                        </a>
+                        <div className="section-head ps-0">
+                            <h3>Your sexual orientation ?</h3>
+                        </div>
+                        {profileForm.sexual_orientation.map(({ name }, index) => {
+                            return (
+                                <div key={index} className="form-check mb-3">
+                                    <input className="form-check-input" type="checkbox"
+                                        id={`custom-checkbox-${index}`}
+                                        key={`checkbox-${index}`}
+                                        name={name}
+                                        value={name}
+                                        checked={checkedState[index].value}
+                                        onChange={() => handleOnChange(index)}/>
+                                    <label key={index} className="form-check-label" htmlFor={`custom-checkbox-${index}`}>
+                                        {name}
+                                    </label>
+                                </div>
+                            );
+                        })}
+                        {/* <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck2"/>
+                            <label className="form-check-label" for="flexCheck2">
+                                Gay
+                            </label>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck3"/>
+                            <label className="form-check-label" for="flexCheck3">
+                                Lesbian
+                            </label>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck4"/>
+                            <label className="form-check-label" for="flexCheck4">
+                                Bisexual
+                            </label>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck5"/>
+                            <label className="form-check-label" for="flexCheck5">
+                                Asexual
+                            </label>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck6"/>
+                            <label className="form-check-label" for="flexCheck6">
+                                Queer
+                            </label>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck7"/>
+                            <label className="form-check-label" for="flexCheck7">
+                                Demisexual
+                            </label>
+                        </div>	 */}
+                    </div>
+                </div>
+            </div>
+            <div className="footer fixed bg-white">
+                <div className="container">
+                    <button disabled={profileForm.sexual_orientation.length==0} onClick={() => navigate('/registration/interested-gender')} class="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                </div>
+            </div>
+        </>
+    );
+}

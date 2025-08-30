@@ -8,7 +8,6 @@ import { navigate } from "../../navigationService";
 import { updateField, resetForm } from "../../store/profileFormSlice";
 
 export default function BirthDate() {
-    const [firstname, setFirstname] = useState('');
     const dispatch = useDispatch();
     const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
@@ -40,14 +39,14 @@ export default function BirthDate() {
                                     <i className="icon feather icon-calendar"></i>
                                 </div>
                             </div>
-                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange} className="form-control"/>								
+                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange}  max="2020-01-01" className="form-control"/>								
                         </div>
                     </div>
                 </div>
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.birthdate==""} onClick={() => navigate('birth-date')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.birthdate==""} onClick={() => navigate('/registration/gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>
