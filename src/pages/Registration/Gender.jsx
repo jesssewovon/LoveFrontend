@@ -68,7 +68,7 @@ export default function Gender() {
                                     <span className="check"></span>							
                                 </span>
                             </label>
-                            <label className="radio-label">
+                            <label className="radio-label" htmlFor="other">
                                 <input type="radio" name="radio2" value="other"
                                     id="other"
                                     checked={
