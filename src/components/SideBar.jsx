@@ -47,7 +47,7 @@ export default function SideBar() {
 				<div className="inner-sidebar" style={{display: "grid",alignItems: "center"}}>
 					{isLoggedIn?
 						(<>
-							<Link to="profile" class="author-box">
+							<Link to="profile" className="author-box">
 								<div className="dz-media">
 									<img src="../src/assets/images/user/pic1.jpg" alt="author-image"/>
 								</div>
