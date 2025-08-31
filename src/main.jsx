@@ -13,8 +13,7 @@ import "./i18n"; // 👈 important import
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-//import { store, persistor } from "./store.jsx";
-import { store, persistor } from "./store";
+import { store, persistor } from "./store/index.jsx";
 console.log('store', store.getState())
 
 createRoot(document.getElementById('root')).render(

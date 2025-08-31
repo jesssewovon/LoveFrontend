@@ -1,7 +1,7 @@
 // api.js
 import axios from "axios";
 
-import { store } from "./store";
+import { store } from "./store/index";
 import { loggedUserOut } from "./store/userSlice";
 
 import { navigate } from "./navigationService";
