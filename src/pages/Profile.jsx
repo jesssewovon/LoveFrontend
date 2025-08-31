@@ -48,7 +48,7 @@ export default function Profile() {
             (<div className="profile-area">
               <div className="main-profile">
                 <div className="about-profile">
-                  <Link to="/" className="setting dz-icon">
+                  <Link to="/settings" className="setting dz-icon">
                     <i className="flaticon flaticon-setting"></i>
                   </Link>
                   <div className="media rounded-circle">

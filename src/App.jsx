@@ -14,6 +14,8 @@ import ChatList from './pages/ChatList';
 import Explore from './pages/Explore';
 import Chat from './pages/Chat';
 import EditProfile from './pages/EditProfile';
+import Settings from './pages/Settings';
+import Filter from './pages/Filter';
 
 import FirstName from './pages/Registration/FirstName';
 import BirthDate from './pages/Registration/BirthDate';
@@ -83,6 +85,8 @@ function App() {
             <Route path="/explore" element={<Explore />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/filter" element={<Filter />} />
             <Route path="/registration-firstname" element={<FirstName />} />
             <Route path="/registration-birth-date" element={<BirthDate />} />
             <Route path="/registration-gender" element={<Gender />} />

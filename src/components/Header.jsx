@@ -30,7 +30,7 @@ function Header({title, showBackButton, showWishList, classes}) {
 							}
 						</div>
 						<div className="right-content dz-meta">
-							<Link to="/" className="filter-icon">
+							<Link to="/filter" className="filter-icon">
 								<i className="flaticon flaticon-settings-sliders"></i>
 							</Link>
 						</div>
