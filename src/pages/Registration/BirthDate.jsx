@@ -39,7 +39,7 @@ export default function BirthDate() {
                                     <i className="icon feather icon-calendar"></i>
                                 </div>
                             </div>
-                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange}  max="2020-01-01" className="form-control"/>								
+                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange}  max="2007-01-01" className="form-control"/>								
                         </div>
                     </div>
                 </div>

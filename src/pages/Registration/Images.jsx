@@ -11,7 +11,7 @@ export default function Images() {
     const dispatch = useDispatch();
     const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
-    
+    //console.log('profileForm', profileForm)
     useEffect(() => {
       if (isLoggedIn) {
         //navigate('/home')
@@ -72,7 +72,7 @@ export default function Images() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-4">
+                           {/*  <div className="col-4">
                                 <div className="dz-drop-box">
                                     <img src="/images/recent-pic/drop-bx.png" alt=""/>
                                     <div className="drop-bx">
@@ -107,7 +107,7 @@ export default function Images() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

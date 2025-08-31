@@ -11,7 +11,6 @@ export default function Gender() {
     const dispatch = useDispatch();
     const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
-    
     useEffect(() => {
       if (isLoggedIn) {
         //navigate('/home')
