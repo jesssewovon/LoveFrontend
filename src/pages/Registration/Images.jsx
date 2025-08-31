@@ -6,19 +6,62 @@ import { setIsLoading, signinPiketplace } from "../../store/userSlice";
 import { navigate } from "../../navigationService";
 
 import { updateField, resetForm } from "../../store/profileFormSlice";
+import Loader from "../../components/Loader";
 
 export default function Images() {
     const dispatch = useDispatch();
     const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
-    //console.log('profileForm', profileForm)
+    console.log('profileForm.images', profileForm.images)
+    
     useEffect(() => {
       if (isLoggedIn) {
         //navigate('/home')
       }
     });
-    const handleRadioChange = (value) => {
-        dispatch(updateField({ field: "images", value: value }));
+    const onFileChange = (event) => {
+		//console.log("onFileChange", event.target.name, event.target.files[0], typeof event.target.files[0]);
+        const profileFormImagesUpdate = {...profileForm.images,
+            [event.target.name]: event.target.files[0],
+        }
+        dispatch(updateField({ field: "images", value: profileFormImagesUpdate }));
+	};
+    const createProfile = async () => {
+        //alert('creatProfile')
+        const formData = new FormData();
+		
+		formData.append("firstname", profileForm.firstname);
+		formData.append("birthdate", profileForm.birthdate);
+		formData.append("gender", profileForm.gender);
+		
+		formData.append("date_filter_gender", profileForm.date_filter_gender);
+		formData.append("relationship_goal", profileForm.relationship_goal);
+        //formData.append("images", profileForm.images);
+        /* profileForm.images.forEach((file) => {
+            formData.append("images", file);
+        }); */
+        profileForm.sexual_orientation.forEach((val, index) => {
+            if (val.value === true) {
+                formData.append("sexual_orientation[]", val.name);
+            }
+        })
+        Object.entries(profileForm.images).forEach(([key, val]) => {
+            formData.append(`images[${key}]`, val);
+        });
+		console.log("formData", formData);
+        //return
+        dispatch(setIsLoading(true))
+		api.post("/profiles", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then(res => {
+            dispatch(setIsLoading(false))
+            navigate('/home')
+            console.log('res', res.data)
+        }).catch(error => {
+            console.log('error', error)
+        });
     };
 
     return (
@@ -36,9 +79,9 @@ export default function Images() {
                             <div className="col-8">
                                 <div className="dz-drop-box">
                                     <div className="drop-bx bx-lg">
-                                        <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
+                                        <div className="imagePreview" style={{backgroundImage: `url(${typeof profileForm.images?.image1 === "object"?(URL.createObjectURL(profileForm.images?.image1)):'/images/recent-pic/drop-bx.png'})`}}>
                                             <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                            <input type='file' className="form-control d-none imageUpload"  id="imageUpload" accept=".png, .jpg, .jpeg"/>
+                                            <input type='file' onChange={onFileChange} name="image1" className="form-control d-none imageUpload" id="imageUpload" accept=".png, .jpg, .jpeg"/>
                                             <label htmlFor="imageUpload"></label>
                                         </div>
                                     </div>
@@ -50,9 +93,9 @@ export default function Images() {
                                         <div className="dz-drop-box">
                                             <img src="/images/recent-pic/drop-bx.png" alt=""/>
                                             <div className="drop-bx">
-                                                <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
+                                                <div className="imagePreview" style={{backgroundImage: `url(${typeof profileForm.images?.image2 === "object"?(URL.createObjectURL(profileForm.images?.image2)):''})`}}>
                                                     <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                                    <input type='file' className="form-control d-none imageUpload"  id="imageUpload2" accept=".png, .jpg, .jpeg"/>
+                                                    <input type='file' onChange={onFileChange} name="image2" className="form-control d-none imageUpload" id="imageUpload2" accept=".png, .jpg, .jpeg"/>
                                                     <label htmlFor="imageUpload2"></label>
                                                 </div>
                                             </div>
@@ -62,9 +105,9 @@ export default function Images() {
                                         <div className="dz-drop-box">
                                             <img src="/images/recent-pic/drop-bx.png" alt=""/>
                                             <div className="drop-bx">
-                                                <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
+                                                <div className="imagePreview" style={{backgroundImage: `url(${typeof profileForm.images?.image3 === "object"?(URL.createObjectURL(profileForm.images?.image3)):''})`}}>
                                                     <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                                    <input type='file' className="form-control d-none imageUpload"  id="imageUpload3" accept=".png, .jpg, .jpeg"/>
+                                                    <input type='file' onChange={onFileChange} name="image3" className="form-control d-none imageUpload" id="imageUpload3" accept=".png, .jpg, .jpeg"/>
                                                     <label htmlFor="imageUpload3"></label>
                                                 </div>
                                             </div>
@@ -114,7 +157,7 @@ export default function Images() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.images.length==0} onClick={() => navigate('/registration-relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={isLoading || Object.entries(profileForm.images)?.length==0} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next<Loader/></button>
                 </div>
             </div>
         </>

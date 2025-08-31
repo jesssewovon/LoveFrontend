@@ -15,9 +15,17 @@ const initialState = {
       {name: "asexual", value: false},
       {name: "demisexual", value: false},
   ],
+  relationships: [
+      {name: "long_term_partner", value: false},
+      {name: "long_term_open_to_short", value: false},
+      {name: "short_term_open_to_long", value: false},
+      {name: "short_term_fun", value: false},
+      {name: "new_friends", value: false},
+      {name: "still_figuring_it_out", value: false},
+  ],
   date_filter_gender: "",
   relationship_goal: "",
-  images: [],
+  images: {},
 };
 
 const formSlice = createSlice({

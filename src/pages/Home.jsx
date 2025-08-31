@@ -20,11 +20,14 @@ export default function Home({ savedScroll, onSaveScroll }) {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-        const res = await api.get(`home-profiles-load?page=${page}`);
-        //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
-        setUsers(res.data.profiles.data); // adjust to your API structure
+            const res = await api.get(`home-profiles-load?page=${page}`);
+            //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
+            setUsers(res.data.profiles.data); // adjust to your API structure
+            if (res.data.profiles.data.length==0) {
+                setPage((p) => 1);
+            }
         } catch (err) {
-        console.error("Error fetching users:", err);
+            console.error("Error fetching users:", err);
         }
         console.log('users', users)
         setLoading(false);

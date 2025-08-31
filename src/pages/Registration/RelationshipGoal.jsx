@@ -18,6 +18,7 @@ export default function RelationshipGoal() {
       }
     });
     const handleRadioChange = (value) => {
+        //console.log('test', value)
         dispatch(updateField({ field: "relationship_goal", value: value }));
     };
 
@@ -33,7 +34,28 @@ export default function RelationshipGoal() {
                             <h3>What are you looking for right now ?</h3>
                         </div>
                         <div className="radio style-2">
-                            <label className="radio-label" htmlFor="women">
+                            {profileForm.relationships.map(({ name }, index) => {
+                                return (
+                                    <label key={index} className="radio-label" htmlFor={name}>
+                                        <input type="radio" name="radio2" value={name}
+                                            id={name} 
+                                            checked={
+                                                profileForm.relationship_goal ===
+                                               name
+                                            }
+                                            onChange={() =>
+                                                handleRadioChange(
+                                                    name
+                                                )
+                                            }/>
+                                        <span className="checkmark">						
+                                            <span className="text">{name}</span>
+                                            <span className="check"></span>							
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                            {/* <label className="radio-label" htmlFor="women">
                                 <input type="radio" name="radio2" value="women"
                                     id="women" 
                                     checked={
@@ -135,7 +157,7 @@ export default function RelationshipGoal() {
                                     <span className="text">Stil figuring it out</span>	
                                     <span className="check"></span>							
                                 </span>
-                            </label>
+                            </label> */}
                         </div>
                     </div>
                 </div>

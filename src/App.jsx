@@ -31,6 +31,7 @@ import { AliveScope, KeepAlive } from "react-activation";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setIsDarkTheme, setIsLoggedIn, setIsLoading } from "./store/userSlice";
+import { updateField } from "./store/profileFormSlice";
 
 import { setNavigator } from "./navigationService";
 
@@ -53,6 +54,7 @@ function App() {
     dispatch(setIsDarkTheme(isDarkTheme))
     dispatch(setIsLoading(false))
     //dispatch(setIsLoggedIn(false))
+    dispatch(updateField({ field: "images", value: {} }));
   }, [dispatch]);
   return (
     <>
