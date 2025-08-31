@@ -49,24 +49,14 @@ export default function SideBar() {
 						(<>
 							<Link to="profile" className="author-box">
 								<div className="dz-media">
-									<img src="../src/assets/images/user/pic1.jpg" alt="author-image"/>
+									<img src={user.profile.imageFirst} alt={user.firstname} style={{height: '100%', objectFit: 'cover'}}/>
 								</div>
 								<div className="dz-info">
-									<h5 className="name">John Doe</h5>
-									<span>example@gmail.com</span>
+									<h5 className="name">{user.profile.firstname}</h5>
+									<span>{user.profile.birthdate}</span>
 								</div>
 							</Link>
 							<ul className="nav navbar-nav">	
-								<li>
-									<NavLink to="/" className={({ isActive }) =>
-							            isActive ? "nav-link active" : "nav-link"
-							        }>
-										<span className="dz-icon">
-											<i className="icon feather icon-home"></i>
-										</span>
-										<span>Home</span>
-									</NavLink>
-								</li>
 								<li>
 									<Link to="/" className="nav-link">
 										<span className="dz-icon">
@@ -108,7 +98,7 @@ export default function SideBar() {
 									</Link>
 								</li>
 								<li>
-									<Link to="/" className="nav-link" href="profile.html">
+									<Link to="/profile" className="nav-link" href="profile.html">
 										<span className="dz-icon">
 											<i className="icon feather icon-user"></i>
 										</span>

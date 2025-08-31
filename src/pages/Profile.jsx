@@ -21,7 +21,6 @@ export default function Profile() {
   }, [i18n])
   const dispatch = useDispatch();
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
-  console.log('user', user)
   const handleLogin = async () => {
       const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
@@ -60,7 +59,7 @@ export default function Profile() {
                     </svg>
                     <div className="data-fill"><span>40%</span></div>
                   </div>
-                  <Link to="/" className="edit-profile dz-icon">
+                  <Link to="/edit-profile" className="edit-profile dz-icon">
                     <i className="flaticon flaticon-pencil-2"></i>
                   </Link>
                 </div>

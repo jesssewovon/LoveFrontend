@@ -13,6 +13,8 @@ import WishList from './pages/WishList';
 import ChatList from './pages/ChatList';
 import Explore from './pages/Explore';
 import Chat from './pages/Chat';
+import EditProfile from './pages/EditProfile';
+
 import FirstName from './pages/Registration/FirstName';
 import BirthDate from './pages/Registration/BirthDate';
 import Gender from './pages/Registration/Gender';
@@ -80,6 +82,7 @@ function App() {
             <Route path="/chat-list" element={<ChatList />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/registration-firstname" element={<FirstName />} />
             <Route path="/registration-birth-date" element={<BirthDate />} />
             <Route path="/registration-gender" element={<Gender />} />
