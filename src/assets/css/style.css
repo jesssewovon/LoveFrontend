@@ -18190,8 +18190,10 @@ label input {
       max-width: 145px;
       position: relative;
       margin: 0 auto 15px;
-      width: 100%;
-      height: 100%;
+      /* width: 100%; */
+      width: 145px;
+      /* height: 100%; */
+      height: 145px;
       top: 0;
       left: 0;
       padding: 11px;

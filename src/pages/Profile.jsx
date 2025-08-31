@@ -20,7 +20,8 @@ export default function Profile() {
     i18n.changeLanguage("fr")
   }, [i18n])
   const dispatch = useDispatch();
-  const { isLoggedIn, isLoading } = useSelector((state) => state.user);
+  const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+  console.log('user', user)
   const handleLogin = async () => {
       const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
@@ -52,8 +53,8 @@ export default function Profile() {
                     <i className="flaticon flaticon-setting"></i>
                   </Link>
                   <div className="media rounded-circle">
-                    <img src="../src/assets/images/user/pic1.jpg" alt="profile-image"/>
-                    <svg className="radial-progress m-b20" data-percentage="40" viewBox="0 0 80 80">
+                    <img src={user.profile?.imageFirst} alt="profile-image"/>
+                    <svg className="radial-progress m-b20" data-percentage="80" viewBox="0 0 80 80">
                       <circle className="incomplete" cx="40" cy="40" r="35"></circle>
                       <circle className="complete" cx="40" cy="40" r="35" style={{strokeDashoffset: "39.58406743523136;"}}></circle>
                     </svg>
@@ -64,7 +65,7 @@ export default function Profile() {
                   </Link>
                 </div>
                 <div className="profile-detail">
-                  <h5 className="name">Richard, 20</h5>
+                  <h5 className="name">{user.profile?.firstname}, 20</h5>
                   <p className="mb-0"><i className="icon feather icon-map-pin me-1"></i> Mentreal, Canada</p>
                 </div>
               </div>

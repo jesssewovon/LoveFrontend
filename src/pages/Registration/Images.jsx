@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import api from "../../api";
-import { setIsLoading, signinPiketplace } from "../../store/userSlice";
+import { setIsLoading, signinPiketplace, setUser } from "../../store/userSlice";
 import { navigate } from "../../navigationService";
 
 import { updateField, resetForm } from "../../store/profileFormSlice";
@@ -57,7 +57,11 @@ export default function Images() {
             },
         }).then(res => {
             dispatch(setIsLoading(false))
-            navigate('/home')
+            if (res.data.status === true) {
+                console.log(res.data)
+                dispatch(setUser(res.data.user))
+                navigate('/home')
+            }
             console.log('res', res.data)
         }).catch(error => {
             console.log('error', error)

@@ -182,6 +182,6 @@ export const signoutPiketplace = createAsyncThunk(
 );
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
-  setIsLoading, loggedUserOut
+  setIsLoading, loggedUserOut,
 } = userSlice.actions;
 export default userSlice.reducer;
