@@ -44,8 +44,8 @@ export default function FirstName() {
                     </div>
                 </div>
             </div>
-            <div class="footer fixed bg-white">
-                <div class="container">
+            <div className="footer fixed bg-white">
+                <div className="container">
                     <button disabled={profileForm.firstname==""} onClick={() => navigate('/registration-birth-date')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
