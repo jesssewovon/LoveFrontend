@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 //import api from "../../api";
 //import { setIsLoading, signinPiketplace } from "../../store/userSlice";
-import { navigate } from "../../navigationService";
-
-import { updateField, resetForm } from "../../store/profileFormSlice";
+//import { navigate } from "../../navigationService";
+import { useNavigate } from "react-router";
+import { updateField, resetForm } from "../../store/profileFormSlice.jsx";
 
 export default function FirstName() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isLoading, isLoggedIn } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
