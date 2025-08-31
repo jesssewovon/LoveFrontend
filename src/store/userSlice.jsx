@@ -62,7 +62,6 @@ const userSlice = createSlice({
     builder
       .addCase(signinPiketplace.pending, (state) => {
         state.isLoading = true;
-        alert('pending signinPiketplace '+state.isLoading);
         state.error = null;
       })
       .addCase(signinPiketplace.fulfilled, (state, action) => {

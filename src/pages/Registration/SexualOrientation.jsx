@@ -27,7 +27,6 @@ export default function SexualOrientation() {
         /* const updatedTabCheckBoxes = checkedState.map((item, index) =>
             index === position ? !item : item
         ); */
-
         setCheckedState(updatedCheckedState);
         dispatch(updateField({ field: "sexual_orientation", value: updatedCheckedState }));
     }
@@ -106,7 +105,7 @@ export default function SexualOrientation() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.sexual_orientation.length==0} onClick={() => navigate('/registration-interested-gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.sexual_orientation.filter(x=>x.value===true).length==0} onClick={() => navigate('/registration-interested-gender')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>
