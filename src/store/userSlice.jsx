@@ -61,8 +61,8 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signinPiketplace.pending, (state) => {
-        //alert('pending signinPiketplace');
         state.isLoading = true;
+        alert('pending signinPiketplace '+state.isLoading);
         state.error = null;
       })
       .addCase(signinPiketplace.fulfilled, (state, action) => {
@@ -181,18 +181,6 @@ export const signoutPiketplace = createAsyncThunk(
     }
   }
 );
-/* export const signoutPiketplace = createAsyncThunk(
-  'auth/signoutPiketplace',
-  async ({ rejectWithValue, dispatch }) => {
-    try {
-      alert('ffffff nfffffffff')
-      const res = await api.post('/signout')
-      return res
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-); */
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
   setIsLoading, loggedUserOut

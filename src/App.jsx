@@ -30,14 +30,13 @@ import { AliveScope, KeepAlive } from "react-activation";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setIsDarkTheme, setIsLoggedIn } from "./store/userSlice";
+import { setIsDarkTheme, setIsLoggedIn, setIsLoading } from "./store/userSlice";
 
-import React from "react";
 import { setNavigator } from "./navigationService";
 
 function NavigatorSetter() {
   const navigate = useNavigate();
-  React.useEffect(() => {
+  useEffect(() => {
     setNavigator(navigate);
   }, [navigate]);
   return null;
@@ -52,6 +51,7 @@ function App() {
   const { isDarkTheme, user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(setIsDarkTheme(isDarkTheme))
+    dispatch(setIsLoading(false))
     //dispatch(setIsLoggedIn(false))
   }, [dispatch]);
   return (
