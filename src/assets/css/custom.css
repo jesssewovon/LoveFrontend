@@ -10,3 +10,24 @@
 .theme-dark .loader-svg{
     stroke: #fff;
 }
+.noUi-horizontal .noUi-handle {
+  width: 15px!important;
+  height: 15px!important;
+  border-radius: 50%!important;
+  border: 3px solid #ff50a2!important;
+}
+.noUi-horizontal .noUi-handle {
+  background-color: #fff!important;
+}
+.noUi-connect {
+  background: #ff50a2!important;
+}
+.noUi-horizontal {
+  height: 5px!important;
+}
+.noUi-horizontal .noUi-handle {
+  top: -5px!important;
+}
+.noUi-target{
+    border: none!important;
+}

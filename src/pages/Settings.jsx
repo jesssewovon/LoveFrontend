@@ -9,30 +9,7 @@ export default function EditProfile() {
     <>
       <Header showBackButton={true} title={"Settings"} showWishList={false}/>
       <div className="page-content space-top">
-        <div className="container"> 
-          <h6 className="title">Account Setting</h6>
-          <div className="card style-3">
-            <div className="card-header">
-              <h6 className="title mb-0 font-14 font-w500">Phone Number</h6>
-            </div>
-            <div className="card-body">
-              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1" aria-controls="offcanvasBottom">
-                <i className="icon dz-flex-box feather icon-phone-call"></i>
-                <span>+123 4567 890</span>
-              </a>
-            </div>
-          </div>
-          <div className="card style-3">
-            <div className="card-header">
-              <h6 className="title mb-0 font-14 font-w500">Email Address</h6>
-            </div>
-            <div className="card-body">
-              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom2" aria-controls="offcanvasBottom">
-                <i className="icon dz-flex-box feather icon-mail"></i>
-                <span>yourname@gmail.com</span>
-              </a>
-            </div>
-          </div>
+        <div className="container">
           <h6 className="title">Discovery Setting</h6>
           <div className="card style-3">
             <div className="card-header">

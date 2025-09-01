@@ -3,8 +3,25 @@ import { Link } from 'react-router';
 import Header from '../components/Header';
 import { useSelector } from 'react-redux';
 
-export default function EditProfile() {
+import Nouislider from "nouislider-react";
+import "nouislider/distribute/nouislider.css";
+import { useState } from 'react';
+
+export default function Filter() {
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+
+  const [min, setMin] = useState(18)
+  const [max, setMax] = useState(82)
+
+  const [value, setValue] = useState(18);
+
+  const onSlide = (render, handle, value, un, percent) => {
+    console.log("onSlide", render, handle, value, un, percent)
+    //alert('hererrr')
+    setMin(value[0].toFixed(0));
+    setMax(value[1].toFixed(0));
+  };
+
   return (
     <>
       <Header showBackButton={true} title={"Date filter"} showWishList={false}/>
@@ -34,12 +51,20 @@ export default function EditProfile() {
               <h6 className="title font-w400 font-14 mb-0">Age</h6>
             </div>
             <div className="card-body">
-              <div className="range-slider style-1">
-                <div className="mb-3 title font-w600 font-16">
-                  <span className="example-val title slider-margin-value-min"></span>
-                  <span className="example-val title slider-margin-value-max"></span>
-                </div>
-                <div id="slider-tooltips"></div>
+              <div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {min} </span>
+                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {max}</span>
+              </div>
+              <div style={{margin: "auto 10px"}}>
+                <Nouislider range={{ min: 18, max: 82 }} start={[18, 50]} 
+                accessibility
+                step={1}
+                onSlide={onSlide} connect/>
+                {/* {min && max && (
+                  <div>
+                    Min: {min}, Max: {max} %
+                  </div>
+                )} */}
               </div>
             </div>
           </div>
@@ -48,12 +73,17 @@ export default function EditProfile() {
               <h6 className="title font-w400 font-14 mb-0">Distance</h6>
             </div>
             <div className="card-body">
-              <div className="range-slider style-1">
-                <div className="mb-3 title font-w600 font-16">
-                  <span className="example-val title slider-margin-value-min"></span>
-                  <span className="example-val title slider-margin-value-max"></span>
-                </div>
-                <div id="slider-tooltips2"></div>
+              {value && (<div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {value} kilometers only</span>
+              </div>)}
+              <div style={{ width: "100%", margin: "15px auto" }}>
+                <Nouislider
+                  /* start={[value]} */         // ✅ single value
+                  start={18}         // ✅ single value
+                  range={{ min: 18, max: 100 }}
+                  connect={[true, false]} // ✅ fill only before the handle
+                  onUpdate={(rendered) => setValue(Math.round(rendered[0]))}
+                />
               </div>
             </div>
           </div>
