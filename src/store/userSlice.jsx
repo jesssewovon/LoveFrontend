@@ -70,23 +70,21 @@ const userSlice = createSlice({
         console.log('fulfilled signinPiketplace', state, action.payload);
         const data = action.payload
         if (data.status==="success") {
-            navigate('/registration-firstname')
-
-            /* state.isLoggedIn = true;
+            state.isLoggedIn = true;
             state.token = data.token;
             state.user = data.current_user_for_automatic_update;
-            MySwal.fire({
+            /* MySwal.fire({
               title: "Hello!",
               text: "Connexion new1",
               icon: "success",
               showConfirmButton: false,
               timer: 1500
-            });
+            }); */
             if(data.redirectTo) {
                 navigate(data.redirectTo)
             }else{
                 navigate('/home')
-            } */
+            }
         }
       })
       .addCase(signinPiketplace.rejected, (state, action) => {
