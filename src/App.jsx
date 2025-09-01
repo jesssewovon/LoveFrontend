@@ -39,7 +39,7 @@ import { updateField } from "./store/profileFormSlice";
 
 import { setNavigator } from "./navigationService";
 
-import store, { persistor } from "./store/index";
+import { persistor } from "./store/index";
 import { useVersionCheck } from "./hooks/useVersionCheck";
 
 function NavigatorSetter() {
