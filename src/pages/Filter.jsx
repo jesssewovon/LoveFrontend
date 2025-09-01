@@ -10,16 +10,16 @@ import { useState } from 'react';
 export default function Filter() {
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
 
-  const [min, setMin] = useState(18)
-  const [max, setMax] = useState(82)
+  const [date_filter_min_age, setDate_filter_min_age] = useState(user.profile?.date_filter_min_age??18)
+  const [date_filter_max_age, setDate_filter_max_age] = useState(user.profile?.date_filter_max_age??60)
 
-  const [value, setValue] = useState(18);
+  const [date_filter_max_distance, setDate_filter_max_distance] = useState(18);
 
   const onSlide = (render, handle, value, un, percent) => {
     console.log("onSlide", render, handle, value, un, percent)
     //alert('hererrr')
-    setMin(value[0].toFixed(0));
-    setMax(value[1].toFixed(0));
+    setDate_filter_min_age(value[0].toFixed(0));
+    setDate_filter_max_age(value[1].toFixed(0));
   };
 
   return (
@@ -52,8 +52,8 @@ export default function Filter() {
             </div>
             <div className="card-body">
               <div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {min} </span>
-                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {max}</span>
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {date_filter_min_age} </span>
+                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {date_filter_max_age}</span>
               </div>
               <div style={{margin: "auto 10px"}}>
                 <Nouislider range={{ min: 18, max: 82 }} start={[18, 50]} 
@@ -73,16 +73,16 @@ export default function Filter() {
               <h6 className="title font-w400 font-14 mb-0">Distance</h6>
             </div>
             <div className="card-body">
-              {value && (<div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {value} kilometers only</span>
+              {date_filter_max_distance && (<div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {date_filter_max_distance} kilometers only</span>
               </div>)}
               <div style={{ width: "100%", margin: "15px auto" }}>
                 <Nouislider
-                  /* start={[value]} */         // ✅ single value
+                  /* start={[date_filter_max_distance]} */         // ✅ single value
                   start={18}         // ✅ single value
                   range={{ min: 18, max: 100 }}
                   connect={[true, false]} // ✅ fill only before the handle
-                  onUpdate={(rendered) => setValue(Math.round(rendered[0]))}
+                  onUpdate={(rendered) => setDate_filter_max_distance(Math.round(rendered[0]))}
                 />
               </div>
             </div>
