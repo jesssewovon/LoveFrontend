@@ -81,7 +81,8 @@ const userSlice = createSlice({
               timer: 1500
             });
             if(data.redirectTo) {
-                navigate(data.redirectTo)
+                /* navigate(data.redirectTo) */
+                navigate('/registration-firstname')
             }else{
                 navigate('/home')
             }
