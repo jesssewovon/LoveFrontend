@@ -71,9 +71,11 @@ const userSlice = createSlice({
         console.log('fulfilled signinPiketplace', state, action.payload);
         const data = action.payload
         if (data.status==="success") {
-            /* state.isLoggedIn = true;
+            state.isLoggedIn = true;
             state.token = data.token;
-            state.user = data.current_user_for_automatic_update; */
+            if (data.current_user_for_automatic_update) {
+              state.user = data?.current_user_for_automatic_update??null;
+            }
             /* MySwal.fire({
               title: "Hello!",
               text: "Connexion new1",
