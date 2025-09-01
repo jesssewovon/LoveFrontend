@@ -53,7 +53,7 @@ export default function SideBar() {
 								</div>
 								<div className="dz-info">
 									<h5 className="name">{user.profile.firstname}</h5>
-									<span>{user.profile.birthdate}</span>
+									<span>@{user.username}</span>
 								</div>
 							</Link>
 							<ul className="nav navbar-nav">	
