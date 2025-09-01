@@ -73,13 +73,13 @@ const userSlice = createSlice({
             state.isLoggedIn = true;
             state.token = data.token;
             state.user = data.current_user_for_automatic_update;
-            /* MySwal.fire({
+            MySwal.fire({
               title: "Hello!",
               text: "Connexion",
               icon: "success",
               showConfirmButton: false,
               timer: 1500
-            }); */
+            });
             if(data.redirectTo) {
                 navigate(data.redirectTo)
             }else{

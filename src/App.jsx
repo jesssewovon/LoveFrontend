@@ -39,6 +39,9 @@ import { updateField } from "./store/profileFormSlice";
 
 import { setNavigator } from "./navigationService";
 
+import store, { persistor } from "./store/index";
+import { useVersionCheck } from "./hooks/useVersionCheck";
+
 function NavigatorSetter() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -48,6 +51,9 @@ function NavigatorSetter() {
 }
 
 function App() {
+  // run version check at startup
+  useVersionCheck({ persistor });
+
   const [scrollY, setScrollY] = useState(0);
   const handleSwipe = (direction) => {
     console.log("Swiped:", direction);
