@@ -49,10 +49,10 @@ export default function SideBar() {
 						(<>
 							<Link to="profile" className="author-box">
 								<div className="dz-media">
-									<img src={user.profile.imageFirst} alt={user.firstname} style={{height: '100%', objectFit: 'cover'}}/>
+									<img src={user.profile?.imageFirst} alt={user.firstname} style={{height: '100%', objectFit: 'cover'}}/>
 								</div>
 								<div className="dz-info">
-									<h5 className="name">{user.profile.firstname}</h5>
+									<h5 className="name">{user.profile?.firstname}</h5>
 									<span>@{user.username}</span>
 								</div>
 							</Link>
