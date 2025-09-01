@@ -75,7 +75,7 @@ const userSlice = createSlice({
             state.user = data.current_user_for_automatic_update;
             MySwal.fire({
               title: "Hello!",
-              text: "Connexion",
+              text: "Connexion new1",
               icon: "success",
               showConfirmButton: false,
               timer: 1500

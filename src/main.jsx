@@ -16,10 +16,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store/index";
 console.log('store', store.getState())
 
+import { history } from "./navigationService";
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={<div>Loading persisted state...</div>} persistor={persistor}>
-      <BrowserRouter>
+      <BrowserRouter history={history}>
           <App />
       </BrowserRouter>
     </PersistGate>
