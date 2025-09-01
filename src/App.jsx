@@ -42,6 +42,9 @@ import { updateField } from "./store/profileFormSlice";
 import { persistor } from "./store/index";
 import { useVersionCheck } from "./hooks/useVersionCheck";
 
+import { unstable_HistoryRouter as HistoryRouter } from "react-router";
+import { history } from "./navigationService";
+
 /* function NavigatorSetter() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -72,35 +75,37 @@ function App() {
         <AliveScope>
           <SideBar/>
           {/* <NavigatorSetter /> */} {/* ✅ makes navigate available everywhere */}
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home" element={
-              <KeepAlive>
-                <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
-              </KeepAlive>
-            } />
-            <Route path="/about" element={<About />} />
-            <Route path="/scroll-page" element={
-              <KeepAlive>
-                <ScrollPage savedScroll={scrollY} onSaveScroll={setScrollY} />
-              </KeepAlive>
-            } />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/wishlist" element={<WishList />} />
-            <Route path="/chat-list" element={<ChatList />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/filter" element={<Filter />} />
-            <Route path="/registration-firstname" element={<FirstName />} />
-            <Route path="/registration-birth-date" element={<BirthDate />} />
-            <Route path="/registration-gender" element={<Gender />} />
-            <Route path="/registration-sexual-orientation" element={<SexualOrientation />} />
-            <Route path="/registration-interested-gender" element={<InterestedGender />} />
-            <Route path="/registration-relationship-goal" element={<RelationshipGoal />} />
-            <Route path="/registration-images" element={<Images />} />
-          </Routes>
+          <HistoryRouter history={history}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/home" element={
+                <KeepAlive>
+                  <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
+                </KeepAlive>
+              } />
+              <Route path="/about" element={<About />} />
+              <Route path="/scroll-page" element={
+                <KeepAlive>
+                  <ScrollPage savedScroll={scrollY} onSaveScroll={setScrollY} />
+                </KeepAlive>
+              } />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/wishlist" element={<WishList />} />
+              <Route path="/chat-list" element={<ChatList />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/filter" element={<Filter />} />
+              <Route path="/registration-firstname" element={<FirstName />} />
+              <Route path="/registration-birth-date" element={<BirthDate />} />
+              <Route path="/registration-gender" element={<Gender />} />
+              <Route path="/registration-sexual-orientation" element={<SexualOrientation />} />
+              <Route path="/registration-interested-gender" element={<InterestedGender />} />
+              <Route path="/registration-relationship-goal" element={<RelationshipGoal />} />
+              <Route path="/registration-images" element={<Images />} />
+            </Routes>
+          </HistoryRouter>
         </AliveScope>
       </ThemeProvider>
     </>
