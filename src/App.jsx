@@ -37,21 +37,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsDarkTheme, setIsLoggedIn, setIsLoading } from "./store/userSlice";
 import { updateField } from "./store/profileFormSlice";
 
-//import { setNavigator } from "./navigationService";
+import { setNavigator } from "./navigationService";
 
 import { persistor } from "./store/index";
 import { useVersionCheck } from "./hooks/useVersionCheck";
 
 import { unstable_HistoryRouter as HistoryRouter } from "react-router";
-import { history } from "./navigationService";
+//import { history } from "./navigationService";
 
-/* function NavigatorSetter() {
+function NavigatorSetter() {
   const navigate = useNavigate();
   useEffect(() => {
     setNavigator(navigate);
   }, [navigate]);
   return null;
-} */
+}
 
 function App() {
   // run version check at startup
@@ -74,8 +74,8 @@ function App() {
       <ThemeProvider>
         <AliveScope>
           <SideBar/>
-          {/* <NavigatorSetter /> */} {/* ✅ makes navigate available everywhere */}
-          <HistoryRouter history={history}>
+          <NavigatorSetter /> {/* ✅ makes navigate available everywhere */}
+          {/* <HistoryRouter history={history}> */}
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/home" element={
@@ -105,7 +105,7 @@ function App() {
               <Route path="/registration-relationship-goal" element={<RelationshipGoal />} />
               <Route path="/registration-images" element={<Images />} />
             </Routes>
-          </HistoryRouter>
+          {/* </HistoryRouter> */}
         </AliveScope>
       </ThemeProvider>
     </>

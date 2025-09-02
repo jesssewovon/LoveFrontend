@@ -19,9 +19,9 @@ console.log('store', store.getState())
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={<div>Loading persisted state...</div>} persistor={persistor}>
-      {/* <BrowserRouter> */}
+      <BrowserRouter>
           <App />
-      {/* </BrowserRouter> */}
+      </BrowserRouter>
     </PersistGate>
   </Provider>
 )
