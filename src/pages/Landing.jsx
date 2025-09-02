@@ -62,7 +62,7 @@ export default function Landing() {
                         </div>
                     </div>
                     <div className="bottom-btn container">
-                        <button disabled={isLoading} onClick={() => findSomeone()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Find Someone 7<Loader/></button>
+                        <button disabled={isLoading} onClick={() => findSomeone()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Find Someone 679<Loader/></button>
                         {/* <button disabled={isLoading} onClick={() => navigate('/registration-firstname')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Find Someone<Loader/></button> */}
                     </div>
                 </div>
