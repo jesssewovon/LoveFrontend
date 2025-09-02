@@ -73,9 +73,9 @@ const userSlice = createSlice({
         if (data.status==="success") {
             state.isLoggedIn = true;
             state.token = data.token;
-            /* if (data.current_user_for_automatic_update || data.user) {
+            if (data.current_user_for_automatic_update || data.user) {
               state.user = data?.current_user_for_automatic_update??(data?.user??null);
-            } */
+            }
             /* MySwal.fire({
               title: "Hello!",
               text: "Connexion new1",
