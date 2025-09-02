@@ -56,10 +56,10 @@ export default function Images() {
                 "Content-Type": "multipart/form-data",
             },
         }).then(res => {
-            //dispatch(setIsLoading(false))
+            dispatch(setIsLoading(false))
             if (res.data.status === true) {
                 //console.log(res.data)
-                //dispatch(setUser(res.data.user))
+                dispatch(setUser(res.data.user))
                 navigate('/home')
             }
             console.log('res', res.data)
