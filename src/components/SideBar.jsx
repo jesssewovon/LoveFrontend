@@ -45,7 +45,7 @@ export default function SideBar() {
     		<div className={`dark-overlay ${isSideBarOpen?'active':''}`} onClick={() => setSideBarStatus(false)}></div>
 	    	<div className={`sidebar ${isSideBarOpen?'show':''}`}>
 				<div className="inner-sidebar" style={{display: "grid",alignItems: "center"}}>
-					{isLoggedIn?
+					{isLoggedIn && user?
 						(<>
 							<Link to="profile" className="author-box">
 								<div className="dz-media">
