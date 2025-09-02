@@ -16,7 +16,7 @@ export default function SwipeDeck({ users = [], onSwipe }) {
   };
 
   return (
-    <div className="" style={{position: "relative", width: "100%", height: "78vh", overflow: "hidden", borderRadius: "20px"}}>
+    <div className="" style={{position: "relative", width: "100%", height: 'calc(100vh - 140px)', overflow: "hidden", borderRadius: "20px"}}>
       {cards
         .map((user, index) => (
           <SwipeCard
