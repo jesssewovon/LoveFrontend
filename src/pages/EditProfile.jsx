@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 
 export default function EditProfile() {
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+  const profileForm = useSelector((state) => state.profileForm);
+  console.log('profileForm', profileForm)
   return (
     <>
       <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
@@ -101,167 +103,91 @@ export default function EditProfile() {
       </div>
       
         <div className="offcanvas offcanvas-bottom intrests" tabIndex="-1" id="offcanvasBottom1">
-        <div className="offcanvas-header share-style">
-          <h6 className="title mb-0">Interest</h6>
-          <button type="button" className="btn-close dz-flex-box" data-bs-dismiss="offcanvas" aria-label="Close">
-            <i className="icon feather icon-x font-22"></i>
-          </button>
-        </div>
-            <div className="offcanvas-body">
-          <div className="input-group input-group-icon search-input">
-            <div className="input-group-text">
-              <div className="input-icon">
-                <i className="icon feather icon-search"></i>
-              </div>
-            </div>
-            <input type="search" className="form-control ms-0" placeholder="Search..."/>
+          <div className="offcanvas-header share-style">
+            <h6 className="title mb-0">Interest</h6>
+            <button type="button" className="btn-close dz-flex-box" data-bs-dismiss="offcanvas" aria-label="Close">
+              <i className="icon feather icon-x font-22"></i>
+            </button>
           </div>
-          <ul className="dz-tag-list style-2">
-            <li> 
-              <div className="dz-tag">
-                <span>Ludo</span>
+          <div className="offcanvas-body">
+            <div className="input-group input-group-icon search-input">
+              <div className="input-group-text">
+                <div className="input-icon">
+                  <i className="icon feather icon-search"></i>
+                </div>
               </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Football</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Cricket</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Tea</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Brunch</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Shopping</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Instagram</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Collecting</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Travelling</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>coffee</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Movies</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Dancing</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Bike</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Cars</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Study</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Walking</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Running</span>
-              </div>
-            </li>
-            <li> 
-              <div className="dz-tag">
-                <span>Manga</span>
-              </div>
-            </li>
-          </ul>
+              <input type="search" className="form-control ms-0" placeholder="Search..."/>
             </div>
+            <ul className="dz-tag-list style-2">
+              <li> 
+                <div className="dz-tag">
+                  <span>Ludo</span>
+                </div>
+              </li>
+              {profileForm.interests?.map(({ name }, index) => {
+                  return (
+                      <li key={index}> 
+                        <div className="dz-tag">
+                          <span>{name}</span>
+                        </div>
+                      </li>
+                  );
+              })}
+            </ul>
+          </div>
         </div>
       
         <div className="offcanvas offcanvas-bottom" tabIndex="-1" id="offcanvasBottom2">
-        <button type="button" className="btn-close drage-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <div className="offcanvas-header share-style m-0 pb-0">
-          <h6 className="title">Relationship Goals</h6>
-        </div>
-            <div className="offcanvas-body">
-          <div className="radio style-2">
-            <label className="radio-label">
-              <input type="radio" checked="checked" name="radio2"/>
-              <span className="checkmark">						
-                <span className="text">Long-term partner</span>
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio2"/>
-              <span className="checkmark">
-                <span className="text">Long-term, open to short</span>
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio2"/>
-              <span className="checkmark">
-                <span className="text">Short-term, open to long</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio2"/>
-              <span className="checkmark">
-                <span className="text">Short-term fun</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio2"/>
-              <span className="checkmark">
-                <span className="text">New friends</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio2"/>
-              <span className="checkmark">
-                <span className="text">Stil figuring it out</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
+          <button type="button" className="btn-close drage-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <div className="offcanvas-header share-style m-0 pb-0">
+            <h6 className="title">Relationship Goals</h6>
           </div>
+          <div className="offcanvas-body">
+            <div className="radio style-2">
+              <label className="radio-label">
+                <input type="radio" checked="checked" name="radio2"/>
+                <span className="checkmark">						
+                  <span className="text">Long-term partner</span>
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio2"/>
+                <span className="checkmark">
+                  <span className="text">Long-term, open to short</span>
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio2"/>
+                <span className="checkmark">
+                  <span className="text">Short-term, open to long</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio2"/>
+                <span className="checkmark">
+                  <span className="text">Short-term fun</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio2"/>
+                <span className="checkmark">
+                  <span className="text">New friends</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio2"/>
+                <span className="checkmark">
+                  <span className="text">Stil figuring it out</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
             </div>
+          </div>
         </div>
       
         <div className="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasLang">
@@ -330,56 +256,56 @@ export default function EditProfile() {
         </div>
       
         <div className="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom3">
-        <button type="button" className="btn-close drage-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <div className="offcanvas-header share-style m-0 pb-0">
-          <h6 className="title">Sexual Orientation</h6>
-        </div>
-            <div className="offcanvas-body">
-          <div className="radio style-2">
-            <label className="radio-label">
-              <input type="radio" checked="checked" name="radio3"/>
-              <span className="checkmark">						
-                <span className="text">Straight</span>
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio3"/>
-              <span className="checkmark">
-                <span className="text">gay</span>
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio3"/>
-              <span className="checkmark">
-                <span className="text">Lesbian</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio3"/>
-              <span className="checkmark">
-                <span className="text">Bisexual</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio3"/>
-              <span className="checkmark">
-                <span className="text">Asexual</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
-            <label className="radio-label">
-              <input type="radio" name="radio3"/>
-              <span className="checkmark">
-                <span className="text">Queer</span>	
-                <span className="check"></span>							
-              </span>
-            </label>
+          <button type="button" className="btn-close drage-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <div className="offcanvas-header share-style m-0 pb-0">
+            <h6 className="title">Sexual Orientation</h6>
           </div>
+          <div className="offcanvas-body">
+            <div className="radio style-2">
+              <label className="radio-label">
+                <input type="radio" checked="checked" name="radio3"/>
+                <span className="checkmark">						
+                  <span className="text">Straight</span>
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio3"/>
+                <span className="checkmark">
+                  <span className="text">gay</span>
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio3"/>
+                <span className="checkmark">
+                  <span className="text">Lesbian</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio3"/>
+                <span className="checkmark">
+                  <span className="text">Bisexual</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio3"/>
+                <span className="checkmark">
+                  <span className="text">Asexual</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="radio3"/>
+                <span className="checkmark">
+                  <span className="text">Queer</span>	
+                  <span className="check"></span>							
+                </span>
+              </label>
             </div>
+          </div>
         </div>
     </>
   );
