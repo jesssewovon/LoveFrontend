@@ -13,16 +13,15 @@ export function useVersionCheck({ storageKey = "app_version", persistor } = {}) 
 
         if (current && current !== version) {
           console.log(`[VersionCheck] New version detected: ${version} (was ${current})`);
-
           // clear storage
           localStorage.clear();
           sessionStorage.clear();
 
           // clear redux-persist if provided
           if (persistor) {
+            //alert('purging')
             await persistor.purge();
           }
-
           // force reload new build
           window.location.reload(true);
         }

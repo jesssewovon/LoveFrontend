@@ -1,7 +1,7 @@
 // store/formSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
   firstname: "",
   birthdate: "",
   gender: "",
@@ -29,14 +29,14 @@ const initialState = {
       {name: "cricket", value: false},
       {name: "tea", value: false},
       {name: "brunch", value: false},
-      {name: "shopping", value: false},
+      {name: "shopping", value: true},
       {name: "instagram", value: false},
       {name: "collecting", value: false},
       {name: "travelling", value: false},
       {name: "coffee", value: false},
       {name: "movies", value: false},
       {name: "dancing", value: false},
-      {name: "bike", value: false},
+      {name: "bike", value: true},
       {name: "cars", value: false},
       {name: "study", value: false},
       {name: "walking", value: false},

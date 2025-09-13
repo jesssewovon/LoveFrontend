@@ -31,3 +31,7 @@
 .noUi-target{
     border: none!important;
 }
+.selected-interest{
+  background-color: #ff50a2!important;
+  color: #fff;
+}

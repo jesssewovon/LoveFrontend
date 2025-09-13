@@ -124,10 +124,10 @@ export default function EditProfile() {
                   <span>Ludo</span>
                 </div>
               </li>
-              {profileForm.interests?.map(({ name }, index) => {
+              {profileForm.interests?.map(({ name, value }, index) => {
                   return (
                       <li key={index}> 
-                        <div className="dz-tag">
+                        <div className={`dz-tag ${value?'selected-interest':''}`}>
                           <span>{name}</span>
                         </div>
                       </li>

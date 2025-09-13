@@ -8,8 +8,11 @@ import { combineReducers } from "redux";
 import userReducer from "./userSlice";
 import profileFormReducer from "./profileFormSlice";
 
+import { initialState as profileFormInitialState } from "./profileFormSlice"; // export it
+
 const persistConfig = {
   key: "root",
+  version: 3, // bump this
   storage,
   //whitelist: ["cart", "auth"], // only persist these reducers
   whitelist: ["user", "profileForm"], // only persist these reducers
@@ -23,12 +26,22 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const rehydrateAuth = () => {
+  const data = localStorage.getItem("profileForm");
+  const version = localStorage.getItem("app_version");
+  console.log('dataaaaaaaaaaaaaaa', data, version, profileFormInitialState)
+  return data ? { ...profileFormInitialState, ...JSON.parse(data) } : profileFormInitialState;
+};
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false, // 🚨 disables warnings
     }),
+  preloadedState: {
+    profileForm: profileFormInitialState,
+  },
 });
 
 export const persistor = persistStore(store);
