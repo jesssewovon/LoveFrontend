@@ -42,6 +42,7 @@ export default function Landing() {
                         </div>
                         <Swiper
                             spaceBetween={30}
+                            speed={1000}
                             centeredSlides={true}
                             autoplay={{
                                 delay: 3000,
