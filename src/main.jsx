@@ -16,6 +16,23 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store/index";
 console.log('store', store.getState())
 
+//CLEAR LOCALSTORAGE CACHE EVERY HMR HOT UPDATED (ONLY ON DEV ENV)
+if (import.meta.hot) {
+  import.meta.hot.accept(async () => { 
+    setTimeout(function(){ 
+      localStorage.clear();
+      localStorage.setItem('persist:root', '');
+      alert('cleared')
+    }, 3000);
+
+    // clear redux-persist if provided
+    if (persistor) { 
+       await persistor.purge();
+    }
+  });
+}
+//END CLEAR LOCALSTORAGE CACHE EVERY HMR HOT UPDATED (ONLY ON DEV ENV)
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={<div>Loading persisted state...</div>} persistor={persistor}>

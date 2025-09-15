@@ -1,12 +1,36 @@
 import { Link } from 'react-router';
 
 import Header from '../components/Header';
-import { useSelector } from 'react-redux';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function EditProfile() {
+  const dispatch = useDispatch();
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
   const profileForm = useSelector((state) => state.profileForm);
   console.log('profileForm', profileForm)
+
+  const [checkedState, setCheckedState] = useState(profileForm.interests);
+  
+  const handleOnClick = (position) => {
+      //alert('handleOnClick')
+      const updatedCheckedState = checkedState.map((item, index) => {
+          console.log('updatedCheckedState', item, index, position)
+          if (index === position) {
+              //alert('index === position')
+              //const it = { ...item, value: !item.value }
+              const it = {name: item.name, value: !item.value }
+              console.log('it', it)
+              return it
+          }
+          return item
+      });
+      /* const updatedTabCheckBoxes = checkedState.map((item, index) =>
+          index === position ? !item : item
+      ); */
+      setCheckedState(updatedCheckedState);
+      dispatch(updateField({ field: "sexual_orientation", value: updatedCheckedState }));
+  }
   return (
     <>
       <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
@@ -119,15 +143,10 @@ export default function EditProfile() {
               <input type="search" className="form-control ms-0" placeholder="Search..."/>
             </div>
             <ul className="dz-tag-list style-2">
-              <li> 
-                <div className="dz-tag">
-                  <span>Ludo</span>
-                </div>
-              </li>
               {profileForm.interests?.map(({ name, value }, index) => {
                   return (
                       <li key={index}> 
-                        <div className={`dz-tag ${value?'selected-interest':''}`}>
+                        <div onClick={() => handleOnClick(index)} className={`dz-tag ${checkedState[index].value?'selected-interest':''}`}>
                           <span>{name}</span>
                         </div>
                       </li>

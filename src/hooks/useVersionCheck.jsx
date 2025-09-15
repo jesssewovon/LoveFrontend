@@ -10,12 +10,18 @@ export function useVersionCheck({ storageKey = "app_version", persistor } = {}) 
 
         const { version } = await res.json();
         const current = localStorage.getItem(storageKey);
-
+        //alert('checking version')
         if (current && current !== version) {
+          alert('version changed')
           console.log(`[VersionCheck] New version detected: ${version} (was ${current})`);
           // clear storage
           localStorage.clear();
           sessionStorage.clear();
+
+          setTimeout(function(){ 
+            localStorage.clear();
+            sessionStorage.clear();
+          }, 2000);
 
           // clear redux-persist if provided
           if (persistor) {
@@ -28,6 +34,10 @@ export function useVersionCheck({ storageKey = "app_version", persistor } = {}) 
 
         // save new version
         localStorage.setItem(storageKey, version);
+        /* setTimeout(function(){ 
+          localStorage.setItem('persist:root', '');
+        }, 2000); */
+        
       } catch (err) {
         console.warn("[VersionCheck] Failed to check version:", err);
       }
