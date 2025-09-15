@@ -33,5 +33,13 @@
 }
 .selected-interest{
   background-color: #ff50a2!important;
-  color: #fff;
+}
+.selected-interest span{
+  color: #fff!important;
+}
+.welcome-area .get-started .swiper-wrapper {
+  margin-bottom: 0!important;
+}
+.swiper-pagination{
+  position: unset!important;
 }

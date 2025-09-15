@@ -28,6 +28,8 @@ i18n.use(LanguageDetector) // auto-detect browser language
         fallbackLng: "en",
         interpolation: {
             escapeValue: false,
+            prefix: '{',
+            suffix: '}',
         },
     });
 

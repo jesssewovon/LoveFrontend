@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import Offcanvas from 'react-bootstrap/Offcanvas';
+
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal);
@@ -58,6 +60,20 @@ const userSlice = createSlice({
     setBodyClass: (state, action) => {
         document.body.classList.add(action.payload);
     },
+    showOffcanvas(id) {
+        var myOffcanvas = document.getElementById(id)
+        var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
+        if (bsOffcanvas) {
+            bsOffcanvas.show()
+        }
+    },
+    hideOffcanvas(id) {
+        var myOffcanvas = document.getElementById(id)
+        var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
+        if (bsOffcanvas) {
+            bsOffcanvas.hide()
+        }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -76,7 +92,7 @@ const userSlice = createSlice({
             if (data.current_user_for_automatic_update || data.user) {
               state.user = data?.current_user_for_automatic_update??(data?.user??null);
             }
-            /* MySwal.fire({
+            /* MySwal.fire({ 
               title: "Hello!",
               text: "Connexion new1",
               icon: "success",
@@ -185,6 +201,6 @@ export const signoutPiketplace = createAsyncThunk(
 );
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
-  setIsLoading, loggedUserOut,
+  setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas,
 } = userSlice.actions;
 export default userSlice.reducer;

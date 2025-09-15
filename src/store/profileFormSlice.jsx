@@ -10,7 +10,6 @@ export const initialState = {
       {name: "gay", value: false},
       {name: "lesbian", value: false},
       {name: "bisexual", value: false},
-      {name: "asexual", value: false},
       {name: "queer", value: false},
       {name: "asexual", value: false},
       {name: "demisexual", value: false},

@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 //import './index.css'
-import * as bootstrap from 'bootstrap'
-import './assets/vendor/swiper/swiper-bundle.min.css'
+//import * as bootstrap from 'bootstrap'
+//import './assets/vendor/swiper/swiper-bundle.min.css'
 import './assets/css/style.css'
 import './assets/css/custom.css'
 
