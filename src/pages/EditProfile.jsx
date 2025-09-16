@@ -105,6 +105,9 @@ export default function EditProfile() {
         map(x=>t(x.name))?.
         join(', ')
   };
+  const saveProfile = () => {
+      alert('saving')
+  };
 
   if (isLoading) {
       return (
@@ -126,7 +129,7 @@ export default function EditProfile() {
   return (
     <>
       <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
-      <div className="page-content space-top">
+      <div className="page-content space-top p-b65">
         <div className="container"> 
           <div className="row g-3 mb-3" data-masonry='{"percentPosition": true }'>
             <div className="col-8">
@@ -167,6 +170,28 @@ export default function EditProfile() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="card style-3">
+            <div className="card-header">
+              <h6 className="title mb-0 font-14 font-w500">Firstname</h6>
+            </div>
+            <div className="card-body">
+              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+                <span>{profile.firstname}</span>
+              </a>
+            </div>
+          </div>
+          
+          <div className="card style-3">
+            <div className="card-header">
+              <h6 className="title mb-0 font-14 font-w500">Date birth</h6>
+            </div>
+            <div className="card-body">
+              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+                <span>{profile.birthdate}</span>
+              </a>
             </div>
           </div>
           
@@ -218,15 +243,13 @@ export default function EditProfile() {
         </div> 
       </div>
 
-      {/* <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
-        </Offcanvas.Body>
-      </Offcanvas> */}
+      <div className="footer fixed">
+        <div className="container">
+          <a onClick={saveProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            Save
+          </a>
+        </div>
+      </div>
     
       <Offcanvas placement={'bottom'} show={showInterestsOffCanvas} onHide={handleInterestsOffCanvasClose}>
         <Offcanvas.Header closeButton className="share-style">
