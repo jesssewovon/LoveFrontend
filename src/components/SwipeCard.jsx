@@ -86,7 +86,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
         <div className="dz-content" style={{width: "100%", display: "flex", justifyContent: "space-between", padding: "0 15px", position: "absolute", bottom: "15px"}}>
             <div className="left-content">
                 <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
-                <h4 className="title" style={{color: 'white'}}><a>{user.firstname} , {user.id}</a></h4>
+                <h4 className="title" style={{color: 'white'}}><a>{user.firstname} , {user.age}</a></h4>
                 <p className="mb-0"><i className="icon feather icon-map-pin"></i> {user.id} miles away</p>
             </div>
             <a className="dz-icon dz-sp-like" style={{width: "50px", height: "50px", borderRadius: "50%", background :"var(--btn-gradient)", color: "#fff"}}>

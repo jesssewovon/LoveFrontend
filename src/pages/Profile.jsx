@@ -57,14 +57,14 @@ export default function Profile() {
                       <circle className="incomplete" cx="40" cy="40" r="35"></circle>
                       <circle className="complete" cx="40" cy="40" r="35" style={{strokeDashoffset: "39.58406743523136;"}}></circle>
                     </svg>
-                    <div className="data-fill"><span>40%</span></div>
+                    <div className="data-fill"><span>{user?.profile?.profilePercentage}%</span></div>
                   </div>
                   <Link to="/edit-profile" className="edit-profile dz-icon">
                     <i className="flaticon flaticon-pencil-2"></i>
                   </Link>
                 </div>
                 <div className="profile-detail">
-                  <h5 className="name">{user?.profile?.firstname}, 20</h5>
+                  <h5 className="name">{user?.profile?.firstname}, {user?.profile?.age}</h5>
                   <p className="mb-0"><i className="icon feather icon-map-pin me-1"></i> Mentreal, Canada</p>
                 </div>
               </div>
