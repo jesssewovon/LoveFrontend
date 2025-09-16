@@ -161,7 +161,9 @@ export default function Images() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={isLoading || Object.entries(profileForm.images)?.length==0} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next<Loader/></button>
+                    <button disabled={isLoading || Object.entries(profileForm.images)?.length==0} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+                        Next<Loader isLoading={isLoading}/>
+                    </button>
                 </div>
             </div>
         </>

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { store } from "./store/index";
-import { loggedUserOut } from "./store/userSlice";
+import { loggedUserOut, setSettings } from "./store/userSlice";
 
 import { navigate } from "./navigationService";
 
@@ -35,10 +35,13 @@ api.interceptors.request.use(
 // Response Interceptor
 api.interceptors.response.use(
   (response) => {
-    console.log('interceptors', response.data)
+    console.log('interceptors api', response.data)
     /* if(response.data.redirectTo || response.data.current_user_for_automatic_update.has_profile===false) {
         alert('redirectTo')
     } */
+    if (response.data.settings_user) {
+      store.dispatch(setSettings(response.data.settings_user));
+    }
     return response;
   },
   async (error) => {

@@ -9,7 +9,7 @@ import { updateField, resetForm } from "../../store/profileFormSlice";
 
 export default function BirthDate() {
     const dispatch = useDispatch();
-    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
+    const { isLoading, isLoggedIn, settings } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
     
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function BirthDate() {
                                     <i className="icon feather icon-calendar"></i>
                                 </div>
                             </div>
-                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange}  max="2007-01-01" className="form-control"/>								
+                            <input type="date" value={profileForm.birthdate} name="birthdate" onChange={handleChange} max={settings.birthdate_max_date} className="form-control"/>								
                         </div>
                     </div>
                 </div>

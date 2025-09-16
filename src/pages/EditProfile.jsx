@@ -3,25 +3,40 @@ import { Link } from 'react-router';
 import Header from '../components/Header';
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoading, hideOffcanvas } from "../store/userSlice";
+import { setIsLoading, hideOffcanvas, setUser } from "../store/userSlice";
 import api from "../api";
 import Button from 'react-bootstrap/Button';
+import Loader from '../components/Loader';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useTranslation } from 'react-i18next';
+import { navigate } from "../navigationService";
 
 export default function EditProfile() {
   const dispatch = useDispatch();
   const {t} = useTranslation()
-  const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+  const { isLoggedIn, isLoading, user, settings } = useSelector((state) => state.user);
   const profileForm = useSelector((state) => state.profileForm);
   console.log('profileForm', profileForm)
 
-  const [checkedState, setCheckedState] = useState(profileForm.interests);
+  const [isSaving, setIsSaving] = useState(false);
   const [profile, setProfile] = useState(profileForm.interests);
   const [interestsForm, setInterestsForm] = useState([]);
   const [relationshipGoals, setRelationshipGoals] = useState([]);
   const [sexualOrientation, setSexualOrientation] = useState([]);
+  const [genders, setGenders] = useState([]);
 
+  const [showFirstnameOffCanvas, setShowFirstnameOffCanvas] = useState(false);
+  const handleFirstnameOffCanvasClose = () => setShowFirstnameOffCanvas(false);
+  const handleFirstnameOffCanvasShow = () => setShowFirstnameOffCanvas(true);
+
+  const [showBirthdateOffCanvas, setShowBirthdateOffCanvas] = useState(false);
+  const handleBirthdateOffCanvasClose = () => setShowBirthdateOffCanvas(false);
+  const handleBirthdateOffCanvasShow = () => setShowBirthdateOffCanvas(true);
+
+  const [showGenderOffCanvas, setShowGenderOffCanvas] = useState(false);
+  const handleGenderOffCanvasClose = () => setShowGenderOffCanvas(false);
+  const handleGenderOffCanvasShow = () => setShowGenderOffCanvas(true);
+  
   const [showInterestsOffCanvas, setShowInterestsOffCanvas] = useState(false);
   const handleInterestsOffCanvasClose = () => setShowInterestsOffCanvas(false);
   const handleInterestsOffCanvasShow = () => setShowInterestsOffCanvas(true);
@@ -44,6 +59,7 @@ export default function EditProfile() {
           setInterestsForm(res.data.interest_form); // adjust to your API structure
           setRelationshipGoals(res.data.relationship_goals); // adjust to your API structure
           setSexualOrientation(res.data.sexual_orientation_form); // adjust to your API structure
+          setGenders(res.data.genders); // adjust to your API structure
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -55,9 +71,32 @@ export default function EditProfile() {
   useEffect(() => {
     getMyProfile();
   }, []);
+
+  const onFileChange = (event) => {
+      //console.log("onFileChange", event.target.name, event.target.files[0], typeof event.target.files[0]);
+          const profileFormImagesUpdate = {...profile.images,
+              [event.target.name]: event.target.files[0],
+          }
+          setProfile({ ...profile, images: profileFormImagesUpdate });
+    };
+
+  const handleFirstnameChange = (e) => {
+    e.preventDefault(); // prevent the default action
+    setProfile({ ...profile, firstname: e.target.value });
+  };
   
-  const handleOnClick = (position) => {
-      //alert('handleOnClick')
+  const handleBirthdateChange = (e) => {
+    e.preventDefault(); // prevent the default action
+    setProfile({ ...profile, birthdate: e.target.value });
+  };
+  
+  const handleGenderChange = (gender) => {
+    setProfile({ ...profile, gender: gender });
+    setShowGenderOffCanvas(false)
+  };
+  
+  const handleInterestAddOnClick = (position) => {
+      //alert('handleInterestAddOnClick')
       const updatedInterestsForm = interestsForm.map((item, index) => {
           console.log('updatedInterestsForm', item, index, position)
           if (index === position) {
@@ -69,11 +108,13 @@ export default function EditProfile() {
           }
           return item
       });
-      /* const updatedTabCheckBoxes = checkedState.map((item, index) =>
-          index === position ? !item : item
-      ); */
       setInterestsForm(updatedInterestsForm);
-      //dispatch(updateField({ field: "sexual_orientation", value: updatedCheckedState }));
+      setProfile({ 
+        ...profile,
+        interests: updatedInterestsForm?.
+          filter(x=>x.value===true)?.
+          map(x=>x.name)
+      });
   }
   const handleSexualOrientationChange = (position) => {
       const updatedSexualOrientation = sexualOrientation.map((item, index) => {
@@ -86,6 +127,12 @@ export default function EditProfile() {
           return item
       });
       setSexualOrientation(updatedSexualOrientation);
+      setProfile({ 
+        ...profile,
+        sexual_orientation: updatedSexualOrientation?.
+          filter(x=>x.value===true)?.
+          map(x=>x.name)
+      });
   }
   const handleRelationshipGoalChange = (value) => {
       //console.log('test', value)
@@ -93,20 +140,66 @@ export default function EditProfile() {
       setShowRelationshipGoalOffCanvas(false)
   };
   const displayInterests = () => {
-      return interestsForm?.
-        filter(x=>x.value===true)?.
-        map(x=>t(x.name))?.
-        join(', ')
+      return profile?.interests?.map(x=>t(x))?.join(', ')
   };
   
   const displaySexualOrientation = () => {
-      return sexualOrientation?.
-        filter(x=>x.value===true)?.
-        map(x=>t(x.name))?.
+      return profile?.sexual_orientation?.
+        map(x=>t(x))?.
         join(', ')
   };
-  const saveProfile = () => {
-      alert('saving')
+  
+  const displayProfileImage = (type) => {
+      if (typeof profile.images?.[type] === "string") {
+        return profile.images[type]
+      }
+      if (typeof profile.images?.[type] === "object") {
+        return URL.createObjectURL(profile.images?.[type])
+      }
+      return '/images/recent-pic/drop-bx.png'
+  };
+
+  const updateProfile = async () => {
+      const formData = new FormData();
+  
+      formData.append("firstname", profile.firstname);
+      formData.append("birthdate", profile.birthdate);
+      formData.append("gender", profile.gender);
+      
+      formData.append("date_filter_gender", profile.date_filter_gender);
+      formData.append("relationship_goal", profile.relationship_goal);
+      profile.sexual_orientation.forEach((val, index) => {
+          if (val) {
+              formData.append("sexual_orientation[]", val);
+          }
+      })
+      profile.interests.forEach((val, index) => {
+          if (val) {
+              formData.append("interests[]", val);
+          }
+      })
+      Object.entries(profile.images).forEach(([key, val]) => {
+          formData.append(`images[${key}]`, val);
+      });
+      console.log("update formData", formData);
+      //return
+      setIsSaving(true)
+      formData.append("_method", 'put');
+      api.post(`/profiles/${profile.id}`, formData, {
+          headers: {
+              "Content-Type": "multipart/form-data",
+          },
+      }).then(res => {
+          setIsSaving(false)
+          if (res.data.status === true) {
+              //console.log(res.data)
+              dispatch(setUser(res.data.user))
+              navigate('/home')
+          }
+          console.log('res', res.data)
+      }).catch(error => {
+          console.log('error', error)
+      });
   };
 
   if (isLoading) {
@@ -135,9 +228,9 @@ export default function EditProfile() {
             <div className="col-8">
               <div className="dz-drop-box style-2">
                 <div className="drop-bx bx-lg">
-                  <div className="imagePreview" style={{backgroundImage: `url(${user?.profile?.imageFirst})`}}>
+                  <div className="imagePreview" style={{backgroundImage: `url(${displayProfileImage('image1')})`}}>
                     <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                    <input type='file' className="form-control d-none imageUpload"  id="imageUpload" accept=".png, .jpg, .jpeg"/>
+                    <input type='file' onChange={onFileChange} name="image1" className="form-control d-none imageUpload"  id="imageUpload" accept=".png, .jpg, .jpeg"/>
                     <label htmlFor="imageUpload"></label>
                   </div>
                 </div>
@@ -149,9 +242,9 @@ export default function EditProfile() {
                   <div className="dz-drop-box style-2">
                     <img src="/images/recent-pic/drop-bx.png" alt=""/>
                     <div className="drop-bx">
-                      <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
+                      <div className="imagePreview" style={{backgroundImage: `url(${displayProfileImage('image2')})`}}>
                         <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                        <input type='file' className="form-control d-none imageUpload"  id="imageUpload2" accept=".png, .jpg, .jpeg"/>
+                        <input type='file' onChange={onFileChange} name="image2" className="form-control d-none imageUpload"  id="imageUpload2" accept=".png, .jpg, .jpeg"/>
                         <label htmlFor="imageUpload2"></label>
                       </div>
                     </div>
@@ -161,9 +254,9 @@ export default function EditProfile() {
                   <div className="dz-drop-box style-2">
                     <img src="/images/recent-pic/drop-bx.png" alt=""/>
                     <div className="drop-bx">
-                      <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
+                      <div className="imagePreview" style={{backgroundImage: `url(${displayProfileImage('image3')})`}}>
                         <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                        <input type='file' className="form-control d-none imageUpload"  id="imageUpload3" accept=".png, .jpg, .jpeg"/>
+                        <input type='file' onChange={onFileChange} name="image3" className="form-control d-none imageUpload"  id="imageUpload3" accept=".png, .jpg, .jpeg"/>
                         <label htmlFor="imageUpload3"></label>
                       </div>
                     </div>
@@ -178,8 +271,9 @@ export default function EditProfile() {
               <h6 className="title mb-0 font-14 font-w500">Firstname</h6>
             </div>
             <div className="card-body">
-              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+              <a onClick={handleFirstnameOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
                 <span>{profile.firstname}</span>
+                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
               </a>
             </div>
           </div>
@@ -189,19 +283,33 @@ export default function EditProfile() {
               <h6 className="title mb-0 font-14 font-w500">Date birth</h6>
             </div>
             <div className="card-body">
-              <a href="javascript:void(0);" className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+              <a onClick={handleBirthdateOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
                 <span>{profile.birthdate}</span>
+                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
               </a>
             </div>
           </div>
           
           <div className="card style-3">
             <div className="card-header">
-              <h6 className="title mb-0 font-14 font-w500">intrests</h6>
+              <h6 className="title mb-0 font-14 font-w500">Gender</h6>
+            </div>
+            <div className="card-body">
+              <a onClick={handleGenderOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+                <span>{profile.gender}</span>
+                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div className="card style-3">
+            <div className="card-header">
+              <h6 className="title mb-0 font-14 font-w500">interests</h6>
             </div>
             <div className="card-body">
               <a onClick={handleInterestsOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1" aria-controls="offcanvasBottom3">
                 <span>{displayInterests()}</span>
+                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
               </a>
             </div>
           </div>
@@ -245,12 +353,83 @@ export default function EditProfile() {
 
       <div className="footer fixed">
         <div className="container">
-          <a onClick={saveProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
-            Save
-          </a>
+          <button disabled={isSaving} onClick={updateProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            Save <Loader isLoading={isSaving}/>
+          </button>
         </div>
       </div>
     
+      <Offcanvas placement={'bottom'} show={showFirstnameOffCanvas} onHide={handleFirstnameOffCanvasClose}>
+        <Offcanvas.Header closeButton className="share-style">
+          <Offcanvas.Title>
+            <h6 className="title mb-0">Firstname</h6>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div class="input-group input-group-icon">
+            <div class="input-group-text">
+              {/* <div class="input-icon">
+                <i class="icon feather icon-map-pin"></i>
+              </div> */}
+            </div>
+            <input type="text" class="form-control" value={profile.firstname} onChange={handleFirstnameChange}/>
+          </div>
+          <a href="javascript:void(0);" class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl" data-bs-dismiss="offcanvas" aria-label="Close">Save</a>
+        </Offcanvas.Body>
+      </Offcanvas>
+
+      <Offcanvas placement={'bottom'} show={showBirthdateOffCanvas} onHide={handleBirthdateOffCanvasClose}>
+        <Offcanvas.Header closeButton className="share-style">
+          <Offcanvas.Title>
+            <h6 className="title mb-0">Date of birth {profile.birthdate}</h6>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div class="input-group input-group-icon">
+            <div class="input-group-text">
+              {/* <div class="input-icon">
+                <i class="icon feather icon-map-pin"></i>
+              </div> */}
+            </div>
+            <input type="date" class="form-control" max={settings?.birthdate_max_date} value={profile.birthdate} onChange={handleBirthdateChange}/>
+          </div>
+          <a href="javascript:void(0);" class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl" data-bs-dismiss="offcanvas" aria-label="Close">Save</a>
+        </Offcanvas.Body>
+      </Offcanvas>
+
+      <Offcanvas placement={'bottom'} show={showGenderOffCanvas} onHide={handleGenderOffCanvasClose}>
+        <Offcanvas.Header closeButton className="share-style">
+          <Offcanvas.Title>
+            <h6 className="title mb-0">Gender</h6>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="radio style-2">
+            {genders?.map(( name , index) => {
+                return (
+                    <label key={index} className="radio-label" htmlFor={name}>
+                        <input type="radio" name="radio2" value={name}
+                            id={name} 
+                            checked={
+                                profile.gender ===
+                                name
+                            }
+                            onChange={() =>
+                                handleGenderChange(
+                                    name
+                                )
+                            }/>
+                        <span className="checkmark">						
+                            <span className="text">{name}</span>
+                            <span className="check"></span>							
+                        </span>
+                    </label>
+                );
+            })}
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+
       <Offcanvas placement={'bottom'} show={showInterestsOffCanvas} onHide={handleInterestsOffCanvasClose}>
         <Offcanvas.Header closeButton className="share-style">
           <Offcanvas.Title>
@@ -270,7 +449,7 @@ export default function EditProfile() {
               {interestsForm?.map(({ name, value }, index) => {
                   return (
                       <li key={index}>
-                        <div onClick={() => handleOnClick(index)} className={`dz-tag ${interestsForm[index].value?'selected-interest':''}`}>
+                        <div onClick={() => handleInterestAddOnClick(index)} className={`dz-tag ${interestsForm[index].value?'selected-interest':''}`}>
                           <span>{name}</span>
                         </div>
                       </li>

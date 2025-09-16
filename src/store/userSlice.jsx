@@ -23,6 +23,7 @@ const userSlice = createSlice({
     connecting: false,
     isLoading: false,
     isOpenLoading: false,
+    settings: {},
     scopes: ["username", "payments", "wallet_address", "preferred_language"],
   },
   reducers: {
@@ -59,6 +60,9 @@ const userSlice = createSlice({
     },
     setBodyClass: (state, action) => {
         document.body.classList.add(action.payload);
+    },
+    setSettings: (state, action) => {
+        state.settings = action.payload;
     },
     showOffcanvas(id) {
         var myOffcanvas = document.getElementById(id)
@@ -201,6 +205,6 @@ export const signoutPiketplace = createAsyncThunk(
 );
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
-  setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas,
+  setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings, 
 } = userSlice.actions;
 export default userSlice.reducer;
