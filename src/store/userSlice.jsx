@@ -26,6 +26,14 @@ const userSlice = createSlice({
     isOpenLoading: false,
     settings: {},
     scopes: ["username", "payments", "wallet_address", "preferred_language"],
+    /* dateFilter: {
+      genders: [],
+      min_age: 18,
+      max_age: 80,
+      max_distance: 80,
+    }, */
+    dateFilter: null,
+    geolocation: null,
   },
   reducers: {
     setUser: (state, action) => {
@@ -64,6 +72,12 @@ const userSlice = createSlice({
     },
     setBodyClass: (state, action) => {
         document.body.classList.add(action.payload);
+    },
+    setDateFilter: (state, action) => {
+        state.dateFilter = action.payload;
+    },
+    setGeolocation: (state, action) => {
+        state.geolocation = action.payload;
     },
     setSettings: (state, action) => {
         state.settings = action.payload;
@@ -156,7 +170,7 @@ const userSlice = createSlice({
 
 export const signinPiketplace = createAsyncThunk(
   'auth/signinPiketplace',
-  async (_, { rejectWithValue, dispatch }) => {
+  async (geolocation, { rejectWithValue, dispatch }) => {
     const scopes = ["username", "payments", "wallet_address", "preferred_language"];
     const onIncompletePaymentFound = (payment) =>{
         //console.log('signin onIncompletePaymentFound', payment)
@@ -187,7 +201,7 @@ export const signinPiketplace = createAsyncThunk(
             'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
         }};
         //authResult.user_country = this.user_country
-        //authResult.geolocation = this.userLocation
+        authResult.geolocation = geolocation
         const res = await api.post(`/signin`, { authResult }, config)
         return res.data
       //return auth; // this goes to `fulfilled` reducer
@@ -210,6 +224,6 @@ export const signoutPiketplace = createAsyncThunk(
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
   setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings,
-  setIsSaving, 
+  setIsSaving, setDateFilter, setGeolocation, 
 } = userSlice.actions;
 export default userSlice.reducer;

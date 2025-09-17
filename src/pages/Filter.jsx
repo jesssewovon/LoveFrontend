@@ -1,26 +1,87 @@
 import { Link } from 'react-router';
 
 import Header from '../components/Header';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslation } from 'react-i18next';
 
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
-import { useState } from 'react';
+import { setIsLoading, setIsSaving, setDateFilter, setUser } from "../store/userSlice";
+import { navigate } from "../navigationService";
+import api from "../api";
 
 export default function Filter() {
-  const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const {t} = useTranslation()
+  const { isLoggedIn, isLoading, user, dateFilter } = useSelector((state) => state.user);
 
-  const [date_filter_min_age, setDate_filter_min_age] = useState(user.profile?.date_filter_min_age??18)
-  const [date_filter_max_age, setDate_filter_max_age] = useState(user.profile?.date_filter_max_age??60)
-
-  const [date_filter_max_distance, setDate_filter_max_distance] = useState(18);
+  const [profile, setProfile] = useState({});
+  const [genders, setGenders] = useState([]);
 
   const onSlide = (render, handle, value, un, percent) => {
     console.log("onSlide", render, handle, value, un, percent)
     //alert('hererrr')
-    setDate_filter_min_age(value[0].toFixed(0));
-    setDate_filter_max_age(value[1].toFixed(0));
+    dispatch(setDateFilter({...dateFilter, min_age: value[0], max_age: value[1]}));
+    //console.log('dateFilter', value, dateFilter)
   };
+
+  // Get my profile from API
+  const getMyProfile = async () => {
+      dispatch(setIsLoading(true));
+      try {
+          const res = await api.get(`get-my-profile`);
+          console.log(`get-my-profile`, res.data); // adjust to your API structure
+          setProfile(res.data.profile); // adjust to your API structure
+          if (dateFilter==null) {
+            dispatch(setDateFilter({
+              genders: ['men', 'women', 'other'],
+              min_age: profile.interested_min_age,
+              max_age: profile.interested_max_age,
+              max_distance: profile.interested_max_distance,
+            }))
+          }
+          setGenders(res.data.genders)
+      } catch (err) {
+          console.error("Error fetching users:", err);
+      }
+      console.log('profile ik', genders, dateFilter, profile)
+      dispatch(setIsLoading(false));
+  };
+
+  // Load data on page change
+  useEffect(() => {
+    getMyProfile();
+  }, []);
+
+  const handleGendersChange = async (name) => {
+      if (dateFilter?.genders?.includes(name) && dateFilter?.genders?.length) {
+        const selectedGenders = dateFilter?.genders?.filter(x=>x!=name)
+        dispatch(setDateFilter({
+          ...dateFilter,
+          genders: selectedGenders
+        }))
+      }else{
+        dispatch(setDateFilter({...dateFilter, genders: [...dateFilter.genders, name]}))
+      }
+  };
+
+  if (isLoading) {
+      return (
+          <>
+              <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
+              <div className="page-content space-top p-b65">
+                  <div className="container fixed-full-area">
+                      <div className="flex items-center justify-center h-screen bg-gray-100">
+                          <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                              <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </>
+      );
+  }
 
   return (
     <>
@@ -32,18 +93,24 @@ export default function Filter() {
               <h6 className="title font-w400 font-14 mb-0">Who you want to date</h6>
             </div>
             <div className="card-body">
-              <div className="form-check">
-                <label className="form-check-label" htmlFor="filterCheck">Men</label>
-                <input className="form-check-input" type="checkbox" id="filterCheck"/>
-              </div>
-              <div className="form-check">
-                <label className="form-check-label" htmlFor="filterCheck2">Women</label>
-                <input className="form-check-input" type="checkbox" id="filterCheck2" checked="checked"/>
-              </div>
-              <div className="form-check">
-                <label className="form-check-label" htmlFor="filterCheck3">Nonbinary people</label>
-                <input className="form-check-input" type="checkbox" id="filterCheck3"/>
-              </div>	
+              {genders?.map(( name , index) => {
+                  return (
+                      <div key={index} className="form-check">
+                        <label className="form-check-label" htmlFor={`custom-filterCheck-${index}`}>
+                          {t(name)}
+                        </label>
+                        <input className="form-check-input"
+                          type="checkbox"
+                          id={`custom-filterCheck-${index}`}
+                          key={`filterCheck-${index}`}
+                          name={name}
+                          value={name}
+                          checked={dateFilter?.genders?.includes(name)}
+                          onChange={() => handleGendersChange(name)}
+                         />
+                      </div>
+                  );
+              })}
             </div>
           </div>
           <div className="card style-1">
@@ -52,11 +119,12 @@ export default function Filter() {
             </div>
             <div className="card-body">
               <div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {date_filter_min_age} </span>
-                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {date_filter_max_age}</span>
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {dateFilter?.min_age} </span>
+                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {dateFilter?.max_age}</span>
               </div>
               <div style={{margin: "auto 10px"}}>
-                <Nouislider range={{ min: 18, max: 82 }} start={[18, 50]} 
+                <Nouislider range={{ min: 18, max: 82 }}
+                start={[dateFilter?.min_age??18, dateFilter?.max_age??80]} 
                 accessibility
                 step={1}
                 onSlide={onSlide} connect/>
@@ -73,16 +141,16 @@ export default function Filter() {
               <h6 className="title font-w400 font-14 mb-0">Distance</h6>
             </div>
             <div className="card-body">
-              {date_filter_max_distance && (<div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {date_filter_max_distance} kilometers only</span>
+              {dateFilter?.max_distance && (<div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {dateFilter?.max_distance} kilometers only</span>
               </div>)}
               <div style={{ width: "100%", margin: "15px auto" }}>
                 <Nouislider
                   /* start={[date_filter_max_distance]} */         // ✅ single value
-                  start={18}         // ✅ single value
+                  start={dateFilter?.max_distance??80}         // ✅ single value
                   range={{ min: 18, max: 100 }}
                   connect={[true, false]} // ✅ fill only before the handle
-                  onUpdate={(rendered) => setDate_filter_max_distance(Math.round(rendered[0]))}
+                  onUpdate={(rendered) => dispatch(setDateFilter({...dateFilter, max_distance: Math.round(rendered[0])}))}
                 />
               </div>
             </div>
@@ -91,7 +159,7 @@ export default function Filter() {
       </div>
       <div className="footer fixed">
         <div className="container">
-          <a href="home.html" className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
+          <a onClick={() => navigate('/home')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
         </div>
       </div>
     </>

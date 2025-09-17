@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useTranslation } from 'react-i18next';
 import { navigate } from "../navigationService";
+import Button from 'react-bootstrap/Button';
 
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
@@ -28,20 +29,13 @@ export default function EditProfile() {
   const handleGenderInterestedOffCanvasClose = () => setShowGenderInterestedOffCanvas(false);
   const handleGenderInterestedOffCanvasShow = () => setShowGenderInterestedOffCanvas(true);
 
-  const [date_filter_min_age, setDate_filter_min_age] = useState(profile?.date_filter_min_age??18)
-  const [date_filter_max_age, setDate_filter_max_age] = useState(profile?.date_filter_max_age??60)
-
-  const [date_filter_max_distance, setDate_filter_max_distance] = useState(profile?.date_filter_max_distance??18);
-
   const onSlide = (render, handle, value, un, percent) => {
     console.log("onSlide", render, handle, value, un, percent)
-    //alert('hererrr')
-    
-    setDate_filter_min_age(value[0].toFixed(0));
 
-    setDate_filter_max_age(value[1].toFixed(0));
-    //setProfile({ ...profile, date_filter_max_age: value[1].toFixed(0) });
-
+    setProfile({ ...profile,
+      interested_min_age: value[0],
+      interested_max_age: value[1]
+    });
     console.log('value slider', value, profile)
   };
 
@@ -72,7 +66,7 @@ export default function EditProfile() {
   };
 
   const handleGenderInterestedChange = (gender) => {
-    setProfile({ ...profile, date_filter_gender: gender });
+    setProfile({ ...profile, interested_gender: gender });
     setShowGenderInterestedOffCanvas(false)
   };
   
@@ -116,21 +110,21 @@ export default function EditProfile() {
             </div>
           </div>
           <h6 className="title">Other</h6>
-          <div className="card style-1">
+          <div className="card style-1" style={{border: '1px solid var(--border-color)'}}>
             <div className="card-header">
               <h6 className="title font-w400 font-14 mb-0">Maximum Distance</h6>
             </div>
             <div className="card-body">
-              {date_filter_max_distance && (<div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {date_filter_max_distance} kilometers only</span>
+              {profile?.interested_max_distance && (<div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Up to  {profile?.interested_max_distance} kilometers only</span>
               </div>)}
               <div style={{ width: "100%", margin: "15px auto" }}>
                 <Nouislider
-                  /* start={[date_filter_max_distance]} */         // ✅ single value
-                  start={18}         // ✅ single value
+                  /* start={[interested_max_distance]} */         // ✅ single value
+                  start={profile?.interested_max_distance??80}         // ✅ single value
                   range={{ min: 18, max: 100 }}
                   connect={[true, false]} // ✅ fill only before the handle
-                  onUpdate={(rendered) => setDate_filter_max_distance(Math.round(rendered[0]))}
+                  onUpdate={(rendered) => setProfile({...profile, interested_max_distance: Math.round(rendered[0])})}
                 />
               </div>
             </div>
@@ -141,7 +135,7 @@ export default function EditProfile() {
             </div>
             <div className="card-body">
               <a onClick={handleGenderInterestedOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom4" aria-controls="offcanvasBottom">
-                <span>{profile.date_filter_gender}</span>
+                <span>{profile.interested_gender}</span>
                 <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
               </a>
             </div>
@@ -152,8 +146,8 @@ export default function EditProfile() {
             </div>
             <div className="card-body">
               <div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {date_filter_min_age} </span>
-                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {date_filter_max_age}</span>
+                <span class="example-val title slider-margin-value-min" style={{color: "var(--title)"}}>Between {profile?.interested_min_age} </span>
+                <span class="example-val title slider-margin-value-max" style={{color: "var(--title)"}}>and {profile?.interested_max_age}</span>
               </div>
               <div style={{margin: "auto 10px"}}>
                 <Nouislider range={{ min: 18, max: 82 }} start={[18, 50]} 
@@ -168,9 +162,9 @@ export default function EditProfile() {
 
       <div className="footer fixed">
         <div className="container">
-          <button disabled={isSaving} onClick={saveProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+          <a disabled={isSaving} onClick={saveProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
             Save <Loader/>
-          </button>
+          </a>
         </div>
       </div>
 
@@ -189,7 +183,9 @@ export default function EditProfile() {
             </div>
             <input type="text" class="form-control" value={profile.address} onChange={handleAddressChange}/>
           </div>
-          <a href="javascript:void(0);" class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl" data-bs-dismiss="offcanvas" aria-label="Close">Save</a>
+          <button onClick={handleAddressOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            {t('close')}
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
     
@@ -207,7 +203,7 @@ export default function EditProfile() {
                         <input type="radio" name="radio2" value={name}
                             id={name} 
                             checked={
-                                profile.date_filter_gender ===
+                                profile.interested_gender ===
                                 name
                             }
                             onChange={() =>

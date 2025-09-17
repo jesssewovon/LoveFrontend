@@ -18,7 +18,7 @@ export default function InterestedGender() {
       }
     });
     const handleRadioChange = (value) => {
-        dispatch(updateField({ field: "date_filter_gender", value: value }));
+        dispatch(updateField({ field: "interested_gender", value: value }));
     };
 
     return (
@@ -37,7 +37,7 @@ export default function InterestedGender() {
                                 <input type="radio" name="radio2" value="women"
                                     id="women" 
                                     checked={
-                                        profileForm.date_filter_gender ===
+                                        profileForm.interested_gender ===
                                         "women"
                                     }
                                     onChange={() =>
@@ -55,7 +55,7 @@ export default function InterestedGender() {
                                     type="radio" name="radio2" value="men"
                                     id="men"
                                     checked={
-                                        profileForm.date_filter_gender ===
+                                        profileForm.interested_gender ===
                                         "men"
                                     }
                                     onChange={() =>
@@ -72,7 +72,7 @@ export default function InterestedGender() {
                                 <input type="radio" name="radio2" value="other"
                                     id="other"
                                     checked={
-                                        profileForm.date_filter_gender ===
+                                        profileForm.interested_gender ===
                                         "other"
                                     }
                                     onChange={() =>
@@ -91,7 +91,7 @@ export default function InterestedGender() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={profileForm.date_filter_gender==""} onClick={() => navigate('/registration-relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
+                    <button disabled={profileForm.interested_gender==""} onClick={() => navigate('/registration-relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
         </>

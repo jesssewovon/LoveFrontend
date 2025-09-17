@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoading, hideOffcanvas, setUser, setIsSaving } from "../store/userSlice";
+import { updateProfile } from "../store/profileFormSlice";
 import api from "../api";
 import Button from 'react-bootstrap/Button';
 import Loader from '../components/Loader';
@@ -158,47 +159,8 @@ export default function EditProfile() {
       return '/images/recent-pic/drop-bx.png'
   };
 
-  const updateProfile = async () => {
-      const formData = new FormData();
-  
-      formData.append("firstname", profile.firstname);
-      formData.append("birthdate", profile.birthdate);
-      formData.append("gender", profile.gender);
-      
-      formData.append("date_filter_gender", profile.date_filter_gender);
-      formData.append("relationship_goal", profile.relationship_goal);
-      profile.sexual_orientation.forEach((val, index) => {
-          if (val) {
-              formData.append("sexual_orientation[]", val);
-          }
-      })
-      profile.interests.forEach((val, index) => {
-          if (val) {
-              formData.append("interests[]", val);
-          }
-      })
-      Object.entries(profile.images).forEach(([key, val]) => {
-          formData.append(`images[${key}]`, val);
-      });
-      console.log("update formData", formData);
-      //return
-      dispatch(setIsSaving(true))
-      formData.append("_method", 'put');
-      api.post(`/profiles/${profile.id}`, formData, {
-          headers: {
-              "Content-Type": "multipart/form-data",
-          },
-      }).then(res => {
-          dispatch(setIsSaving(false))
-          if (res.data.status === true) {
-              //console.log(res.data)
-              dispatch(setUser(res.data.user))
-              navigate('/home')
-          }
-          console.log('res', res.data)
-      }).catch(error => {
-          console.log('error', error)
-      });
+  const saveProfile = async () => {
+      dispatch(updateProfile(profile));
   };
 
   if (isLoading) {
@@ -352,7 +314,7 @@ export default function EditProfile() {
 
       <div className="footer fixed">
         <div className="container">
-          <button disabled={isSaving} onClick={updateProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+          <button disabled={isSaving} onClick={saveProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
             Save <Loader/>
           </button>
         </div>
@@ -373,7 +335,9 @@ export default function EditProfile() {
             </div>
             <input type="text" class="form-control" value={profile.firstname} onChange={handleFirstnameChange}/>
           </div>
-          <a href="javascript:void(0);" class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl" data-bs-dismiss="offcanvas" aria-label="Close">Save</a>
+          <button onClick={handleFirstnameOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            {t('close')}
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
 
@@ -392,7 +356,9 @@ export default function EditProfile() {
             </div>
             <input type="date" class="form-control" max={settings?.birthdate_max_date} value={profile.birthdate} onChange={handleBirthdateChange}/>
           </div>
-          <a href="javascript:void(0);" class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl" data-bs-dismiss="offcanvas" aria-label="Close">Save</a>
+          <button onClick={handleBirthdateOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            {t('close')}
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
 
@@ -436,25 +402,25 @@ export default function EditProfile() {
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-            <div className="input-group input-group-icon search-input">
-              <div className="input-group-text">
-                <div className="input-icon">
-                  <i className="icon feather icon-search"></i>
-                </div>
+          <div className="input-group input-group-icon search-input">
+            <div className="input-group-text">
+              <div className="input-icon">
+                <i className="icon feather icon-search"></i>
               </div>
-              <input type="search" className="form-control ms-0" placeholder="Search..."/>
             </div>
-            <ul className="dz-tag-list style-2">
-              {interestsForm?.map(({ name, value }, index) => {
-                  return (
-                      <li key={index}>
-                        <div onClick={() => handleInterestAddOnClick(index)} className={`dz-tag ${interestsForm[index].value?'selected-interest':''}`}>
-                          <span>{name}</span>
-                        </div>
-                      </li>
-                  );
-              })}
-            </ul>
+            <input type="search" className="form-control ms-0" placeholder="Search..."/>
+          </div>
+          <ul className="dz-tag-list style-2">
+            {interestsForm?.map(({ name, value }, index) => {
+                return (
+                    <li key={index}>
+                      <div onClick={() => handleInterestAddOnClick(index)} className={`dz-tag ${interestsForm[index].value?'selected-interest':''}`}>
+                        <span>{name}</span>
+                      </div>
+                    </li>
+                );
+            })}
+          </ul>
         </Offcanvas.Body>
       </Offcanvas>
     
@@ -581,6 +547,9 @@ export default function EditProfile() {
                 );
             })}
           </div>
+          <button onClick={handleSexualOrientationOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            {t('close')}
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
     </>

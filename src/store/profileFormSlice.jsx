@@ -45,7 +45,7 @@ export const initialState = {
       {name: "running", value: false},
       {name: "manga", value: false},
   ],
-  date_filter_gender: "",
+  interested_gender: "",
   relationship_goal: "",
   images: {},
 };
@@ -72,10 +72,10 @@ export const updateProfile = createAsyncThunk(
       formData.append("gender", profile.gender);
       formData.append("address", profile.address);
       
-      formData.append("date_filter_gender", profile.date_filter_gender);
-      formData.append("date_filter_min_age", profile.date_filter_min_age);
-      formData.append("date_filter_max_age", profile.date_filter_max_age);
-      formData.append("date_filter_max_distance", profile.date_filter_max_distance);
+      formData.append("interested_gender", profile.interested_gender);
+      formData.append("interested_min_age", profile.interested_min_age);
+      formData.append("interested_max_age", profile.interested_max_age);
+      formData.append("interested_max_distance", profile.interested_max_distance);
       formData.append("relationship_goal", profile.relationship_goal);
       profile.sexual_orientation.forEach((val, index) => {
           if (val) {
