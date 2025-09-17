@@ -22,6 +22,7 @@ const userSlice = createSlice({
     isDarkTheme: true,
     connecting: false,
     isLoading: false,
+    isSaving: false,
     isOpenLoading: false,
     settings: {},
     scopes: ["username", "payments", "wallet_address", "preferred_language"],
@@ -49,6 +50,9 @@ const userSlice = createSlice({
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
+    },
+    setIsSaving: (state, action) => {
+      state.isSaving = action.payload;
     },
     setIsDarkTheme: (state, action) => {
       state.isDarkTheme = action.payload;
@@ -82,11 +86,11 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signinPiketplace.pending, (state) => {
-        state.isLoading = true;
+        state.isSaving = true;
         state.error = null;
       })
       .addCase(signinPiketplace.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isSaving = false;
         //alert('fulfilled signinPiketplace');
         console.log('fulfilled signinPiketplace', state, action.payload);
         const data = action.payload
@@ -205,6 +209,7 @@ export const signoutPiketplace = createAsyncThunk(
 );
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
-  setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings, 
+  setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings,
+  setIsSaving, 
 } = userSlice.actions;
 export default userSlice.reducer;

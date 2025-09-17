@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import api from "../../api";
-import { setIsLoading, signinPiketplace, setUser } from "../../store/userSlice";
+import { setIsLoading, signinPiketplace, setUser, setIsSaving } from "../../store/userSlice";
 import { navigate } from "../../navigationService";
 
 import { updateField, resetForm } from "../../store/profileFormSlice";
@@ -50,13 +50,13 @@ export default function Images() {
         });
 		console.log("formData", formData);
         //return
-        dispatch(setIsLoading(true))
+        dispatch(setIsSaving(true))
 		api.post("/profiles", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then(res => {
-            dispatch(setIsLoading(false))
+            dispatch(setIsSaving(false))
             if (res.data.status === true) {
                 //console.log(res.data)
                 dispatch(setUser(res.data.user))
@@ -162,7 +162,7 @@ export default function Images() {
             <div className="footer fixed bg-white">
                 <div className="container">
                     <button disabled={isLoading || Object.entries(profileForm.images)?.length==0} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
-                        Next<Loader isLoading={isLoading}/>
+                        Next<Loader/>
                     </button>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Header from '../components/Header';
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoading, hideOffcanvas, setUser } from "../store/userSlice";
+import { setIsLoading, hideOffcanvas, setUser, setIsSaving } from "../store/userSlice";
 import api from "../api";
 import Button from 'react-bootstrap/Button';
 import Loader from '../components/Loader';
@@ -14,12 +14,11 @@ import { navigate } from "../navigationService";
 export default function EditProfile() {
   const dispatch = useDispatch();
   const {t} = useTranslation()
-  const { isLoggedIn, isLoading, user, settings } = useSelector((state) => state.user);
+  const { isLoggedIn, isLoading, user, settings, isSaving } = useSelector((state) => state.user);
   const profileForm = useSelector((state) => state.profileForm);
   console.log('profileForm', profileForm)
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [profile, setProfile] = useState(profileForm.interests);
+  const [profile, setProfile] = useState({});
   const [interestsForm, setInterestsForm] = useState([]);
   const [relationshipGoals, setRelationshipGoals] = useState([]);
   const [sexualOrientation, setSexualOrientation] = useState([]);
@@ -183,14 +182,14 @@ export default function EditProfile() {
       });
       console.log("update formData", formData);
       //return
-      setIsSaving(true)
+      dispatch(setIsSaving(true))
       formData.append("_method", 'put');
       api.post(`/profiles/${profile.id}`, formData, {
           headers: {
               "Content-Type": "multipart/form-data",
           },
       }).then(res => {
-          setIsSaving(false)
+          dispatch(setIsSaving(false))
           if (res.data.status === true) {
               //console.log(res.data)
               dispatch(setUser(res.data.user))
@@ -354,7 +353,7 @@ export default function EditProfile() {
       <div className="footer fixed">
         <div className="container">
           <button disabled={isSaving} onClick={updateProfile} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
-            Save <Loader isLoading={isSaving}/>
+            Save <Loader/>
           </button>
         </div>
       </div>

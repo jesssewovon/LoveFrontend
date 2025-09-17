@@ -1,5 +1,8 @@
 // store/formSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { setIsSaving, hideOffcanvas, setUser } from "./userSlice";
+import api from "../api"
+import { navigate } from "../navigationService";
 
 export const initialState = {
   firstname: "",
@@ -58,6 +61,57 @@ const formSlice = createSlice({
     resetForm: () => initialState
   }
 });
+
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (profile, { rejectWithValue, dispatch }) => {
+    const formData = new FormData();
+  
+      formData.append("firstname", profile.firstname);
+      formData.append("birthdate", profile.birthdate);
+      formData.append("gender", profile.gender);
+      formData.append("address", profile.address);
+      
+      formData.append("date_filter_gender", profile.date_filter_gender);
+      formData.append("date_filter_min_age", profile.date_filter_min_age);
+      formData.append("date_filter_max_age", profile.date_filter_max_age);
+      formData.append("date_filter_max_distance", profile.date_filter_max_distance);
+      formData.append("relationship_goal", profile.relationship_goal);
+      profile.sexual_orientation.forEach((val, index) => {
+          if (val) {
+              formData.append("sexual_orientation[]", val);
+          }
+      })
+      profile.interests.forEach((val, index) => {
+          if (val) {
+              formData.append("interests[]", val);
+          }
+      })
+      Object.entries(profile.images).forEach(([key, val]) => {
+          formData.append(`images[${key}]`, val);
+      });
+      console.log("update formData", formData);
+      //return
+      dispatch(setIsSaving(true))
+      formData.append("_method", 'put');
+      api.post(`/profiles/${profile.id}`, formData, {
+          headers: {
+              "Content-Type": "multipart/form-data",
+          },
+      }).then(res => {
+          dispatch(setIsSaving(false))
+          console.log("jessss", res.data)
+          if (res.data.status === true) {
+              //console.log(res.data)
+              dispatch(setUser(res.data.user))
+              navigate('/home')
+          }
+          console.log('res', res.data)
+      }).catch(error => {
+          console.log('error', error)
+      });
+  }
+);
 
 export const { updateField, resetForm } = formSlice.actions;
 export default formSlice.reducer;

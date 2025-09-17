@@ -64,8 +64,15 @@ export default function Profile() {
                   </Link>
                 </div>
                 <div className="profile-detail">
-                  <h5 className="name">{user?.profile?.firstname}, {user?.profile?.age}</h5>
-                  <p className="mb-0"><i className="icon feather icon-map-pin me-1"></i> Mentreal, Canada</p>
+                  <h5 className="name">
+                    {user?.profile?.firstname}, {user?.profile?.age}
+                  </h5>
+                  {user?.profile?.address?
+                    (<p className="mb-0">
+                      <i className="icon feather icon-map-pin me-1"></i> 
+                      {user?.profile?.address}
+                    </p>):''
+                  }
                 </div>
               </div>
               <div className="row g-2 mb-5">
