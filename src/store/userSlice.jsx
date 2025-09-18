@@ -238,6 +238,81 @@ export const changeLanguage = createAsyncThunk(
   }
 );
 
+export const piPayment = createAsyncThunk(
+  'auth/piPayment',
+  async (data, thunkAPI) => {
+    const scopes = ["username", "payments", "wallet_address", "preferred_language"];
+    const config = {headers: {'Content-Type': 'application/json', 'Content-Type': 'application/json', 'Access-Control-Allow_Origin': '*'}};
+    const onIncompletePaymentFound = (payment) =>{
+        //console.log('onIncompletePaymentFound jn', payment);
+        let txid = payment.transaction.txid;
+        let paymentId = payment.identifier;
+        let data = {
+            paymentId:paymentId,
+            txid:txid,
+        }
+        executePaymentCompletion(data)
+    };
+
+    const executePaymentCompletion = (data) =>{
+        alert('incomplete payment found')
+        let paymentId = data.paymentId
+        let txid = data.txid
+        const config = {headers: {'Content-Type': 'application/json', 'Content-Type': 'application/json', 'Access-Control-Allow_Origin': '*'}};
+        api.post('/incomplete', { paymentId:paymentId, txid:txid }, config);
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    const onReadyForServerApproval = (paymentId) =>{
+        //console.log('onReadyForServerApproval', paymentId);
+        let res = api.post("/approve", { paymentId:paymentId }, config);
+        //console.log('approve res', res);
+        return res;
+    };
+    const onReadyForServerCompletion = (paymentId, txid) =>{
+        //console.log('onReadyForServerCompletion', paymentId, txid);
+        return api.post('/complete', { paymentId:paymentId, txid:txid }, config);
+    };
+    const onCancel = (paymentId) =>{
+        //commit('CLEAR_PAYMENT_VERIFIER')
+        //console.log('onCancel', paymentId);
+        //return api.get('/cancel', { paymentId:paymentId }, config);
+    };
+    const onError = (error, payment) =>{
+        //console.log('onError', error);
+        if (payment) {
+            //console.log(payment);
+        }
+    };
+
+    /*Pi.authenticate(['payments'], onIncompletePaymentFound).then(function(auth) {
+        console.log(auth.user.username);
+        
+    }).catch(function(error) {
+      console.error(error);
+    });*/
+
+    Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
+        console.log(auth.user.username);
+        Pi.createPayment({
+          amount: data.amount,
+          memo: data.memo, // e.g: "Digital kitten #1234",
+          //metadata: { orderId: data.orderId, userId: data.userId, type: data.type }, // e.g: { kittenId: 1234 }
+          metadata: data.metadata, // e.g: { kittenId: 1234 }
+        }, {
+          onReadyForServerApproval: onReadyForServerApproval,
+          onReadyForServerCompletion: onReadyForServerCompletion,
+          onCancel: onCancel,
+          //onCancel: function(paymentId) { console.log('canc') },
+          onError: onError,
+          //onError: function(error, payment) { /* ... */ },
+        });
+
+    }).catch(function(error) {
+      console.error(error);
+    });
+});
+
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
   setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings,
   setIsSaving, setDateFilter, setGeolocation, setReloadHomePage, 

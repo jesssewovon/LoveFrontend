@@ -17,6 +17,7 @@ import EditProfile from './pages/EditProfile';
 import Settings from './pages/Settings';
 import Filter from './pages/Filter';
 import ProfileDetails from './pages/ProfileDetails';
+import Donation from './pages/Donation';
 
 import FirstName from './pages/Registration/FirstName';
 import BirthDate from './pages/Registration/BirthDate';
@@ -99,6 +100,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/filter" element={<Filter />} />
               <Route path="/profile-details/:id" element={<ProfileDetails />} />
+              <Route path="/donation" element={<Donation />} />
               <Route path="/registration-firstname" element={<FirstName />} />
               <Route path="/registration-birth-date" element={<BirthDate />} />
               <Route path="/registration-gender" element={<Gender />} />
