@@ -9,9 +9,9 @@ import { setIsLoading, signinPiketplace, setGeolocation,
 import i18n from "../i18n"; // your i18n config
 
 import Loader from '../components/Loader';
+import SwitchLanguage from '../components/SwitchLanguage';
 import { useNavigate } from "react-router";
 import { useTranslation } from 'react-i18next';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -22,22 +22,15 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 export default function Landing() {
+    const childRef = useRef()
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {t} = useTranslation()
     const { isLoading, isLoggedIn, isSaving, geolocation } = useSelector((state) => state.user);
     
     const [showLanguageOffCanvas, setShowLanguageOffCanvas] = useState(false);
-    const handleLanguageOffCanvasClose = () => setShowLanguageOffCanvas(false);
-    const handleLanguageOffCanvasShow = () => setShowLanguageOffCanvas(true);
-    
-    const [languages, setLanguages] = useState([
-        {name: "English", code: "en"},
-        {name: "中国人", code: "cn"},
-        {name: "Tiếng Việt", code: "vn"},
-        {name: "Español", code: "es"},
-        {name: "Français", code: "fr"},
-    ])
+    const handleLanguageOffCanvasShow = () => {setShowLanguageOffCanvas(true)};
+    const handleLanguageOffCanvasClose = () => {setShowLanguageOffCanvas(false)};
     
     const findSomeone = async () => {
         //updateLanguage()
@@ -65,10 +58,7 @@ export default function Landing() {
     const updateLanguage = async () => {
         dispatch(changeLanguage('cn'))
     };
-    const handleLanguageChange = async (code) => {
-        dispatch(changeLanguage(code))
-        setShowLanguageOffCanvas(false)
-    };
+    
     useEffect(() => {
       dispatch(setIsSaving(false))
       geolocate()
@@ -136,38 +126,7 @@ export default function Landing() {
             <a onClick={handleLanguageOffCanvasShow} className="setting-input" style={{position: "absolute", top: "20px", left: "20px", zIndex: "1"}}>
                 <svg fill="#ff50a2" width="24px" height="24px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>ionicons-v5-l</title><path d="M478.33,433.6l-90-218a22,22,0,0,0-40.67,0l-90,218a22,22,0,1,0,40.67,16.79L316.66,406H419.33l18.33,44.39A22,22,0,0,0,458,464a22,22,0,0,0,20.32-30.4ZM334.83,362,368,281.65,401.17,362Z"></path><path d="M267.84,342.92a22,22,0,0,0-4.89-30.7c-.2-.15-15-11.13-36.49-34.73,39.65-53.68,62.11-114.75,71.27-143.49H330a22,22,0,0,0,0-44H214V70a22,22,0,0,0-44,0V90H54a22,22,0,0,0,0,44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-31.41-41.68-43.08-68.65-43.17-68.87a22,22,0,0,0-40.58,17c.58,1.38,14.55,34.23,52.86,83.93.92,1.19,1.83,2.35,2.74,3.51-39.24,44.35-77.74,71.86-93.85,80.74a22,22,0,1,0,21.07,38.63c2.16-1.18,48.6-26.89,101.63-85.59,22.52,24.08,38,35.44,38.93,36.1a22,22,0,0,0,30.75-4.9Z"></path></g></svg>
             </a>
-            <Offcanvas placement={'bottom'} show={showLanguageOffCanvas} onHide={handleLanguageOffCanvasClose}>
-                <Offcanvas.Header closeButton className="share-style">
-                    <Offcanvas.Title>
-                        <h6 className="title mb-0">Languages</h6>
-                    </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <div className="radio style-2">
-                        {languages?.map(( {name, code} , index) => {
-                            return (
-                                <label key={index} className="radio-label" htmlFor={name}>
-                                    <input type="radio" name="radio2" value={name}
-                                        id={name} 
-                                        checked={
-                                            i18n.language ===
-                                            code
-                                        }
-                                        onChange={() =>
-                                            handleLanguageChange(
-                                                code
-                                            )
-                                        }/>
-                                    <span className="checkmark">						
-                                        <span className="text">{name}</span>
-                                        <span className="check"></span>							
-                                    </span>
-                                </label>
-                            );
-                        })}
-                    </div>
-                </Offcanvas.Body>
-            </Offcanvas>
+            <SwitchLanguage showLanguageOffCanvas={showLanguageOffCanvas} handleLanguageOffCanvasClose={handleLanguageOffCanvasClose}/>
         </>
     );
 }
