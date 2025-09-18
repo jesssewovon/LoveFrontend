@@ -24,7 +24,7 @@ i18n.use(LanguageDetector) // auto-detect browser language
             },
             },
         }, */
-        //lng: "en", // default language
+        lng: "en", // default language
         fallbackLng: "en",
         interpolation: {
             escapeValue: false,
