@@ -6,6 +6,7 @@ import { setIsLoading, signinPiketplace, setGeolocation,
     changeLanguage, setIsSaving
 } from "../store/userSlice";
 //import { navigate } from "../navigationService";
+import i18n from "../i18n"; // your i18n config
 
 import Loader from '../components/Loader';
 import { useNavigate } from "react-router";
@@ -32,6 +33,9 @@ export default function Landing() {
     
     const [languages, setLanguages] = useState([
         {name: "English", code: "en"},
+        {name: "中国人", code: "cn"},
+        {name: "Tiếng Việt", code: "vn"},
+        {name: "Español", code: "es"},
         {name: "Français", code: "fr"},
     ])
     
@@ -60,6 +64,10 @@ export default function Landing() {
     };
     const updateLanguage = async () => {
         dispatch(changeLanguage('cn'))
+    };
+    const handleLanguageChange = async (code) => {
+        dispatch(changeLanguage(code))
+        setShowLanguageOffCanvas(false)
     };
     useEffect(() => {
       dispatch(setIsSaving(false))
@@ -151,7 +159,7 @@ export default function Landing() {
                     </div>
                     <div className="bottom-btn container">
                         <button disabled={isSaving} onClick={() => findSomeone()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
-                            Find Someone<Loader/>
+                            Find Someone {t('log_in')}<Loader/>
                         </button>
                         {/* <button disabled={isLoading} onClick={() => navigate('/registration-firstname')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Find Someone<Loader/></button> */}
                     </div>
@@ -163,19 +171,33 @@ export default function Landing() {
                 <Offcanvas placement={'bottom'} show={showLanguageOffCanvas} onHide={handleLanguageOffCanvasClose}>
                     <Offcanvas.Header closeButton className="share-style">
                         <Offcanvas.Title>
-                            <h6 className="title mb-0">About me</h6>
+                            <h6 className="title mb-0">Languages</h6>
                         </Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        {languages?.map(({ name }, index) => {
-                            return (
-                                <li key={index}>
-                                <div className={`dz-tag`}>
-                                    <span>{name}</span>
-                                </div>
-                                </li>
-                            );
-                        })}
+                        <div className="radio style-2">
+                            {languages?.map(( {name, code} , index) => {
+                                return (
+                                    <label key={index} className="radio-label" htmlFor={name}>
+                                        <input type="radio" name="radio2" value={name}
+                                            id={name} 
+                                            checked={
+                                                i18n.language ===
+                                                code
+                                            }
+                                            onChange={() =>
+                                                handleLanguageChange(
+                                                    code
+                                                )
+                                            }/>
+                                        <span className="checkmark">						
+                                            <span className="text">{name}</span>
+                                            <span className="check"></span>							
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                        </div>
                     </Offcanvas.Body>
                 </Offcanvas>
         </>

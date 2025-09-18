@@ -232,7 +232,7 @@ export const changeLanguage = createAsyncThunk(
     i18n.changeLanguage(lang)
     const userState = thunkAPI.getState().user
     if (userState.isLoggedIn) {
-      alert('isloggedin')
+      //alert('isloggedin')
       const res = await api.post('/switchLocale', {lang})
     }
   }
