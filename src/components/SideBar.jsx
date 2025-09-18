@@ -57,7 +57,7 @@ export default function SideBar() {
 								</div>
 							</Link>
 							<ul className="nav navbar-nav">	
-								<li>
+								{/* <li>
 									<Link to="/" className="nav-link">
 										<span className="dz-icon">
 											<i className="icon feather icon-heart"></i>
@@ -87,6 +87,22 @@ export default function SideBar() {
 											<i className="icon feather icon-grid"></i>
 										</span>
 										<span>Components</span>
+									</Link>
+								</li> */}
+								<li>
+									<Link to="/wishlist" className="nav-link">
+										<span className="dz-icon">
+											<i className="flaticon flaticon-heart"></i>
+										</span>
+										<span>Wishlist</span>
+									</Link>
+								</li>
+								<li>
+									<Link to="/chat-list" className="nav-link">
+										<span className="dz-icon">
+											<i className="flaticon flaticon-chat-1"></i>
+										</span>
+										<span>New matchs</span>
 									</Link>
 								</li>
 								<li>
