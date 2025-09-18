@@ -7,7 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
-import { setIsLoading, setIsSaving, setDateFilter, setUser, setReloadHomePage } from "../store/userSlice";
+import { setIsLoading, setIsSaving, setDateFilter,
+  setUser, setReloadHomePage, changeLanguage, 
+} from "../store/userSlice";
 import { navigate } from "../navigationService";
 import api from "../api";
 
@@ -54,6 +56,7 @@ export default function Filter() {
   // Load data on page change
   useEffect(() => {
     getMyProfile();
+    //dispatch(changeLanguage('fr'))
   }, []);
 
   

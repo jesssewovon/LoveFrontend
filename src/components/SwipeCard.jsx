@@ -5,6 +5,8 @@ import "react-lazy-load-image-component/src/effects/blur.css"; // nice blur effe
 
 import '../assets/scss/pages/_tinder-swiper.scss';
 
+import { navigate } from "../navigationService";
+
 export default function SwipeCard({ user, onSwipe, disabled }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -84,7 +86,7 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
       </div> */}
       <div className="" style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundImage: "linear-gradient(180deg, rgba(49, 70, 133, 0) 67.50%, rgba(30, 34, 46, 0.67) 84.84%, #1E222E 96.23%, #1E222E 100%)"}}>
         <div className="dz-content" style={{width: "100%", display: "flex", justifyContent: "space-between", padding: "0 15px", position: "absolute", bottom: "15px"}}>
-            <div className="left-content">
+            <div onClick={() => navigate(`/profile-details/${user.id}`)} className="left-content">
                 <span className="badge badge-primary d-inline-flex gap-1 mb-2"><i className="icon feather icon-map-pin"></i>Nearby</span>
                 <h4 className="title" style={{color: 'white'}}><a>{user.firstname} , {user.age}</a></h4>
                 <p className="mb-0"><i className="icon feather icon-map-pin"></i> {user.id} miles away</p>

@@ -206,7 +206,8 @@ export const signinPiketplace = createAsyncThunk(
         }};
         //authResult.user_country = this.user_country
         authResult.geolocation = geolocation
-        const res = await api.post(`/signin`, { authResult }, config)
+        const locale = i18n.language
+        const res = await api.post(`/signin`, { authResult, locale }, config)
         return res.data
       //return auth; // this goes to `fulfilled` reducer
     } catch (error) {
@@ -222,6 +223,17 @@ export const signoutPiketplace = createAsyncThunk(
       return res.data
     } catch (error) {
       return rejectWithValue(error);
+    }
+  }
+);
+export const changeLanguage = createAsyncThunk(
+  'auth/changeLanguage',
+  async (lang, thunkAPI) => {
+    i18n.changeLanguage(lang)
+    const userState = thunkAPI.getState().user
+    if (userState.isLoggedIn) {
+      alert('isloggedin')
+      const res = await api.post('/switchLocale', {lang})
     }
   }
 );

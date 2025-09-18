@@ -39,6 +39,9 @@ export default function SideBar() {
 		}
 		dispatch(signoutPiketplace());
 	};
+	const handleClickOnLink = () => {
+		setSideBarStatus(false)
+	};
 
     return (
     	<>
@@ -90,7 +93,7 @@ export default function SideBar() {
 									</Link>
 								</li> */}
 								<li>
-									<Link to="/wishlist" className="nav-link">
+									<Link onClick={handleClickOnLink} to="/wishlist" className="nav-link">
 										<span className="dz-icon">
 											<i className="flaticon flaticon-heart"></i>
 										</span>
@@ -98,7 +101,7 @@ export default function SideBar() {
 									</Link>
 								</li>
 								<li>
-									<Link to="/chat-list" className="nav-link">
+									<Link onClick={handleClickOnLink} to="/chat-list" className="nav-link">
 										<span className="dz-icon">
 											<i className="flaticon flaticon-chat-1"></i>
 										</span>
@@ -106,7 +109,7 @@ export default function SideBar() {
 									</Link>
 								</li>
 								<li>
-									<Link to="/" className="nav-link">
+									<Link onClick={handleClickOnLink} to="/settings" className="nav-link">
 										<span className="dz-icon">
 											<i className="icon feather icon-settings"></i>
 										</span>
@@ -114,11 +117,11 @@ export default function SideBar() {
 									</Link>
 								</li>
 								<li>
-									<Link to="/profile" className="nav-link" href="profile.html">
+									<Link onClick={handleClickOnLink} to="/profile" className="nav-link" href="profile.html">
 										<span className="dz-icon">
 											<i className="icon feather icon-user"></i>
 										</span>
-										<span>Profile</span>
+										<span>{t('side_menu.profile')}</span>
 									</Link>
 								</li>
 								<li>
@@ -126,7 +129,7 @@ export default function SideBar() {
 										<span className="dz-icon">
 											<i className="icon feather icon-log-out"></i>
 										</span>
-										<span>Logout</span>
+										<span>{t('log_out')}</span>
 										<Loader/>
 									</a>
 								</li>

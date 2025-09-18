@@ -29,6 +29,10 @@ export default function EditProfile() {
   const handleFirstnameOffCanvasClose = () => setShowFirstnameOffCanvas(false);
   const handleFirstnameOffCanvasShow = () => setShowFirstnameOffCanvas(true);
 
+  const [showAboutmeOffCanvas, setShowAboutmeOffCanvas] = useState(false);
+  const handleAboutmeOffCanvasClose = () => setShowAboutmeOffCanvas(false);
+  const handleAboutmeOffCanvasShow = () => setShowAboutmeOffCanvas(true);
+
   const [showBirthdateOffCanvas, setShowBirthdateOffCanvas] = useState(false);
   const handleBirthdateOffCanvasClose = () => setShowBirthdateOffCanvas(false);
   const handleBirthdateOffCanvasShow = () => setShowBirthdateOffCanvas(true);
@@ -83,6 +87,11 @@ export default function EditProfile() {
   const handleFirstnameChange = (e) => {
     e.preventDefault(); // prevent the default action
     setProfile({ ...profile, firstname: e.target.value });
+  };
+  
+  const handleAboutmeChange = (e) => {
+    e.preventDefault(); // prevent the default action
+    setProfile({ ...profile, about_me: e.target.value });
   };
   
   const handleBirthdateChange = (e) => {
@@ -241,6 +250,18 @@ export default function EditProfile() {
           
           <div className="card style-3">
             <div className="card-header">
+              <h6 className="title mb-0 font-14 font-w500">About me</h6>
+            </div>
+            <div className="card-body">
+              <a onClick={handleAboutmeOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
+                <span>{profile.about_me}</span>
+                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div className="card style-3">
+            <div className="card-header">
               <h6 className="title mb-0 font-14 font-w500">Date birth</h6>
             </div>
             <div className="card-body">
@@ -336,6 +357,28 @@ export default function EditProfile() {
             <input type="text" class="form-control" value={profile.firstname} onChange={handleFirstnameChange}/>
           </div>
           <button onClick={handleFirstnameOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+            {t('close')}
+          </button>
+        </Offcanvas.Body>
+      </Offcanvas>
+      
+      <Offcanvas placement={'bottom'} show={showAboutmeOffCanvas} onHide={handleAboutmeOffCanvasClose}>
+        <Offcanvas.Header closeButton className="share-style">
+          <Offcanvas.Title>
+            <h6 className="title mb-0">About me</h6>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div class="input-group input-group-icon">
+            <div class="input-group-text">
+              {/* <div class="input-icon">
+                <i class="icon feather icon-map-pin"></i>
+              </div> */}
+            </div>
+            {/* <input type="text" class="form-control" value={profile.about_me} onChange={handleAboutmeChange}/> */}
+            <textarea rows={3} class="form-control" onChange={handleAboutmeChange}>{profile.about_me}</textarea>
+          </div>
+          <button onClick={handleAboutmeOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
             {t('close')}
           </button>
         </Offcanvas.Body>

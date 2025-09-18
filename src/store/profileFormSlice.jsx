@@ -68,6 +68,7 @@ export const updateProfile = createAsyncThunk(
     const formData = new FormData();
   
       formData.append("firstname", profile.firstname);
+      formData.append("about_me", profile.about_me);
       formData.append("birthdate", profile.birthdate);
       formData.append("gender", profile.gender);
       formData.append("address", profile.address);
