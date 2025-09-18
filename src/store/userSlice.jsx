@@ -139,11 +139,11 @@ const userSlice = createSlice({
       })
       .addCase(signoutPiketplace.pending, (state) => {
         //alert('pending signoutPiketplace');
-        state.isLoading = true;
+        state.isSaving = true;
       })
       .addCase(signoutPiketplace.fulfilled, (state, action) => {
         console.log('fulfilled signoutPiketplace');
-        state.isLoading = false;
+        state.isSaving = false;
         //alert('fulfilled signoutPiketplace');
         console.log('fulfilled signoutPiketplace', state, action.payload);
         const data = action.payload
@@ -165,7 +165,7 @@ const userSlice = createSlice({
       .addCase(signoutPiketplace.rejected, (state, action) => {
         console.log('rejected signoutPiketplace', state, action);
         //alert('rejected signoutPiketplace');
-        state.isLoading = false;
+        state.isSaving = false;
         //state.error = action.payload || 'Authentication failed';
       })
       ;
