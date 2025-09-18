@@ -34,6 +34,7 @@ const userSlice = createSlice({
     }, */
     dateFilter: null,
     geolocation: null,
+    reloadHomePage: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -78,6 +79,9 @@ const userSlice = createSlice({
     },
     setGeolocation: (state, action) => {
         state.geolocation = action.payload;
+    },
+    setReloadHomePage: (state, action) => {
+        state.reloadHomePage = action.payload;
     },
     setSettings: (state, action) => {
         state.settings = action.payload;
@@ -224,6 +228,6 @@ export const signoutPiketplace = createAsyncThunk(
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
   setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings,
-  setIsSaving, setDateFilter, setGeolocation, 
+  setIsSaving, setDateFilter, setGeolocation, setReloadHomePage, 
 } = userSlice.actions;
 export default userSlice.reducer;

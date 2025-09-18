@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
-import { setIsLoading, setIsSaving, setDateFilter, setUser } from "../store/userSlice";
+import { setIsLoading, setIsSaving, setDateFilter, setUser, setReloadHomePage } from "../store/userSlice";
 import { navigate } from "../navigationService";
 import api from "../api";
 
@@ -18,6 +18,8 @@ export default function Filter() {
 
   const [profile, setProfile] = useState({});
   const [genders, setGenders] = useState([]);
+
+  const [tab, setTab] = useState([]);
 
   const onSlide = (render, handle, value, un, percent) => {
     console.log("onSlide", render, handle, value, un, percent)
@@ -36,9 +38,9 @@ export default function Filter() {
           if (dateFilter==null) {
             dispatch(setDateFilter({
               genders: ['men', 'women', 'other'],
-              min_age: profile.interested_min_age,
-              max_age: profile.interested_max_age,
-              max_distance: profile.interested_max_distance,
+              min_age: res.data.profile?.interested_min_age,
+              max_age: res.data.profile?.interested_max_age,
+              max_distance: res.data.profile?.interested_max_distance,
             }))
           }
           setGenders(res.data.genders)
@@ -54,16 +56,16 @@ export default function Filter() {
     getMyProfile();
   }, []);
 
-  const handleGendersChange = async (name) => {
-      if (dateFilter?.genders?.includes(name) && dateFilter?.genders?.length) {
+  
+  const handleGendersChange = (name) => {
+      /////////////////////////////////////////////////////////
+      if (dateFilter?.genders.includes(name)) {
         const selectedGenders = dateFilter?.genders?.filter(x=>x!=name)
-        dispatch(setDateFilter({
-          ...dateFilter,
-          genders: selectedGenders
-        }))
+        dispatch(setDateFilter({...dateFilter, genders: selectedGenders}))
       }else{
-        dispatch(setDateFilter({...dateFilter, genders: [...dateFilter.genders, name]}))
+        dispatch(setDateFilter({...dateFilter, genders: [...dateFilter?.genders, name]}))
       }
+      //console.log('final dateFilter', dateFilter, tab)
   };
 
   if (isLoading) {
@@ -159,7 +161,7 @@ export default function Filter() {
       </div>
       <div className="footer fixed">
         <div className="container">
-          <a onClick={() => navigate('/home')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
+          <a onClick={() => {dispatch(setReloadHomePage(true));navigate('/home')}} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
         </div>
       </div>
     </>

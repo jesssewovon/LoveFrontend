@@ -124,7 +124,7 @@ export default function EditProfile() {
                   start={profile?.interested_max_distance??80}         // ✅ single value
                   range={{ min: 18, max: 100 }}
                   connect={[true, false]} // ✅ fill only before the handle
-                  onUpdate={(rendered) => setProfile({...profile, interested_max_distance: Math.round(rendered[0])})}
+                  onSlide={(rendered) => setProfile({...profile, interested_max_distance: Math.round(rendered[0])})}
                 />
               </div>
             </div>

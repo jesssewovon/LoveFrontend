@@ -26,7 +26,7 @@ export default function Landing() {
         dispatch(signinPiketplace(geolocation));
     };
     const geolocate = async () => {
-        alert('geolocate')
+        //alert('geolocate')
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(position => {
             let userLocation = {
