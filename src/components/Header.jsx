@@ -24,7 +24,7 @@ function Header({title, showBackButton, showWishList, classes}) {
 						</div>
 						<div className="mid-content header-logo">
 							{showWishList?
-								(<Link to="/">
+								(<Link to="/home">
 									<img src="/images/logo.png" alt=""/>
 								</Link>):""
 							}
