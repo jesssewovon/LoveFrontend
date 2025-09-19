@@ -5,6 +5,21 @@ import MenuBar from '../components/MenuBar';
 
 export default function ChatList() {
   return (
+      <>
+          <Header showBackButton={true} title={"New Matches"} showWishList={false}/>
+          <MenuBar/>
+          <div className="page-content space-top p-b65">
+              <div className="container fixed-full-area">
+                  <div className="flex items-center justify-center h-screen bg-gray-100">
+                      <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                          COMING SOON
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </>
+  );
+  return (
     <>
       <Header showBackButton={true} title={"New Matches"} showWishList={false}/>
       <MenuBar/>
