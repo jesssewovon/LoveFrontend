@@ -34,7 +34,7 @@ export default function Images() {
 		formData.append("birthdate", profileForm.birthdate);
 		formData.append("gender", profileForm.gender);
 		
-		formData.append("date_filter_gender", profileForm.date_filter_gender);
+		formData.append("interested_gender", profileForm.interested_gender);
 		formData.append("relationship_goal", profileForm.relationship_goal);
         //formData.append("images", profileForm.images);
         /* profileForm.images.forEach((file) => {
