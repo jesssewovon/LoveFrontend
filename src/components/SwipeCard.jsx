@@ -89,7 +89,6 @@ export default function SwipeCard({ user, onSwipe, disabled }) {
             <div onClick={() => navigate(`/profile-details/${user.id}`)} className="left-content">
                 {user.isNew===true?
                   (<span className="badge badge-primary d-inline-flex gap-1 mb-2">
-                    <i className="icon feather icon-map-pin"></i>
                     New here
                   </span>):
                   (
