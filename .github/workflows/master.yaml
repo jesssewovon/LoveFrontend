@@ -1,4 +1,4 @@
-name: Deploy Piketplace to cPanel
+name: Deploy Dating App to cPanel
 
 on:
   push:
@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_APP_BASE_URL: https://delivery-testnet.piketplace.com
-      VITE_APP_BACKEND_URL: https://delivery-testnet.piketplace.com/api/v1
+      VITE_APP_BASE_URL: https://dating-testnet-backend.xendlo.com
+      VITE_APP_BACKEND_URL: https://dating-testnet-backend.xendlo.com/api/v1
 
     strategy:
       matrix:
@@ -38,6 +38,44 @@ jobs:
           server: ${{ secrets.LOVE_TESTNET_FTP_SERVER }}
           username: ${{ secrets.LOVE_TESTNET_FTP_USERNAME }}
           password: ${{ secrets.LOVE_TESTNET_FTP_PASSWORD }}
+          server-dir: / 
+          exclude: |
+            **/.git**
+            **/.git*/**
+            **/node_modules/**
+            **/.**
+  deploy_mainnet:
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_APP_BASE_URL: https://dating-backend.xendlo.com
+      VITE_APP_BACKEND_URL: https://dating-backend.xendlo.com/api/v1
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: 📂 Sync files to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.LOVE_MAINNET_FTP_SERVER }}
+          username: ${{ secrets.LOVE_MAINNET_FTP_USERNAME }}
+          password: ${{ secrets.LOVE_MAINNET_FTP_PASSWORD }}
           server-dir: / 
           exclude: |
             **/.git**
