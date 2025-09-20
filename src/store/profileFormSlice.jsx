@@ -4,6 +4,10 @@ import { setIsSaving, hideOffcanvas, setUser } from "./userSlice";
 import api from "../api"
 import { navigate } from "../navigationService";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
+
 export const initialState = {
   firstname: "",
   birthdate: "",
@@ -65,25 +69,38 @@ const formSlice = createSlice({
 export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
   async (profile, { rejectWithValue, dispatch }) => {
-    const formData = new FormData();
+      //console.log('updateProfile', profile)
+      //alert('updateProfile')
+      const formData = new FormData();
   
       formData.append("firstname", profile.firstname);
-      formData.append("about_me", profile.about_me);
+      if (profile.about_me) {
+        formData.append("about_me", profile.about_me);
+      }
       formData.append("birthdate", profile.birthdate);
       formData.append("gender", profile.gender);
-      formData.append("address", profile.address);
+      if (profile.address) {
+        formData.append("address", profile.address);
+      }
       
       formData.append("interested_gender", profile.interested_gender);
-      formData.append("interested_min_age", profile.interested_min_age);
-      formData.append("interested_max_age", profile.interested_max_age);
-      formData.append("interested_max_distance", profile.interested_max_distance);
+      if (profile.interested_min_age) {
+        formData.append("interested_min_age", profile.interested_min_age);
+      }
+      if (profile.interested_max_age) {
+        formData.append("interested_max_age", profile.interested_max_age);
+      }
+      if (profile.interested_max_distance) {
+        formData.append("interested_max_distance", profile.interested_max_distance);
+      }
       formData.append("relationship_goal", profile.relationship_goal);
-      profile.sexual_orientation.forEach((val, index) => {
+      profile.sexual_orientation?.forEach((val, index) => {
           if (val) {
               formData.append("sexual_orientation[]", val);
           }
       })
-      profile.interests.forEach((val, index) => {
+      //formData.append("interests[]", '');
+      profile.interests?.forEach((val, index) => {
           if (val) {
               formData.append("interests[]", val);
           }
@@ -95,6 +112,7 @@ export const updateProfile = createAsyncThunk(
       //return
       dispatch(setIsSaving(true))
       formData.append("_method", 'put');
+      
       api.post(`/profiles/${profile.id}`, formData, {
           headers: {
               "Content-Type": "multipart/form-data",
@@ -103,12 +121,33 @@ export const updateProfile = createAsyncThunk(
           dispatch(setIsSaving(false))
           console.log("jessss", res.data)
           if (res.data.status === true) {
+              MySwal.fire({ 
+                title: "Info",
+                text: res.data.message,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+              });
               //console.log(res.data)
               dispatch(setUser(res.data.user))
-              navigate('/home')
+              //navigate('/home')
+          }else{
+            MySwal.fire({ 
+                title: "Info",
+                text: res.data.message,
+                icon: "error",
+                showConfirmButton: false,
+            });
           }
           console.log('res', res.data)
       }).catch(error => {
+          MySwal.fire({ 
+            title: "Info",
+            text: t('an_error_occured'),
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+          });
           console.log('error', error)
       });
   }

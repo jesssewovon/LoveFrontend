@@ -500,7 +500,7 @@ export default function EditProfile() {
         </Offcanvas.Body>
       </Offcanvas>
     
-      <div className="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasLang">
+      <div className="offcanvas offcanvas-bottom" tabIndex="-1" id="offcanvasLang">
         <div className="offcanvas-header share-style">
           <h6 className="title mb-0">Language</h6>
           <button type="button" className="btn-close dz-flex-box" data-bs-dismiss="offcanvas" aria-label="Close">
