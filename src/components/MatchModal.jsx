@@ -18,6 +18,9 @@ function MatchModal(props) {
         centered
         >
         <Modal.Body className="content-body">
+            <span onClick={props.onHide} className="modal-close-button">
+              <i className="fa fa-times"></i>
+            </span>
             <div class="match-area style-3 bg-image">
               <div class="match-inner">
                 <div class="item1">

@@ -5,6 +5,9 @@
     height: 200px;
     object-fit: cover;
   }
+  .match-area .match-inner .dz-media{
+    height: 40vh;
+  }
 }
 
 @media only screen and (min-width: 600px) {
