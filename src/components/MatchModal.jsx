@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import '../assets/css/welcome-modal.css'
+import '../assets/css/responsive.css'
 
 function MatchModal(props) {
     const { isSaving } = useSelector((state) => state.user);
