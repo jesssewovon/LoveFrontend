@@ -7,9 +7,13 @@ import { useActivate, useUnactivate } from "react-activation";
 import api from "../api";
 import Header from "../components/Header";
 import MenuBar from '../components/MenuBar';
+import MatchModal from '../components/MatchModal';
 import Loader from "../components/Loader";
 import { setIsLoading, setReloadHomePage } from "../store/userSlice";
 import { navigate } from "../navigationService";
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
@@ -64,6 +68,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, [page]);
 
     const handleSwipe = (dir, user, nb) => {
+        handleShow()
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
@@ -74,6 +79,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
             setPage((p) => p + 1);
         }
     };
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
     if (loading) {
         return (
             <>
@@ -120,6 +129,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
                     }
                 </div>
             </div>
+            {/* <Button variant="primary" onClick={handleShow}>
+                Launch demo modal
+            </Button> */}
+            <MatchModal show={show} onHide={handleClose}/>
         </>
     );
 }

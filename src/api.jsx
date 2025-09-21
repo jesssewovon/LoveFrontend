@@ -36,9 +36,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => {
     console.log('interceptors api', response.data)
-    /* if(response.data.redirectTo || response.data.current_user_for_automatic_update.has_profile===false) {
-        alert('redirectTo')
-    } */
+    if(response.data.redirectTo) {
+        //alert('redirectTo')
+        navigate(response.data.redirectTo);
+        return response;
+    }
     if (response.data.settings_user) {
       store.dispatch(setSettings(response.data.settings_user));
     }

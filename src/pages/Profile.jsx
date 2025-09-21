@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Loader from '../components/Loader';
+import { navigate } from '../navigationService';
 
 export default function Profile() {
   const MySwal = withReactContent(Swal);
@@ -51,11 +52,11 @@ export default function Profile() {
                   <Link to="/settings" className="setting dz-icon">
                     <i className="flaticon flaticon-setting"></i>
                   </Link>
-                  <div className="media rounded-circle">
+                  <div className="media rounded-circle" onClick={() => navigate('/edit-profile')}>
                     <img src={user?.profile?.imageFirst} alt="profile-image"/>
-                    <svg className="radial-progress m-b20" data-percentage="80" viewBox="0 0 80 80">
+                    <svg className="radial-progress m-b20" data-percentage="40" viewBox="0 0 80 80">
                       <circle className="incomplete" cx="40" cy="40" r="35"></circle>
-                      <circle className="complete" cx="40" cy="40" r="35" style={{strokeDashoffset: "39.58406743523136;"}}></circle>
+                      <circle className="complete" cx="40" cy="40" r="35" style={{strokeDashoffset: (100-user?.profile?.profilePercentage)*222/100}}></circle>
                     </svg>
                     <div className="data-fill"><span>{user?.profile?.profilePercentage}%</span></div>
                   </div>
