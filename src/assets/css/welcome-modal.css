@@ -17,7 +17,7 @@
 .match-area .match-inner .dz-media{
   position: relative;
   width: 95%;
-  height: 320px;
+  height: 50vh;
   margin: auto;
   margin-bottom: 50px;
   overflow: unset;
@@ -70,6 +70,8 @@
 }
 .match-area.style-3 .match-inner .dz-media .left-media img, .match-area.style-3 .match-inner .dz-media .right-media img {
   border-radius: 25px;
+  /* width: 200px;
+  height: 250px; */
   height: 100%;
   object-fit: cover;
 }
