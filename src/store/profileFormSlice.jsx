@@ -52,6 +52,7 @@ export const initialState = {
   interested_gender: "",
   relationship_goal: "",
   images: {},
+  reactions: [],
 };
 
 const formSlice = createSlice({
@@ -62,7 +63,10 @@ const formSlice = createSlice({
       const { field, value } = action.payload;
       state[field] = value;
     },
-    resetForm: () => initialState
+    resetForm: () => initialState,
+    setReactions: (state, action) => {
+      state.reactions = action.payload;
+    },
   }
 });
 
@@ -153,5 +157,5 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-export const { updateField, resetForm } = formSlice.actions;
+export const { updateField, resetForm, setReactions } = formSlice.actions;
 export default formSlice.reducer;

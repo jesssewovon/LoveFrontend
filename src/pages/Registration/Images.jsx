@@ -8,9 +8,13 @@ import { navigate } from "../../navigationService";
 import { updateField, resetForm } from "../../store/profileFormSlice";
 import Loader from "../../components/Loader";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
+
 export default function Images() {
     const dispatch = useDispatch();
-    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
+    const { isLoading, isLoggedIn, isSaving } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
     console.log('profileForm.images', profileForm.images)
     
@@ -56,14 +60,34 @@ export default function Images() {
                 "Content-Type": "multipart/form-data",
             },
         }).then(res => {
+            //console.log(res.data)
             dispatch(setIsSaving(false))
             if (res.data.status === true) {
-                //console.log(res.data)
+                MySwal.fire({
+                    title: "Info",
+                    text: res.data.message,
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 dispatch(setUser(res.data.user))
                 navigate('/home')
+            }else{
+                MySwal.fire({ 
+                    title: "Info",
+                    text: res.data.message,
+                    icon: "error",
+                    showConfirmButton: true,
+                });
             }
             console.log('res', res.data)
         }).catch(error => {
+            MySwal.fire({ 
+                title: "Info",
+                text: t('an_error_occured'),
+                icon: "error",
+                showConfirmButton: true,
+            });
             console.log('error', error)
         });
     };
@@ -161,7 +185,7 @@ export default function Images() {
             </div>
             <div className="footer fixed bg-white">
                 <div className="container">
-                    <button disabled={isLoading || Object.entries(profileForm.images)?.length==0} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
+                    <button disabled={isSaving || Object.entries(profileForm.images)?.length==0 || !profileForm.images?.image1} onClick={() => createProfile()} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
                         Next<Loader/>
                     </button>
                 </div>

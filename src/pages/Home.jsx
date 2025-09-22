@@ -10,28 +10,39 @@ import MenuBar from '../components/MenuBar';
 import MatchModal from '../components/MatchModal';
 import Loader from "../components/Loader";
 import { setIsLoading, setReloadHomePage } from "../store/userSlice";
+import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
-
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
   const { isLoading, dateFilter, reloadHomePage } = useSelector((state) => state.user);
+  const { reactions } = useSelector((state) => state.profileForm);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
+  const intervalRef = useRef(null);
+  const startTimer = () => {
+      intervalRef.current = setInterval(() => {
+        //alert('hhh')
+        alert("Tick... reactionsRef "+reactionsRef.current.length);
+        console.log("Tick... reactionsRef", reactionsRef.current);
+      }, 5000);
+  };
+  const stopTimer = () => {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+  };
   useActivate(() => {
     //alert('useactivate')
+    startTimer()
     if (reloadHomePage===true) {
         setReloadHomePage(false)
         setReload(true)
     }
   });
 
-    // Load data on page change
     useEffect(() => {
         if (reload) {
             setReload(false)
@@ -39,8 +50,18 @@ export default function Home({ savedScroll, onSaveScroll }) {
             fetchUsers()
         }
     }, [reload]);
+    
+    const reactionsRef = useRef(reactions)
+    useEffect(() => {
+        reactionsRef.current = reactions
+        console.log('reaction useeffect', reactions)
+        alert('reaction useeffect '+reactions.length)
+    }, [reactions]);
 
+  // Clear interval when component is "deactivated" (but not unmounted)
   useUnactivate(() => {
+    stopTimer()
+    ////////////////////////////////////////
     setReloadHomePage(false)
     console.log("PageA hidden");
   });
@@ -67,11 +88,27 @@ export default function Home({ savedScroll, onSaveScroll }) {
       fetchUsers();
     }, [page]);
 
+    //Load once
+    useEffect(() => {
+      startTimer();
+    }, []);
+
     const handleSwipe = (dir, user, nb) => {
         handleShow()
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
+        //if (dir === "up") api.post(`/superlike/${user.id}`);
+        
+        if (dir === "right"){
+            //setReactions([...reactions, {id: user.id, type: 'like'}])
+            setReactions(reactions => {
+                return [...reactions, {id: user.id, type: 'like'}]
+            });
+        }
+        if (dir === "left"){
+            setReactions([...reactions, {id: user.id, type: 'dislike'}])
+        }
         //if (dir === "up") api.post(`/superlike/${user.id}`);
 
         // 🔄 when deck gets empty, fetch next page
@@ -116,10 +153,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
                                 <div className="" style={{width: "100%", textAlign: "center"}}>
                                     <label className="my-4" style={{}}>No profile found</label>
                                     <div className="" style={{display: 'flex', justifyContent: "space-between", }}>
-                                        <button onClick={fetchUsers} class="btn btn-gradient w-100 btn-shadow rounded-xl">
+                                        <button onClick={fetchUsers} className="btn btn-gradient w-100 btn-shadow rounded-xl">
                                             {t('reload')}
                                         </button>
-                                        <button onClick={() => navigate('/filter')} class="btn btn-gradient w-100 btn-shadow rounded-xl">
+                                        <button onClick={() => navigate('/filter')} className="btn btn-gradient w-100 btn-shadow rounded-xl">
                                             {t('ajust filter')}
                                         </button>
                                     </div>
