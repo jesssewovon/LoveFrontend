@@ -28,7 +28,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   useActivate(() => {
     //alert("savedScroll "+savedScroll)
     window.scrollTo(0, savedScroll || 0);
-    window.addEventListener("scroll", onScroll);
+    //window.addEventListener("scroll", onScroll);
     return () => {
       // save scroll before unmount
       //onSaveScroll(window.scrollY);
@@ -43,7 +43,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [savedScroll, onSaveScroll]);
+  }, [onScroll]);
   
   // fetch users from API
   const fetchCrushes = async () => {
