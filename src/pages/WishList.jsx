@@ -23,11 +23,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   useActivate(() => {
     //alert("savedScroll "+savedScroll)
     console.log("useActivate savedScroll", savedScroll)
-    //window.scrollTo(0, savedScroll || 0);
-
-    requestAnimationFrame(() => {
-    window.scrollTo(0, scrollRef.current || savedScroll || 0);
-  });
+    window.scrollTo(0, savedScroll || 0);
     
     return () => {
       //console.log('onSaveScroll')
