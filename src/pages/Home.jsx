@@ -13,6 +13,8 @@ import { setIsLoading, setReloadHomePage } from "../store/userSlice";
 //import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
 
+import { useLocation } from "react-router";
+
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
   const { isLoading, dateFilter, reloadHomePage } = useSelector((state) => state.user);
@@ -21,6 +23,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
+
+  const location = useLocation();
 
   const [reactions, setReactions] = useState([]);
 
@@ -43,13 +47,14 @@ export default function Home({ savedScroll, onSaveScroll }) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
   };
+  useEffect(() => {
+      console.log('location href', location)
+      if (location?.state?.reloadHome === true) {
+        setReload(true)
+      }
+    }, [location]);
   useActivate(() => {
     startTimer()
-    if (reloadHomePage===true) {
-        setReloadHomePage(false)
-        setReload(true)
-    }
-    //alert('useactivate')
     window.scrollTo(0, savedScroll || 0);
     return () => {
       //console.log('onSaveScroll')

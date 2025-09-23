@@ -22,45 +22,28 @@ export default function WishList({ savedScroll, onSaveScroll }) {
 
   useActivate(() => {
     //alert("savedScroll "+savedScroll)
-    console.log("useActivate savedScroll", savedScroll)
     window.scrollTo(0, savedScroll || 0);
-    
     return () => {
-      //console.log('onSaveScroll')
       // save scroll before unmount
       //onSaveScroll(window.scrollY);
     };
   });
   // Clear interval when component is "deactivated" (but not unmounted)
   useUnactivate(() => {
-    console.log("useUnactivate savedScroll", savedScroll)
-    //onSaveScroll(window.scrollY);
-    onSaveScroll(scrollRef.current);
-    //alert('savedScroll '+savedScroll+" window.scrollY "+window.scrollY)
+    window.removeEventListener("scroll", onScroll);
+    //console.log("useUnactivate savedScroll", savedScroll)
   });
 
-  /* useEffect(() => {
-    const onScroll = () => {
+  const onScroll = (e) => {
       onSaveScroll(window.scrollY);
-      console.log('onScroll', window.scrollY, savedScroll);
-    };
+      //console.log('onScroll', window.scrollY);
+  };
 
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []); */
-  const scrollRef = useRef(0);
-
-  // Track scroll immediately with ref
   useEffect(() => {
-    const onScroll = () => {
-      scrollRef.current = window.scrollY;
-      onSaveScroll(scrollRef.current); // still push latest to parent if needed
-      console.log('onScroll', window.scrollY, savedScroll, scrollRef.current);
-    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [onSaveScroll]);
-
+  }, [savedScroll]);
+  
   // fetch users from API
   const fetchCrushes = async () => {
       console.log('fetchCrushes', page)

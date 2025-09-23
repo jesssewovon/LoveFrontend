@@ -10,11 +10,13 @@ import "nouislider/distribute/nouislider.css";
 import { setIsLoading, setIsSaving, setDateFilter,
   setUser, setReloadHomePage, changeLanguage, 
 } from "../store/userSlice";
-import { navigate } from "../navigationService";
+//import { navigate } from "../navigationService";
+import { useNavigate } from 'react-router';
 import api from "../api";
 
 export default function Filter() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const {t} = useTranslation()
   const { isLoggedIn, isLoading, user, dateFilter } = useSelector((state) => state.user);
 
@@ -164,7 +166,7 @@ export default function Filter() {
       </div>
       <div className="footer fixed">
         <div className="container">
-          <a onClick={() => {dispatch(setReloadHomePage(true));navigate('/home')}} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
+          <a onClick={() => navigate('/home?reload=true', {state: {reloadHome: true}})} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Apply</a>
         </div>
       </div>
     </>
