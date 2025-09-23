@@ -19,8 +19,12 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   const [crushes, setCrushes] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const scrollRef = useRef(0);
+
   useActivate(() => {
-    window.scrollTo(0, savedScroll || 0);
+    //alert("savedScroll "+scrollRef.current)
+    window.scrollTo(0, scrollRef.current || 0);
     return () => {
       //console.log('onSaveScroll')
       // save scroll before unmount
@@ -30,13 +34,14 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   // Clear interval when component is "deactivated" (but not unmounted)
   useUnactivate(() => {
     console.log("PageA hidden");
-    //alert('savedScroll '+savedScroll+" window.scrollY ")
+    //alert('savedScroll '+savedScroll+" window.scrollY "+window.scrollY)
   });
 
   useEffect(() => {
     const onScroll = () => {
       onSaveScroll(window.scrollY);
-      console.log('scrolll', window.scrollY);
+      scrollRef.current = window.scrollY; // or container.scrollTop
+      console.log('onScroll', window.scrollY, scrollRef.current);
     };
 
     window.addEventListener("scroll", onScroll);
