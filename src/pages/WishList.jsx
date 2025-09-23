@@ -109,15 +109,15 @@ export default function WishList({ savedScroll, onSaveScroll }) {
         <div className="container">
           <div className="row g-2" id="scroll-container">
             {crushes.map((reaction, index) => (
-                <div key={reaction.id} className="col-6">
+                <div key={reaction.id} className="col-6" onClick={() => navigate(`/profile-details/${reaction.sender?.id}`)}>
                   <div className="dz-media-card">
-                    <a href="profile-detail.html">
+                    <a>
                       <div className="dz-media">
-                        <img src={reaction.crush?.imageFirst} alt={reaction.crush?.firstname}/>
+                        <img src={reaction.sender?.imageFirst} alt={reaction.sender?.firstname}/>
                       </div>
                       <div className="dz-content">
-                        <h6 className="title">{reaction.crush?.firstname}</h6>  
-                        <span className="about">{reaction.crush?.about_me}</span> 
+                        <h6 className="title">{reaction.sender?.firstname}</h6>  
+                        <span className="about">{reaction.sender?.about_me}</span> 
                       </div>
                     </a>
                   </div>

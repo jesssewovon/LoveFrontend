@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Loader from '../components/Loader';
+import MatchModal from '../components/MatchModal';
 import api from "../api";
 
 export default function ProfileDetails() {
@@ -22,6 +23,24 @@ export default function ProfileDetails() {
   const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
 
   const [profile, setProfile] = useState({});
+  const [reaction, setReaction] = useState({});
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const sendReaction = async (id, type) => {
+      console.log('sendReaction', id, type)
+      alert('sendReaction')
+      const res = await api.post(`/save-one-reaction`, {id, type})
+      if (res.data.status === true) {
+          //alert('success')
+          if (res.data.is_match === true) {
+            setReaction(res.data.reaction)
+            handleShow()
+          }
+      }
+  };
 
   const getProfileDetails = async () => {
       dispatch(setIsLoading(true));
@@ -29,10 +48,10 @@ export default function ProfileDetails() {
           const res = await api.get(`/get-profile-details/${id}`);
           console.log(`/get-profile-details`, res.data); // adjust to your API structure
           setProfile(res.data.profile); // adjust to your API structure
-          setInterestsForm(res.data.interest_form); // adjust to your API structure
-          setRelationshipGoals(res.data.relationship_goals); // adjust to your API structure
-          setSexualOrientation(res.data.sexual_orientation_form); // adjust to your API structure
-          setGenders(res.data.genders); // adjust to your API structure
+          //setInterestsForm(res.data.interest_form); // adjust to your API structure
+          //setRelationshipGoals(res.data.relationship_goals); // adjust to your API structure
+          //setSexualOrientation(res.data.sexual_orientation_form); // adjust to your API structure
+          //setGenders(res.data.genders); // adjust to your API structure
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -132,11 +151,18 @@ export default function ProfileDetails() {
       </div>
       <div className="footer fixed">
         <div className="dz-icon-box">
-          <a href="home.html" className="icon dz-flex-box dislike"><i className="flaticon flaticon-cross font-18"></i></a>
-          <a href="home.html" className="icon dz-flex-box super-like"><i className="fa-solid fa-star"></i></a>
-          <a href="wishlist.html" className="icon dz-flex-box like"><i className="fa-solid fa-heart"></i></a>
+          <a onClick={() => sendReaction(id, 'dislike')} className="icon dz-flex-box dislike">
+            <i className="flaticon flaticon-cross font-18"></i>
+          </a>
+          {/* <a className="icon dz-flex-box super-like">
+            <i className="fa-solid fa-star"></i>
+          </a> */}
+          <a onClick={() => sendReaction(id, 'like')} className="icon dz-flex-box like">
+            <i className="fa-solid fa-heart"></i>
+          </a>
         </div>
       </div>
+      <MatchModal reaction={reaction} show={show} onHide={handleClose}/>
     </>
   );
 }

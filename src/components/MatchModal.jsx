@@ -43,7 +43,7 @@ function MatchModal(props) {
                 </div>
                 <div class="dz-media">
                   <div class="left-media">
-                    <img src="/images/match/5.jpg" alt="" class="wow flipInY" data-wow-duration="1.5s" style={{visibility: "visible", animationDuration: "1.5s"}}/>
+                    <img src={props.reaction?.sender?.imageFirst} alt={props.reaction?.sender?.firstname} class="wow flipInY" data-wow-duration="1.5s" style={{visibility: "visible", animationDuration: "1.5s"}}/>
                     <div class="heart">
                       <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M2.83594 10.2649C2.83596 9.06308 3.20053 7.88957 3.88149 6.89933C4.56245 5.90909 5.52776 5.1487 6.64994 4.7186C7.77212 4.2885 8.99838 4.20891 10.1667 4.49034C11.3351 4.77178 12.3906 5.40101 13.1939 6.29491C13.2504 6.35541 13.3188 6.40363 13.3948 6.43661C13.4708 6.46958 13.5527 6.48659 13.6356 6.48659C13.7184 6.48659 13.8003 6.46958 13.8763 6.43661C13.9523 6.40363 14.0207 6.35541 14.0773 6.29491C14.878 5.3952 15.9338 4.76068 17.104 4.47583C18.2743 4.19097 19.5035 4.26928 20.6282 4.70033C21.7528 5.13138 22.7195 5.89474 23.3996 6.88879C24.0797 7.88284 24.4409 9.06044 24.4352 10.2649C24.4352 12.738 22.8153 14.5847 21.1953 16.2047L15.2642 21.9425C15.0629 22.1736 14.8148 22.3593 14.5363 22.4871C14.2578 22.615 13.9553 22.6821 13.6488 22.684C13.3424 22.686 13.039 22.6227 12.7589 22.4984C12.4788 22.3741 12.2284 22.1916 12.0243 21.963L6.07583 16.2047C4.45588 14.5847 2.83594 12.7488 2.83594 10.2649Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -51,7 +51,7 @@ function MatchModal(props) {
                     </div>
                   </div>
                   <div class="right-media">
-                    <img src="/images/match/6.jpg" alt="" class="wow flipInY" data-wow-duration="1.5s" style={{visibility: "visible", animationDuration: "1.5s"}}/>
+                    <img src={props.reaction?.receiver?.imageFirst} alt={props.reaction?.receiver?.firstname} class="wow flipInY" data-wow-duration="1.5s" style={{visibility: "visible", animationDuration: "1.5s"}}/>
                     <div class="heart">
                       <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M2.83594 10.2649C2.83596 9.06308 3.20053 7.88957 3.88149 6.89933C4.56245 5.90909 5.52776 5.1487 6.64994 4.7186C7.77212 4.2885 8.99838 4.20891 10.1667 4.49034C11.3351 4.77178 12.3906 5.40101 13.1939 6.29491C13.2504 6.35541 13.3188 6.40363 13.3948 6.43661C13.4708 6.46958 13.5527 6.48659 13.6356 6.48659C13.7184 6.48659 13.8003 6.46958 13.8763 6.43661C13.9523 6.40363 14.0207 6.35541 14.0773 6.29491C14.878 5.3952 15.9338 4.76068 17.104 4.47583C18.2743 4.19097 19.5035 4.26928 20.6282 4.70033C21.7528 5.13138 22.7195 5.89474 23.3996 6.88879C24.0797 7.88284 24.4409 9.06044 24.4352 10.2649C24.4352 12.738 22.8153 14.5847 21.1953 16.2047L15.2642 21.9425C15.0629 22.1736 14.8148 22.3593 14.5363 22.4871C14.2578 22.615 13.9553 22.6821 13.6488 22.684C13.3424 22.686 13.039 22.6227 12.7589 22.4984C12.4788 22.3741 12.2284 22.1916 12.0243 21.963L6.07583 16.2047C4.45588 14.5847 2.83594 12.7488 2.83594 10.2649Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
