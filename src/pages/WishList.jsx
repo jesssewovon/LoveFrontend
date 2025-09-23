@@ -20,11 +20,10 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const scrollRef = useRef(0);
-
   useActivate(() => {
-    //alert("savedScroll "+scrollRef.current)
-    window.scrollTo(0, scrollRef.current || 0);
+    //alert("savedScroll "+savedScroll)
+    console.log("useActivate savedScroll", savedScroll)
+    window.scrollTo(0, savedScroll || 0);
     return () => {
       //console.log('onSaveScroll')
       // save scroll before unmount
@@ -33,15 +32,15 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   });
   // Clear interval when component is "deactivated" (but not unmounted)
   useUnactivate(() => {
-    console.log("PageA hidden");
+    console.log("useUnactivate savedScroll", savedScroll)
+    onSaveScroll(window.scrollY);
     //alert('savedScroll '+savedScroll+" window.scrollY "+window.scrollY)
   });
 
   useEffect(() => {
     const onScroll = () => {
       onSaveScroll(window.scrollY);
-      scrollRef.current = window.scrollY; // or container.scrollTop
-      console.log('onScroll', window.scrollY, scrollRef.current);
+      console.log('onScroll', window.scrollY, savedScroll);
     };
 
     window.addEventListener("scroll", onScroll);
@@ -59,13 +58,14 @@ export default function WishList({ savedScroll, onSaveScroll }) {
           if (res.data.list.data.length==0) {
               setPage((p) => 1);
           }
+          window.scrollTo(0, savedScroll || 0);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
       console.log('crushes', crushes)
       setLoading(false);
   };
-
+  
   // Load data on page change
   useEffect(() => {
     fetchCrushes();
