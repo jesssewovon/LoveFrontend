@@ -20,9 +20,15 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  const onScroll = (e) => {
+      onSaveScroll(window.scrollY);
+      console.log('onScroll', window.scrollY);
+  };
+
   useActivate(() => {
     //alert("savedScroll "+savedScroll)
     window.scrollTo(0, savedScroll || 0);
+    window.addEventListener("scroll", onScroll);
     return () => {
       // save scroll before unmount
       //onSaveScroll(window.scrollY);
@@ -34,15 +40,10 @@ export default function WishList({ savedScroll, onSaveScroll }) {
     //console.log("useUnactivate savedScroll", savedScroll)
   });
 
-  const onScroll = (e) => {
-      onSaveScroll(window.scrollY);
-      //console.log('onScroll', window.scrollY);
-  };
-
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [savedScroll]);
+  }, [savedScroll, onSaveScroll]);
   
   // fetch users from API
   const fetchCrushes = async () => {
