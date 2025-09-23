@@ -16,7 +16,7 @@ import Header from '../components/Header';
 
 export default function ScrollPage({ savedScroll, onSaveScroll }) {
   useActivate(() => {
-    //alert('activated')
+    alert('activated')
     // restore scroll when component mounts
     //alert('savedScroll: '+savedScroll)
     window.scrollTo(0, savedScroll || 0);
@@ -68,7 +68,7 @@ export default function ScrollPage({ savedScroll, onSaveScroll }) {
       (entries) => {
         if (entries[0].isIntersecting && !loading) {
           setPage((prev) => prev + 1);
-          alert('page n° '+page+" window.scrollY: "+window.scrollY)
+          //alert('page n° '+page+" window.scrollY: "+window.scrollY)
         }
       },
       { threshold: 1 }

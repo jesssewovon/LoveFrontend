@@ -81,18 +81,22 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/home" element={
-                <KeepAlive>
+                <KeepAlive id="home">
                   <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
                 </KeepAlive>
               } />
               <Route path="/about" element={<About />} />
-              <Route path="/scroll-page" element={
+              <Route id="scroll-page" path="/scroll-page" element={
                 <KeepAlive>
                   <ScrollPage savedScroll={scrollY} onSaveScroll={setScrollY} />
                 </KeepAlive>
               } />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/wishlist" element={<WishList />} />
+              <Route path="/wishlist" element={
+                <KeepAlive id="wishlist">
+                  <WishList savedScroll={scrollY} onSaveScroll={setScrollY} />
+                </KeepAlive>
+              } />
               <Route path="/chat-list" element={<ChatList />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/chat" element={<Chat />} />

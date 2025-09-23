@@ -10,24 +10,33 @@ import MenuBar from '../components/MenuBar';
 import MatchModal from '../components/MatchModal';
 import Loader from "../components/Loader";
 import { setIsLoading, setReloadHomePage } from "../store/userSlice";
-import { setReactions } from "../store/profileFormSlice";
+//import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
   const { isLoading, dateFilter, reloadHomePage } = useSelector((state) => state.user);
-  const { reactions } = useSelector((state) => state.profileForm);
+  //const { reactions } = useSelector((state) => state.profileForm);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
+  const [reactions, setReactions] = useState([]);
+
   const intervalRef = useRef(null);
+
+  const reactionsRef = useRef(reactions)
+  useEffect(() => {
+    reactionsRef.current = reactions;
+  }, [reactions]);
+
   const startTimer = () => {
+      if (intervalRef.current) return; // already running
       intervalRef.current = setInterval(() => {
         //alert('hhh')
-        alert("Tick... reactionsRef "+reactionsRef.current.length);
-        console.log("Tick... reactionsRef", reactionsRef.current);
+        sendReactions()
+        console.log("Tick... reactionsRef", reactionsRef.current, reactions);
       }, 5000);
   };
   const stopTimer = () => {
@@ -35,13 +44,37 @@ export default function Home({ savedScroll, onSaveScroll }) {
       intervalRef.current = null;
   };
   useActivate(() => {
-    //alert('useactivate')
     startTimer()
     if (reloadHomePage===true) {
         setReloadHomePage(false)
         setReload(true)
     }
+    //alert('useactivate')
+    window.scrollTo(0, savedScroll || 0);
+    return () => {
+      //console.log('onSaveScroll')
+      // save scroll before unmount
+      onSaveScroll(window.scrollY);
+    };
+    
   });
+  // Clear interval when component is "deactivated" (but not unmounted)
+  useUnactivate(() => {
+    stopTimer()
+    sendReactions()
+    ////////////////////////////////////////
+    setReloadHomePage(false)
+    console.log("PageA hidden");
+  });
+
+    const sendReactions = async () => {
+        if (reactionsRef.current.length===0) return
+        const res = await api.post(`/save-reactions`, {reactions: reactionsRef.current})
+        if (res.data.status === true) {
+            //alert('success')
+            setReactions([])
+        }
+    };
 
     useEffect(() => {
         if (reload) {
@@ -51,20 +84,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
         }
     }, [reload]);
     
-    const reactionsRef = useRef(reactions)
-    useEffect(() => {
-        reactionsRef.current = reactions
-        console.log('reaction useeffect', reactions)
-        alert('reaction useeffect '+reactions.length)
-    }, [reactions]);
 
-  // Clear interval when component is "deactivated" (but not unmounted)
-  useUnactivate(() => {
-    stopTimer()
-    ////////////////////////////////////////
-    setReloadHomePage(false)
-    console.log("PageA hidden");
-  });
     // fetch users from API
     const fetchUsers = async () => {
         console.log('fetchUsers', page, dateFilter)
@@ -94,7 +114,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, []);
 
     const handleSwipe = (dir, user, nb) => {
-        handleShow()
+        //handleShow()
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
@@ -116,6 +136,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
             setPage((p) => p + 1);
         }
     };
+
     const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
