@@ -31,7 +31,7 @@ export default function ProfileDetails() {
 
   const sendReaction = async (id, type) => {
       console.log('sendReaction', id, type)
-      alert('sendReaction')
+      //alert('sendReaction')
       const res = await api.post(`/save-one-reaction`, {id, type})
       if (res.data.status === true) {
           //alert('success')

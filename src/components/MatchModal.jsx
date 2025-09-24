@@ -7,8 +7,22 @@ import Modal from 'react-bootstrap/Modal';
 import '../assets/css/welcome-modal.css'
 import '../assets/css/responsive.css'
 
+import { useLocation } from "react-router";
+
+import { navigate } from "../navigationService";
+
 function MatchModal(props) {
+    const location = useLocation();
     const { isSaving } = useSelector((state) => state.user);
+
+    const keepSwiping = () =>{
+      console.log('keepSwiping location', location)
+      if (location.pathname === '/home') {
+        props.onHide()
+      }else{
+        navigate(`/home`)
+      }
+    }
 
     return (
       <Modal
@@ -70,8 +84,9 @@ function MatchModal(props) {
             
 
               <div class="bottom-btn_ container">
-                <a href="chat.html" class="btn btn-lg btn-gradient w-100 dz-flex-box rounded-xl m-b10">Say Hello</a>
-                <a onClick={props.onHide} class="btn btn-lg btn-light w-100 dz-flex-box rounded-xl border-0">Keep Swiping</a>
+                <a onClick={() => navigate(`/home`)} class="btn btn-lg btn-gradient w-100 dz-flex-box rounded-xl m-b10">Say Hello</a>
+                <a onClick={() => keepSwiping()} class="btn btn-lg btn-light w-100 dz-flex-box rounded-xl border-0">Keep Swiping</a>
+                {/* <a onClick={props.onHide} class="btn btn-lg btn-light w-100 dz-flex-box rounded-xl border-0">Keep Swiping</a> */}
               </div>
               
             </div>
