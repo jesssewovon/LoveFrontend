@@ -188,11 +188,11 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
                 <div className="" style={{width: "100%", textAlign: "center"}}>
                     <label className="my-4" style={{}}>Action needed</label>
-                    <div className="" style={{display: 'flex', justifyContent: "space-between", }}>
-                        <button onClick={()=>{}} className="btn btn-gradient w-100 btn-shadow rounded-xl">
+                    <div className="" style={{}}>
+                        <button onClick={()=>{}} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
                             {t('unlock with PiAd')}
                         </button>
-                        <button onClick={() => navigate('/filter')} className="btn btn-gradient w-100 btn-shadow rounded-xl">
+                        <button onClick={() => navigate('/filter')} className="btn btn-light w-100 btn-shadow rounded-xl my-2">
                             {t('subsrcibe to unlock')}
                         </button>
                     </div>
