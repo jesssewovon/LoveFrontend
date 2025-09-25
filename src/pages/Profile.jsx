@@ -14,6 +14,14 @@ import withReactContent from 'sweetalert2-react-content'
 import Loader from '../components/Loader';
 import { navigate } from '../navigationService';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import required modules
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
 export default function Profile() {
   const MySwal = withReactContent(Swal);
   const { t, i18n } = useTranslation();
@@ -122,32 +130,43 @@ export default function Profile() {
                 </div>
               </div>
               <div className="swiper subscription-swiper">
-                <div className="swiper-wrapper mb-3">
-                  <div className="swiper-slide">
-                    <div className="dz-content">
-                      <h5 className="title">Get Dating Plus</h5>
-                      <p>Get Unlimited Likes, Passport and more!</p>
-                      <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="dz-content">
-                      <h5 className="title">Get Dating Gold</h5>
-                      <p>Get Unlimited Likes, Passport and more!</p>
-                      <Link to="/" className="btn rounded-xl">Get Dating Gold</Link>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="dz-content">
-                      <h5 className="title">Get Dating Platinum</h5>
-                      <p>Get Unlimited Likes, Passport and more!</p>
-                      <Link to="/" className="btn rounded-xl">Get Dating Platinum</Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="swiper-btn">
-                  <div className="swiper-pagination style-1 flex-1"></div>
-                </div>
+                <Swiper
+                    spaceBetween={30}
+                    speed={1500}
+                    centeredSlides={true}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    navigation={false}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper get-started"
+                >
+                    <SwiperSlide>
+                        <div className="dz-content">
+                          <h5 className="title">Get Dating Plus</h5>
+                          <p>Get Unlimited Likes, Passport and more!</p>
+                          <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="dz-content">
+                          <h5 className="title">Get Dating Gold</h5>
+                          <p>Get Unlimited Likes, Passport and more!</p>
+                          <Link to="/" className="btn rounded-xl">Get Dating Gold</Link>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="dz-content">
+                          <h5 className="title">Get Dating Platinum</h5>
+                          <p>Get Unlimited Likes, Passport and more!</p>
+                          <Link to="/" className="btn rounded-xl">Get Dating Platinum</Link>
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
               </div>
             </div>):
             (

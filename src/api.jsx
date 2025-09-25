@@ -2,7 +2,7 @@
 import axios from "axios";
 
 import { store } from "./store/index";
-import { loggedUserOut, setSettings } from "./store/userSlice";
+import { loggedUserOut, setSettings, setUser } from "./store/userSlice";
 
 import { navigate } from "./navigationService";
 
@@ -40,6 +40,10 @@ api.interceptors.response.use(
         //alert('redirectTo')
         navigate(response.data.redirectTo);
         return response;
+    }
+    if (response.data.current_user_for_automatic_update) {
+      //alert('current_user_for_automatic_update')
+      store.dispatch(setUser(response.data.current_user_for_automatic_update));
     }
     if (response.data.settings_user) {
       store.dispatch(setSettings(response.data.settings_user));

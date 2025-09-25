@@ -1,28 +1,29 @@
 import { useState, useEffect } from "react";
 import SwipeCard from "./SwipeCard";
 
-export default function SwipeDeck({ users = [], onSwipe }) {
-  const [cards, setCards] = useState(users);
+export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping }) {
+  const [cards, setCards] = useState(profiles);
 
-  // 🔄 Sync local cards whenever parent `users` changes
+  // 🔄 Sync local cards whenever parent `profiles` changes
   useEffect(() => {
-    setCards(users);
-  }, [users]);
+    setCards(profiles);
+  }, [profiles]);
 
-  const handleCardSwipe = (direction, user) => {
-    onSwipe(direction, user, cards.length);
+  const handleCardSwipe = (direction, profile) => {
+    onSwipe(direction, profile, cards.length);
     // remove swiped card from local stack
-    setCards((prev) => prev.filter((c) => c.id !== user.id));
+    setCards((prev) => prev.filter((c) => c.id !== profile.id));
   };
 
   return (
     <div className="" style={{position: "relative", width: "100%", height: 'calc(100vh - 140px)', overflow: "hidden", borderRadius: "20px"}}>
       {cards
-        .map((user, index) => (
+        .map((profile, index) => (
           <SwipeCard
-            key={user.id}
-            user={user}
+            key={profile.id}
+            profile={profile}
             onSwipe={handleCardSwipe}
+            remainingFreeSwiping={remainingFreeSwiping}
             style={{ zIndex: cards.length - index }}
           />
         ))

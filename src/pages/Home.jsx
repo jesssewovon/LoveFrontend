@@ -15,11 +15,15 @@ import { navigate } from "../navigationService";
 
 import { useLocation } from "react-router";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
+
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
-  const { isLoading, dateFilter, reloadHomePage } = useSelector((state) => state.user);
+  const { isLoading, dateFilter, reloadHomePage, user } = useSelector((state) => state.user);
   //const { reactions } = useSelector((state) => state.profileForm);
-  const [users, setUsers] = useState([]);
+  const [profiles, setProfiles] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
@@ -27,6 +31,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   const location = useLocation();
 
   const [reactions, setReactions] = useState([]);
+  
+  const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping);
 
   const intervalRef = useRef(null);
 
@@ -34,7 +40,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
     reactionsRef.current = reactions;
   }, [reactions]);
-
+  useEffect(() => {
+    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
+  }, [user]);
+  
   const startTimer = () => {
       if (intervalRef.current) return; // already running
       intervalRef.current = setInterval(() => {
@@ -50,10 +59,18 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
       console.log('location href', location)
       if (location?.state?.reloadHome === true) {
+        MySwal.fire({ 
+            title: "Info!",
+            text: "Filter application ...",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500
+        });
         setReload(true)
       }
     }, [location]);
   useActivate(() => {
+    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
     startTimer()
     window.scrollTo(0, savedScroll || 0);
     return () => {
@@ -73,44 +90,49 @@ export default function Home({ savedScroll, onSaveScroll }) {
   });
 
     const sendReactions = async () => {
+        console.log('remainingFreeSwiping', remainingSwipingRef.current)
         if (reactionsRef.current.length===0) return
+        const nb = reactionsRef.current.length
+        //alert(nb)
+        console.log('reactionsRef.current', reactionsRef.current)
         const res = await api.post(`/save-reactions`, {reactions: reactionsRef.current})
         if (res.data.status === true) {
             //alert('success')
             setReactions([])
+            remainingSwipingRef.current = remainingSwipingRef.current-nb
         }
     };
 
     useEffect(() => {
         if (reload) {
             setReload(false)
-            setUsers([])
-            fetchUsers()
+            setProfiles([])
+            fetchProfiles()
         }
     }, [reload]);
     
 
-    // fetch users from API
-    const fetchUsers = async () => {
-        console.log('fetchUsers', page, dateFilter)
+    // fetch profiles from API
+    const fetchProfiles = async () => {
+        console.log('fetchProfiles', page, dateFilter)
         setLoading(true);
         try {
             const res = await api.get(`home-profiles-load?page=${page}`, {params: dateFilter});
             //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
-            setUsers(res.data.profiles.data); // adjust to your API structure
+            setProfiles(res.data.profiles.data); // adjust to your API structure
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
             }
         } catch (err) {
-            console.error("Error fetching users:", err);
+            console.error("Error fetching profiles:", err);
         }
-        console.log('users', users)
+        console.log('profiles', profiles)
         setLoading(false);
     };
   
     // Load data on page change
     useEffect(() => {
-      fetchUsers();
+      fetchProfiles();
     }, [page]);
 
     //Load once
@@ -170,16 +192,16 @@ export default function Home({ savedScroll, onSaveScroll }) {
             <MenuBar/>
             <div className="page-content space-top p-b65">
                 <div className="container fixed-full-area">
-                    {users.length>0?
+                    {profiles.length>0?
                         (<div className="flex items-center justify-center h-screen bg-gray-100">
-                            <SwipeDeck key={JSON.stringify(users)} users={users} onSwipe={handleSwipe} />
+                            <SwipeDeck key={JSON.stringify(profiles)} profiles={profiles} onSwipe={handleSwipe} remainingFreeSwiping={remainingSwipingRef.current} />
                         </div>)
                         :(<div className="flex items-center justify-center h-screen bg-gray-100">
                             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
                                 <div className="" style={{width: "100%", textAlign: "center"}}>
                                     <label className="my-4" style={{}}>No profile found</label>
                                     <div className="" style={{display: 'flex', justifyContent: "space-between", }}>
-                                        <button onClick={fetchUsers} className="btn btn-gradient w-100 btn-shadow rounded-xl">
+                                        <button onClick={fetchProfiles} className="btn btn-gradient w-100 btn-shadow rounded-xl">
                                             {t('reload')}
                                         </button>
                                         <button onClick={() => navigate('/filter')} className="btn btn-gradient w-100 btn-shadow rounded-xl">
