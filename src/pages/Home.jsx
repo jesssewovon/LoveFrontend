@@ -121,6 +121,9 @@ export default function Home({ savedScroll, onSaveScroll }) {
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
             }
+            if (res.data.remainingFreeSwiping) {
+                remainingSwipingRef.current = res.data.remainingFreeSwiping
+            }
         } catch (err) {
             console.error("Error fetching profiles:", err);
         }
