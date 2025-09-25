@@ -41,9 +41,9 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
     reactionsRef.current = reactions;
   }, [reactions]);
-  /* useEffect(() => {
+  useEffect(() => {
     remainingSwipingRef.current = user?.profile?.remainingFreeSwiping??0;
-  }, [user?.profile?.remainingFreeSwiping]); */
+  }, [user?.profile?.remainingFreeSwiping]);
   
   const startTimer = () => {
       if (intervalRef.current) return; // already running
