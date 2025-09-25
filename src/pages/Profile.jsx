@@ -149,33 +149,12 @@ export default function Profile() {
                         <SwiperSlide key={subscription.id}>
                             <div className="dz-content">
                               <h5 className="title">{subscription.name}</h5>
-                              <p>Get Unlimited Likes, Passport and more!</p>
-                              <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
+                              <p>{subscription.description}</p>
+                              <Link to="/" className="btn rounded-xl">{t('proceed')}</Link>
                             </div>
                         </SwiperSlide>
                       ))
                     }
-                    <SwiperSlide>
-                        <div className="dz-content">
-                          <h5 className="title">Get Dating Plus</h5>
-                          <p>Get Unlimited Likes, Passport and more!</p>
-                          <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="dz-content">
-                          <h5 className="title">Get Dating Gold</h5>
-                          <p>Get Unlimited Likes, Passport and more!</p>
-                          <Link to="/" className="btn rounded-xl">Get Dating Gold</Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="dz-content">
-                          <h5 className="title">Get Dating Platinum</h5>
-                          <p>Get Unlimited Likes, Passport and more!</p>
-                          <Link to="/" className="btn rounded-xl">Get Dating Platinum</Link>
-                        </div>
-                    </SwiperSlide>
                 </Swiper>
               </div>
             </div>):

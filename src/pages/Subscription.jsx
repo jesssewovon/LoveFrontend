@@ -29,17 +29,18 @@ export default function Filter() {
   const { isLoggedIn, isLoading, user, dateFilter } = useSelector((state) => state.user);
 
   const swiperRef = useRef();
+  const [subscriptions, setSubscriptions] = useState([]);
   const [activeSubscription, setActiveSubscription] = useState(0);
 
   // Get my profile from API
   const getSubscriptions = async () => {
       dispatch(setIsLoading(true));
       try {
-          const res = await api.get(`get-my-profile`);
-          console.log(`get-my-profile`, res.data); // adjust to your API structure
-          
+          const res = await api.get(`get-subscriptions`);
+          console.log(`get-subscriptions`, res.data); // adjust to your API structure
+          setSubscriptions(res.data.subscriptions)
       } catch (err) {
-          console.error("Error fetching users:", err);
+          console.error("Error :", err);
       }
       dispatch(setIsLoading(false));
   };
@@ -96,31 +97,95 @@ export default function Filter() {
                     modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper get-started"
                 >
-                    <SwiperSlide>
-                        <div class="subscribe-box plus">
-                          <h3 class="title">W3Dating App</h3>
-                          <div class="badge">PLUS</div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div class="subscribe-box gold">
-                          <h3 class="title">W3Dating App</h3>
-                          <div class="badge">GOLD</div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div class="subscribe-box platinum">
-                          <h3 class="title">W3Dating App</h3>
-                          <div class="badge">PLATINUM</div>
-                        </div>
-                    </SwiperSlide>
+                    {subscriptions?.map((subscription, index) => (
+                        <SwiperSlide key={subscription.id}>
+                            <div className={`subscribe-box ${index%2==0?'plus':'platinum'}`}>
+                              <h3 className="title">{subscription.name}</h3>
+                              {/* <div className="badge">PLUS</div> */}
+                            </div>
+                        </SwiperSlide>
+                      ))
+                    }
                 </Swiper>
-                <div class="swiper-btn">
-                  <div class="swiper-pagination style-1 flex-1"></div>
+                <div className="swiper-btn">
+                  <div className="swiper-pagination style-1 flex-1"></div>
                 </div>
               </div>
             </div>
-            {activeSubscription ===0 && (<div class="subscribe-content plus">
+            {subscriptions?.map((subscription, index) => (
+                activeSubscription === index && (<div key={subscription.id} className={`subscribe-content ${index%2==0?'plus':'platinum'}`}>
+                  <ul class="pricing-data">
+                    {
+                      subscription?.contents?.map((content, index1) => (
+                        <li className="list-true">
+                          {((content.item.type=='boolean' && content.value==1) || (content.item.type=='int' && content.value==-1)) && (<i className="icon feather icon-check"></i>)}
+                          {content.item.type=='boolean' && content.value==0 && (<i className="icon feather icon-lock"></i>)}
+                          {(content.item.type=='int' && content.value!=-1) && (<i>{content.value}</i>)}
+                          <span>{content.name}</span>
+                        </li>
+                      ))
+                    }
+                    {/* <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Unlimited Likes</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>See Who Likes You</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>Priority Likes</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Unlimited Rewinds</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>1 Free Boost per month</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>5 Free Super Likes per week</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>Message Before Matching</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Passport</span>
+                    </li>
+                    <li class="list-false">
+                      <i class="icon feather icon-lock"></i>
+                      <span>Top Picks</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Control Your Profile</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Control Who Sees You</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Control Who You See</span>
+                    </li>
+                    <li class="list-true">
+                      <i class="icon feather icon-check"></i>
+                      <span>Hide Ads</span>
+                    </li> */}
+                  </ul>
+                  <div className="bottom-btn container bg-white text-center px-5">
+                    <a className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
+                      {subscription.amount} Pi => Proceed</a>
+                  </div>
+                </div>)
+              ))
+            }
+            {/* {activeSubscription ===0 && (<div class="subscribe-content plus">
               <ul class="pricing-data">
                 <li class="list-true">
                   <i class="icon feather icon-check"></i>
@@ -296,7 +361,7 @@ export default function Filter() {
               <div class="bottom-btn container bg-white text-center px-5">
                 <a href="javascript:void(0);" class="btn btn-gradient dz-flex-box btn-shadow rounded-xl">Starting at <span class="ms-2"><i class="fa-solid fa-indian-rupee-sign"></i></span> 999</a>
               </div>
-            </div>)}
+            </div>)} */}
           </div>
         </div> 
       </div>
