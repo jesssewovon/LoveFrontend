@@ -150,7 +150,7 @@ export default function Profile() {
                             <div className="dz-content">
                               <h5 className="title">{subscription.name}</h5>
                               <p>{subscription.description}</p>
-                              <Link to="/" className="btn rounded-xl">{t('proceed')}</Link>
+                              <Link to="/" className="btn rounded-xl">{t('subscribe')}</Link>
                             </div>
                         </SwiperSlide>
                       ))

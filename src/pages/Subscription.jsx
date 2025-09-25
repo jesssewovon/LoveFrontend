@@ -180,7 +180,7 @@ export default function Filter() {
                   </ul>
                   <div className="bottom-btn container bg-white text-center px-5">
                     <a className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
-                      {subscription.amount} Pi => Proceed</a>
+                      {subscription.amount} Pi => {t('subscribe')}</a>
                   </div>
                 </div>)
               ))
