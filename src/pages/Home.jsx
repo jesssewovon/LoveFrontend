@@ -92,14 +92,11 @@ export default function Home({ savedScroll, onSaveScroll }) {
     const sendReactions = async () => {
         console.log('remainingFreeSwiping', remainingSwipingRef.current)
         if (reactionsRef.current.length===0) return
-        const nb = reactionsRef.current.length
-        //alert(nb)
         console.log('reactionsRef.current', reactionsRef.current)
         const res = await api.post(`/save-reactions`, {reactions: reactionsRef.current})
         if (res.data.status === true) {
             //alert('success')
             setReactions([])
-            remainingSwipingRef.current = remainingSwipingRef.current-nb
         }
     };
 
@@ -142,6 +139,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     const handleSwipe = (dir, user, nb) => {
         //handleShow()
+        remainingSwipingRef.current--
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
