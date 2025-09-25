@@ -21,7 +21,7 @@ const MySwal = withReactContent(Swal);
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
-  const { isLoading, dateFilter, reloadHomePage, user } = useSelector((state) => state.user);
+  const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
   //const { reactions } = useSelector((state) => state.profileForm);
   const [profiles, setProfiles] = useState([]);
   const [page, setPage] = useState(1);
@@ -32,7 +32,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
   const [reactions, setReactions] = useState([]);
   
-  const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
+  //const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
+  const remainingSwipingRef = useRef(0);
   console.log('remainingSwipingRef start', user?.profile, remainingSwipingRef.current)
   //alert('remainingSwipingRef '+remainingSwipingRef.current)
   const intervalRef = useRef(null);
@@ -41,6 +42,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
     reactionsRef.current = reactions;
   }, [reactions]);
+
+  //Execute that code on user data change
   useEffect(() => {
     remainingSwipingRef.current = user?.profile?.remainingFreeSwiping??0;
   }, [user?.profile?.remainingFreeSwiping]);
@@ -117,12 +120,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
         try {
             const res = await api.get(`home-profiles-load?page=${page}`, {params: dateFilter});
             //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
+            console.log('res fetchProfiles', res.data)
             setProfiles(res.data.profiles.data); // adjust to your API structure
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
-            }
-            if (res.data.remainingFreeSwiping) {
-                remainingSwipingRef.current = res.data.remainingFreeSwiping
             }
         } catch (err) {
             console.error("Error fetching profiles:", err);
@@ -135,6 +136,14 @@ export default function Home({ savedScroll, onSaveScroll }) {
     useEffect(() => {
       fetchProfiles();
     }, [page]);
+    
+    // Code to execute on isLoggedIn change
+    useEffect(() => {
+        //Code...
+        if (isLoggedIn === true) {
+            //Code if connected...
+        }
+    }, [isLoggedIn]);
 
     //Load once
     useEffect(() => {
