@@ -34,7 +34,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
   //const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
   const remainingSwipingRef = useRef(0);
-  console.log('remainingSwipingRef start', user?.profile, remainingSwipingRef.current)
+  //console.log('remainingSwipingRef start', user?.profile, remainingSwipingRef.current)
   //alert('remainingSwipingRef '+remainingSwipingRef.current)
   const intervalRef = useRef(null);
 
@@ -44,9 +44,9 @@ export default function Home({ savedScroll, onSaveScroll }) {
   }, [reactions]);
 
   //Execute that code on user data change
-  useEffect(() => {
+  /* useEffect(() => {
     remainingSwipingRef.current = user?.profile?.remainingFreeSwiping??0;
-  }, [user?.profile?.remainingFreeSwiping]);
+  }, [user?.profile?.remainingFreeSwiping]); */
   
   const startTimer = () => {
       if (intervalRef.current) return; // already running
@@ -121,6 +121,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
             const res = await api.get(`home-profiles-load?page=${page}`, {params: dateFilter});
             //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
             console.log('res fetchProfiles', res.data)
+            if (res.data.remainingFreeSwiping!==null) {
+                //alert('res.data.remainingFreeSwiping '+res.data.remainingFreeSwiping)
+                remainingSwipingRef.current = res.data.remainingFreeSwiping
+            }
             setProfiles(res.data.profiles.data); // adjust to your API structure
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
@@ -142,6 +146,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
         //Code...
         if (isLoggedIn === true) {
             //Code if connected...
+            fetchProfiles()
         }
     }, [isLoggedIn]);
 
