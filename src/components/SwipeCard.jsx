@@ -27,7 +27,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
   const [isSwiped, setIsSwiped] = useState(false);
 
   const handleDragEnd = (_, info) => {
-    if (remainingFreeSwiping === 0) return;
+    if (remainingFreeSwiping <= 0) return;
     if (disabled) return;
 
     if (info.offset.x > 80) {
