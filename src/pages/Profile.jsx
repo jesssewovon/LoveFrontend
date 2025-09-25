@@ -29,7 +29,7 @@ export default function Profile() {
     i18n.changeLanguage("fr")
   }, [i18n])
   const dispatch = useDispatch();
-  const { isLoggedIn, isLoading, user } = useSelector((state) => state.user);
+  const { isLoggedIn, isLoading, user, settings } = useSelector((state) => state.user);
   const handleLogin = async () => {
       const scopes = ["username", "payments", "wallet_address", "preferred_language"];
       const onIncompletePaymentFound = (payment) =>{
@@ -145,6 +145,16 @@ export default function Profile() {
                     modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper get-started"
                 >
+                    {settings?.subscriptions?.map((subscription, index) => (
+                        <SwiperSlide key={subscription.id}>
+                            <div className="dz-content">
+                              <h5 className="title">{subscription.name}</h5>
+                              <p>Get Unlimited Likes, Passport and more!</p>
+                              <Link to="/" className="btn rounded-xl">Get Dating Plus</Link>
+                            </div>
+                        </SwiperSlide>
+                      ))
+                    }
                     <SwiperSlide>
                         <div className="dz-content">
                           <h5 className="title">Get Dating Plus</h5>
