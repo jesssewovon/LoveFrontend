@@ -32,17 +32,18 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
   const [reactions, setReactions] = useState([]);
   
-  const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping);
-
+  const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
+  console.log('remainingSwipingRef start', user?.profile, remainingSwipingRef.current)
+  //alert('remainingSwipingRef '+remainingSwipingRef.current)
   const intervalRef = useRef(null);
 
   const reactionsRef = useRef(reactions)
   useEffect(() => {
     reactionsRef.current = reactions;
   }, [reactions]);
-  useEffect(() => {
-    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
-  }, [user]);
+  /* useEffect(() => {
+    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping??0;
+  }, [user?.profile?.remainingFreeSwiping]); */
   
   const startTimer = () => {
       if (intervalRef.current) return; // already running

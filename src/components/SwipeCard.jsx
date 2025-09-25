@@ -130,7 +130,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                     </span>):""
                   )
                 }
-                <h4 className={`title ${remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age}</a></h4>
+                <h4 className={`title ${remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
                 {profile.distance && (<p className={`mb-0 ${remainingFreeSwiping<=0?'text-blur':''}`}>
                   <i className="icon feather icon-map-pin"></i>
                   &nbsp; {profile.distance} km away
