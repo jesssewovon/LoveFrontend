@@ -43,3 +43,6 @@
 .swiper-pagination{
   position: unset!important;
 }
+.text-blur{
+  filter: blur(4px);
+}
