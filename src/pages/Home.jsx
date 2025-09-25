@@ -184,7 +184,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-    if (loading) {
+    /* if (loading) {
         return (
             <>
                 <Header showBackButton={false} showWishList={true} />
@@ -200,7 +200,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                 </div>
             </>
         );
-    }
+    } */
 
     return (
         <>
@@ -208,7 +208,13 @@ export default function Home({ savedScroll, onSaveScroll }) {
             <MenuBar/>
             <div className="page-content space-top p-b65">
                 <div className="container fixed-full-area">
-                    {profiles.length>0?
+                    {loading ? (
+                        <div className="flex items-center justify-center h-screen bg-gray-100">
+                            <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
+                            </div>
+                        </div>
+                    ):profiles.length>0?
                         (<div className="flex items-center justify-center h-screen bg-gray-100">
                             <SwipeDeck key={JSON.stringify(profiles)} profiles={profiles} onSwipe={handleSwipe} remainingFreeSwiping={remainingSwipingRef.current} />
                         </div>)
