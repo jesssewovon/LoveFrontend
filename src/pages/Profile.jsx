@@ -5,7 +5,7 @@ import MenuBar from '../components/MenuBar';
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { signinPiketplace } from '../store/userSlice';
+import { signinPiketplace, piPayment } from '../store/userSlice';
 import { useTranslation } from "react-i18next";
 import { useEffect } from 'react';
 
