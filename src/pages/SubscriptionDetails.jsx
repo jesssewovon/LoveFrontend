@@ -196,8 +196,9 @@ export default function Filter() {
                 </li> */}
               </ul>
               <div className="bottom-btn container bg-white text-center px-5">
-                <a onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
-                  {selectedPeriod.amount} Pi {'=>'} {t('subscribe')}</a>
+                <button disabled={!selectedPeriod.id} onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
+                  {selectedPeriod.amount} Pi {'=>'} {t('subscribe')}
+                </button>
               </div>
             </div>
           </div>

@@ -31,6 +31,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   const location = useLocation();
 
   const [reactions, setReactions] = useState([]);
+
+  const isSwipingUnlimitedRef = useRef({})
   
   //const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
   const remainingSwipingRef = useRef(0);
@@ -75,6 +77,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, [location]);
   useActivate(() => {
     remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
+    isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
     startTimer()
     window.scrollTo(0, savedScroll || 0);
     return () => {
@@ -125,6 +128,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                 //alert('res.data.remainingFreeSwiping '+res.data.remainingFreeSwiping)
                 remainingSwipingRef.current = res.data.remainingFreeSwiping
             }
+            isSwipingUnlimitedRef.current = res.data.isSwipingUnlimited
             setProfiles(res.data.profiles.data); // adjust to your API structure
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
@@ -216,7 +220,13 @@ export default function Home({ savedScroll, onSaveScroll }) {
                         </div>
                     ):profiles.length>0?
                         (<div className="flex items-center justify-center h-screen bg-gray-100">
-                            <SwipeDeck key={JSON.stringify(profiles)} profiles={profiles} onSwipe={handleSwipe} remainingFreeSwiping={remainingSwipingRef.current} />
+                            <SwipeDeck
+                              key={JSON.stringify(profiles)}
+                              profiles={profiles}
+                              onSwipe={handleSwipe}
+                              remainingFreeSwiping={remainingSwipingRef.current}
+                              isSwipingUnlimited={isSwipingUnlimitedRef.current}
+                              />
                         </div>)
                         :(<div className="flex items-center justify-center h-screen bg-gray-100">
                             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>

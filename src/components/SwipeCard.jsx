@@ -8,7 +8,7 @@ import '../assets/scss/pages/_tinder-swiper.scss';
 
 import { navigate } from "../navigationService";
 
-export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwiping }) {
+export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwiping, isSwipingUnlimited }) {
   const {t} = useTranslation()
 
   const x = useMotionValue(0);
@@ -27,7 +27,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
   const [isSwiped, setIsSwiped] = useState(false);
 
   const handleDragEnd = (_, info) => {
-    if (remainingFreeSwiping <= 0) return;
+    if (!isSwipingUnlimited && remainingFreeSwiping <= 0) return;
     if (disabled) return;
 
     if (info.offset.x > 80) {
@@ -100,7 +100,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         src={profile.imageFirst}
         alt={profile.firstname}
         effect="blur"
-        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${remainingFreeSwiping<=0?20:0}px)` }}
+        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${!isSwipingUnlimited && remainingFreeSwiping<=0?20:0}px)` }}
         drag={disabled ? 'false' : 'true'}
         dragconstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragelastic={0.5}
@@ -130,8 +130,8 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                     </span>):""
                   )
                 }
-                <h4 className={`title ${remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
-                {profile.distance && (<p className={`mb-0 ${remainingFreeSwiping<=0?'text-blur':''}`}>
+                <h4 className={`title ${!isSwipingUnlimited && remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
+                {profile.distance && (<p className={`mb-0 ${!isSwipingUnlimited && remainingFreeSwiping<=0?'text-blur':''}`}>
                   <i className="icon feather icon-map-pin"></i>
                   &nbsp; {profile.distance} km away
                 </p>)}
@@ -183,7 +183,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         <span className="py-2 px-2" style={{background: "green"}}>⭐️ Super Like</span>
         
       </motion.div> */}
-      {remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
+      {!isSwipingUnlimited && remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
                 <div className="" style={{width: "100%", textAlign: "center"}}>
