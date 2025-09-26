@@ -320,6 +320,57 @@ export const showPiAdRewarded = createAsyncThunk(
   }
 );
 
+export const showPiAdInterstitial = createAsyncThunk(
+  'auth/showPiAdInterstitial',
+  async (_, thunkAPI) => {
+    try{
+      const ready = await Pi.Ads.isAdReady("interstitial");
+      //alert('Pi Ads ready '+JSON.stringify(ready))
+      //console.log('Pi Ads ready', ready)
+      //alert('Pi Ads start')
+      if (ready.ready === false) {
+          //alert('Pi Ads not ready, request again')
+          const requestAdResponse = await Pi.Ads.requestAd("interstitial");
+          //console.log('Pi Ads requestAd',  requestAdResponse)
+          //alert('Pi Ads requestAdResponse '+JSON.stringify(requestAdResponse))
+          /*if (requestAdResponse.result == "AD_LOADED") {
+              this.can_show_add = true
+          }*/
+          if (showMessage) {
+            if (requestAdResponse.result === "AD_LOADED") {
+                //
+            }else if(requestAdResponse.result === "AD_FAILED_TO_LOAD"){
+                functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ad_failed_to_load"))
+            }else if(requestAdResponse.result === "AD_NOT_AVAILABLE"){
+                functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+            }
+          }
+      }else{
+          //alert('Pi Ads ready')
+      }
+      const showAdResponse = await Pi.Ads.showAd("interstitial");
+      //console.log('Pi Ads showAdResponse', showAdResponse)
+      //alert('Pi interstitial Ads showAdResponse '+JSON.stringify(showAdResponse))
+      if (!showMessage) {
+        return
+      }
+      if (showAdResponse.result === "AD_CLOSED") {
+        //Nothing to do
+      } else if(showAdResponse.result === "AD_NOT_AVAILABLE") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+      } else if(showAdResponse.result === "AD_NETWORK_ERROR") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.encountered_network_connection_issues"))
+      } else if(showAdResponse.result === "AD_DISPLAY_ERROR") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ad_failed_to_be_displayed"))
+      }
+    }catch(err){
+        //alert('catch error')
+        //alert('catch error '+err.message)
+        //alert('catch error '+JSON.stringify(err))
+    }
+  }
+);
+
 export const piPayment = createAsyncThunk(
   'auth/piPayment',
   async (data, thunkAPI) => {

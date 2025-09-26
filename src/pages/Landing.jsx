@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import api from "../api";
 import { setIsLoading, signinPiketplace, setGeolocation,
-    changeLanguage, setIsSaving
+    changeLanguage, setIsSaving, showPiAdInterstitial, 
 } from "../store/userSlice";
 //import { navigate } from "../navigationService";
 import i18n from "../i18n"; // your i18n config
@@ -60,6 +60,7 @@ export default function Landing() {
     };
     
     useEffect(() => {
+      dispatch(showPiAdInterstitial())
       dispatch(setIsSaving(false))
       geolocate()
       if (isLoggedIn) {
