@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import { setIsLoading, setIsSaving, setDateFilter,
-  setUser, setReloadHomePage, changeLanguage, 
+  setUser, setReloadHomePage, changeLanguage, piPayment, 
 } from "../store/userSlice";
 //import { navigate } from "../navigationService";
 import { useNavigate } from 'react-router';
@@ -51,6 +51,19 @@ export default function Filter() {
     console.log('swiperRef', swiperRef)
     //dispatch(changeLanguage('fr'))
   }, []);
+
+  const makePayment = (subscription) => {
+      //alert('makepaiement')
+      dispatch(piPayment({
+          amount: subscription.amount,
+          memo: `Subscription ${subscription.name}`,
+          metadata: {
+              userId: user.id,
+              type: 'subscription',
+              subscription_id: subscription.id,
+          },
+      }));
+  };
 
   if (isLoading) {
       return (
@@ -179,8 +192,8 @@ export default function Filter() {
                     </li> */}
                   </ul>
                   <div className="bottom-btn container bg-white text-center px-5">
-                    <a className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
-                      {subscription.amount} Pi => {t('subscribe')}</a>
+                    <a onClick={() => makePayment(subscription)} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
+                      {subscription.amount} Pi {'=>'} {t('subscribe')}</a>
                   </div>
                 </div>)
               ))
