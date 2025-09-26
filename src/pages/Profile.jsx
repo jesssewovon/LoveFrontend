@@ -48,19 +48,6 @@ export default function Profile() {
     dispatch(signinPiketplace({ scopes, onIncompletePaymentFound }));
   };
 
-  const makePayment = (subscription) => {
-      //alert('makepaiement')
-      dispatch(piPayment({
-          amount: subscription.amount,
-          memo: `Subscription ${subscription.name}`,
-          metadata: {
-              userId: user.id,
-              type: 'subscription',
-              subscription_id: subscription.id,
-          },
-      }));
-  };
-
   return (
     <>
       <Header showBackButton={true} title={"Profile"} showWishList={false} classes={"bg-white"}/>
@@ -164,9 +151,9 @@ export default function Profile() {
                             <div className="dz-content">
                               <h5 className="title">{subscription.name}</h5>
                               <p>{subscription.description}</p>
-                              <a onClick={() => makePayment(subscription)} className="btn rounded-xl">
+                              <Link to={`/subscription-details/${subscription.id}`} className="btn rounded-xl">
                                 {t('subscribe')}
-                              </a>
+                              </Link>
                             </div>
                         </SwiperSlide>
                       ))

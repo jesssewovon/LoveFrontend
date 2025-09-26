@@ -60,7 +60,7 @@ export default function Filter() {
           metadata: {
               userId: user.id,
               type: 'subscription',
-              subscription_id: subscription.id,
+              subscriptions_id: subscription.id,
           },
       }));
   };
@@ -68,7 +68,7 @@ export default function Filter() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={"My subscription"} showWishList={false}/>
+              <Header showBackButton={true} title={"Subscriptions"} showWishList={false}/>
               <div className="page-content space-top p-b65">
                   <div className="container fixed-full-area">
                       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -84,7 +84,7 @@ export default function Filter() {
 
   return (
     <>
-      <Header showBackButton={true} title={"My subscription"} showWishList={false}/>
+      <Header showBackButton={true} title={"Subscriptions"} showWishList={false}/>
       <div class="page-content space-top p-b60">
         <div class="container"> 
           <div class="dz-subscribe-area">
@@ -127,7 +127,7 @@ export default function Filter() {
             </div>
             {subscriptions?.map((subscription, index) => (
                 activeSubscription === index && (<div key={subscription.id} className={`subscribe-content ${index%2==0?'plus':'platinum'}`}>
-                  <ul class="pricing-data">
+                  <ul className="pricing-data">
                     {
                       subscription?.contents?.map((content, index1) => (
                         <li className="list-true">
@@ -138,243 +138,15 @@ export default function Filter() {
                         </li>
                       ))
                     }
-                    {/* <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Unlimited Likes</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>See Who Likes You</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>Priority Likes</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Unlimited Rewinds</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>1 Free Boost per month</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>5 Free Super Likes per week</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>Message Before Matching</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Passport</span>
-                    </li>
-                    <li class="list-false">
-                      <i class="icon feather icon-lock"></i>
-                      <span>Top Picks</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Control Your Profile</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Control Who Sees You</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Control Who You See</span>
-                    </li>
-                    <li class="list-true">
-                      <i class="icon feather icon-check"></i>
-                      <span>Hide Ads</span>
-                    </li> */}
                   </ul>
                   <div className="bottom-btn container bg-white text-center px-5">
-                    <a onClick={() => makePayment(subscription)} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
-                      {subscription.amount} Pi {'=>'} {t('subscribe')}</a>
+                    <Link to={`/subscription-details/${subscription.id}`} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
+                     {t('subscribe')}
+                    </Link>
                   </div>
                 </div>)
               ))
             }
-            {/* {activeSubscription ===0 && (<div class="subscribe-content plus">
-              <ul class="pricing-data">
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Likes</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>See Who Likes You</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>Priority Likes</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Rewinds</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>1 Free Boost per month</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>5 Free Super Likes per week</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>Message Before Matching</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Passport</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>Top Picks</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Your Profile</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who Sees You</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who You See</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Hide Ads</span>
-                </li>
-              </ul>
-              <div class="bottom-btn container bg-white text-center px-5">
-                <a href="javascript:void(0);" class="btn btn-gradient dz-flex-box btn-shadow rounded-xl">Starting at <span class="ms-2"><i class="fa-solid fa-indian-rupee-sign"></i></span> 450</a>
-              </div>
-            </div>)}
-            {activeSubscription ===1 && (<div class="subscribe-content gold">
-              <ul class="pricing-data">
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Likes</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>See Who Likes You</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>Priority Likes</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Rewinds</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>1 Free Boost per month</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>5 Free Super Likes per week</span>
-                </li>
-                <li class="list-false">
-                  <i class="icon feather icon-lock"></i>
-                  <span>Message Before Matching</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Passport</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Top Picks</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Your Profile</span>
-                </li> 
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who Sees You</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who You See</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Hide Ads</span>
-                </li>
-              </ul>
-              <div class="bottom-btn container bg-white text-center px-5">
-                <a href="javascript:void(0);" class="btn btn-gradient dz-flex-box btn-shadow rounded-xl">Starting at <span class="ms-2"><i class="fa-solid fa-indian-rupee-sign"></i></span> 650</a>
-              </div>
-            </div>)}
-            {activeSubscription ===2 && (<div class="subscribe-content platinum">
-              <ul class="pricing-data">
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Likes</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>See Who Likes You</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Priority Likes</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Unlimited Rewinds</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>1 Free Boost per month</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>5 Free Super Likes per week</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Message Before Matching</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Passport</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Top Picks</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Your Profile</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who Sees You</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Control Who You See</span>
-                </li>
-                <li class="list-true">
-                  <i class="icon feather icon-check"></i>
-                  <span>Hide Ads</span>
-                </li>
-              </ul>
-              <div class="bottom-btn container bg-white text-center px-5">
-                <a href="javascript:void(0);" class="btn btn-gradient dz-flex-box btn-shadow rounded-xl">Starting at <span class="ms-2"><i class="fa-solid fa-indian-rupee-sign"></i></span> 999</a>
-              </div>
-            </div>)} */}
           </div>
         </div> 
       </div>
