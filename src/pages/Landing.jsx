@@ -60,7 +60,7 @@ export default function Landing() {
     };
     
     useEffect(() => {
-      dispatch(showPiAdInterstitial())
+      //dispatch(showPiAdInterstitial())
       dispatch(setIsSaving(false))
       geolocate()
       if (isLoggedIn) {

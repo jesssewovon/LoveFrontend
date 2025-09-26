@@ -210,7 +210,7 @@ export const signinPiketplace = createAsyncThunk(
         const locale = i18n.language
         const res = await api.post(`/signin`, { authResult, locale }, config)
         if (res.data.status == "success") {
-          dispatch(showPiAdRewarded())
+          //dispatch(showPiAdRewarded())
         }
         return res.data
       //return auth; // this goes to `fulfilled` reducer
