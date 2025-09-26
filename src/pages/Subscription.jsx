@@ -55,7 +55,7 @@ export default function Filter() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
+              <Header showBackButton={true} title={"My subscription"} showWishList={false}/>
               <div className="page-content space-top p-b65">
                   <div className="container fixed-full-area">
                       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -118,9 +118,9 @@ export default function Filter() {
                     {
                       subscription?.contents?.map((content, index1) => (
                         <li className="list-true">
-                          {((content.item.type=='boolean' && content.value==1) || (content.item.type=='int' && content.value==-1)) && (<i className="icon feather icon-check"></i>)}
-                          {content.item.type=='boolean' && content.value==0 && (<i className="icon feather icon-lock"></i>)}
-                          {(content.item.type=='int' && content.value!=-1) && (<i>{content.value}</i>)}
+                          {((content.item.type=='boolean' && content.value==1)) && (<i className="icon feather icon-check"></i>)}
+                          {((content.item.type=='boolean' && content.value==0) || (content.item.type=='int' && content.value==0)) && (<i className="icon feather icon-lock"></i>)}
+                          {(content.item.type=='int' && content.value!=0 && content.value!=-1) && (<i>{content.value}</i>)}
                           <span>{content.name}</span>
                         </li>
                       ))
