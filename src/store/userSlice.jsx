@@ -130,6 +130,7 @@ const userSlice = createSlice({
             }else{
                 navigate('/home')
             }
+
         }
       })
       .addCase(signinPiketplace.rejected, (state, action) => {
@@ -208,6 +209,9 @@ export const signinPiketplace = createAsyncThunk(
         authResult.geolocation = geolocation
         const locale = i18n.language
         const res = await api.post(`/signin`, { authResult, locale }, config)
+        if (res.data.status == "success") {
+          dispatch(showPiAdRewarded())
+        }
         return res.data
       //return auth; // this goes to `fulfilled` reducer
     } catch (error) {
@@ -234,6 +238,84 @@ export const changeLanguage = createAsyncThunk(
     if (userState.isLoggedIn) {
       //alert('isloggedin')
       const res = await api.post('/switchLocale', {lang})
+    }
+  }
+);
+
+export const showPiAdRewarded = createAsyncThunk(
+  'auth/showPiAd',
+  async (_, thunkAPI) => {
+    try{
+      const ready = await Pi.Ads.isAdReady("rewarded");
+      //alert("ready "+JSON.stringify(ready))
+      if (ready.ready !== true) {
+          const requestAdResponse = await Pi.Ads.requestAd("rewarded");
+          if (requestAdResponse.result === "ADS_NOT_SUPPORTED") {
+              // display modal to update Pi Browser
+              // showAdsNotSupportedModal()
+              //alert('rewarded ADS_NOT_SUPPORTED')
+              return;
+          }
+          if (requestAdResponse.result === "AD_LOADED") {
+              // display modal ads are temporarily unavailable and user should try again later
+              // showAdUnavailableModal()
+              //alert('rewarded AD_NOT_LOADED')
+              //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+              //return;
+          }else if(requestAdResponse.result === "AD_FAILED_TO_LOAD"){
+              //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ad_failed_to_load"))
+          }else if(requestAdResponse.result === "AD_NOT_AVAILABLE"){
+              //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+          }else {
+              //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.an_error_occured"))
+          }
+      }/*else{
+          const requestAdResponse = await Pi.Ads.requestAd("rewarded");
+      }*/
+      const showAdResponse = await Pi.Ads.showAd("rewarded");
+      /* if (this.user && this.user.username==="djedje00") {
+          alert("showAdResponse "+JSON.stringify(showAdResponse))
+      } */
+      //alert("showAdResponse "+JSON.stringify(showAdResponse))
+      //alert('rewarded result '+showAdResponse.result)
+      //alert('rewarded '+showAdResponse.adid+' - '+showAdResponse.adId)
+      
+      if (showAdResponse.result === "AD_REWARDED") {
+          //alert("showAdResponse "+JSON.stringify(showAdResponse))
+          //alert('rewarded adId '+showAdResponse.adid+' - '+showAdResponse.adId)
+          // reward user logic, usually delegate rewarding user to your backend which would
+          // firstly verify `adId` against Pi Platform API, then decide whether to reward the user
+          // and rewarded user if the rewarded ad status is confirmed
+          // e.g.:
+          // const result = await rewardUserForWatchingRewardedAd(adId);
+          // if (result.rewarded) {
+          // showRewardedModal(result.reward)
+          // } else {
+          // showRewardFailModal(result.error)
+          // }
+            let adId = showAdResponse.adId
+            //const result = await this.rewardUserForWatchingRewardedAd(adId, origin);
+      } else if(showAdResponse.result === "AD_CLOSED") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+      } else if(showAdResponse.result === "AD_NOT_AVAILABLE") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))
+      } else if(showAdResponse.result === "AD_NETWORK_ERROR") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.encountered_network_connection_issues"))
+      } else if(showAdResponse.result === "AD_DISPLAY_ERROR") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ad_failed_to_be_displayed"))
+      } else if(showAdResponse.result === "USER_UNAUTHENTICATED") {
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.not_authenticated_try_again"))
+          //this.signInPiNetwork({isLoggedIn: true})
+      } else {
+          //alert('rewarded AD_NOT_REWARDED')
+          // fallback logic
+          // showAdErrorModal()
+          //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.an_error_occured"))
+      }
+    }catch(err){
+        //alert('catch error')
+        //alert('catch error '+err.message)
+        //alert('catch error '+JSON.stringify(err))
     }
   }
 );
