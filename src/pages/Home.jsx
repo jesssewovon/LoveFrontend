@@ -32,6 +32,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
   const [reactions, setReactions] = useState([]);
 
+  const userRef = useRef(user)
   const isSwipingUnlimitedRef = useRef({})
   
   //const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
@@ -75,9 +76,15 @@ export default function Home({ savedScroll, onSaveScroll }) {
         setReload(true)
       }
     }, [location]);
+  
+  useEffect(() => {
+      //isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
+      userRef.current = user
+      isSwipingUnlimitedRef.current = userRef.current?.profile?.isSwipingUnlimited;
+    }, [user]);
   useActivate(() => {
     remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
-    isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
+    //isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
     startTimer()
     window.scrollTo(0, savedScroll || 0);
     return () => {
@@ -225,7 +232,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                               profiles={profiles}
                               onSwipe={handleSwipe}
                               remainingFreeSwiping={remainingSwipingRef.current}
-                              isSwipingUnlimited={isSwipingUnlimitedRef.current}
+                              isSwipingUnlimited={userRef.current?.profile?.isSwipingUnlimited}
                               />
                         </div>)
                         :(<div className="flex items-center justify-center h-screen bg-gray-100">
