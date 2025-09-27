@@ -22,7 +22,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-export default function Filter() {
+export default function Subscription() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {t} = useTranslation()
@@ -30,7 +30,8 @@ export default function Filter() {
 
   const swiperRef = useRef();
   const [subscriptions, setSubscriptions] = useState([]);
-  const [activeSubscription, setActiveSubscription] = useState(0);
+  const [activeSubscription, setActiveSubscription] = useState({});
+  const [subscriptionIndex, setSubscriptionIndex] = useState(0);
 
   // Get my profile from API
   const getSubscriptions = async () => {
@@ -39,6 +40,7 @@ export default function Filter() {
           const res = await api.get(`get-subscriptions`);
           console.log(`get-subscriptions`, res.data); // adjust to your API structure
           setSubscriptions(res.data.subscriptions)
+          setActiveSubscription(res.data.active_subscription)
       } catch (err) {
           console.error("Error :", err);
       }
@@ -94,7 +96,7 @@ export default function Filter() {
                     ref={swiperRef}
                     onSlideChange={(swiper) => {
                       //alert(swiper.activeIndex)
-                      setActiveSubscription(swiper.activeIndex)
+                      setSubscriptionIndex(swiper.activeIndex)
                     }}
                     spaceBetween={30}
                     speed={1500}
@@ -114,7 +116,7 @@ export default function Filter() {
                         <SwiperSlide key={subscription.id}>
                             <div className={`subscribe-box ${index%2==0?'plus':'platinum'}`}>
                               <h3 className="title">{subscription.name}</h3>
-                              {/* <div className="badge">PLUS</div> */}
+                              {activeSubscription?.code==subscription.code && (<div className="badge">Active</div>)}
                             </div>
                         </SwiperSlide>
                       ))
@@ -126,7 +128,7 @@ export default function Filter() {
               </div>
             </div>
             {subscriptions?.map((subscription, index) => (
-                activeSubscription === index && (<div key={subscription.id} className={`subscribe-content ${index%2==0?'plus':'platinum'}`}>
+                subscriptionIndex === index && (<div key={subscription.id} className={`subscribe-content ${index%2==0?'plus':'platinum'}`}>
                   <ul className="pricing-data">
                     {
                       subscription?.contents?.map((content, index1) => (
@@ -139,11 +141,11 @@ export default function Filter() {
                       ))
                     }
                   </ul>
-                  <div className="bottom-btn container bg-white text-center px-5">
+                  {activeSubscription?.code!==subscription.code && (<div className="bottom-btn container bg-white text-center px-5">
                     <Link to={`/subscription-details/${subscription.id}`} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
                      {t('subscribe')}
                     </Link>
-                  </div>
+                  </div>)}
                 </div>)
               ))
             }

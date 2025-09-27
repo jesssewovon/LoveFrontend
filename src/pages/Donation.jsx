@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { updateField, resetForm } from "../store/profileFormSlice";
 import Header from '../components/Header';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function FirstName() {
     const navigate = useNavigate();
@@ -30,14 +31,22 @@ export default function FirstName() {
     
     const makePayment = () => {
         //alert('makepaiement')
+        const uuid = uuidv4()
         dispatch(piPayment({
             amount: amount,
             memo: "Donation",
             metadata: {
                 userId: user.id,
                 type: 'donation',
+                uniqueId: uuid,
             },
         }));
+        navigate('/payment-verification', {
+            state: {
+                uniqueId: uuid,
+                from: "donation",
+            }
+        })
     };
 
     return (

@@ -20,6 +20,7 @@ import ProfileDetails from './pages/ProfileDetails';
 import Donation from './pages/Donation';
 import Subscription from './pages/Subscription';
 import SubscriptionDetails from './pages/SubscriptionDetails';
+import PaymentVerification from './pages/PaymentVerification';
 
 import FirstName from './pages/Registration/FirstName';
 import BirthDate from './pages/Registration/BirthDate';
@@ -109,6 +110,7 @@ function App() {
               <Route path="/donation" element={<Donation />} />
               <Route path="/subscription" element={<Subscription />} />
               <Route path="/subscription-details/:id" element={<SubscriptionDetails />} />
+              <Route path="/payment-verification" element={<PaymentVerification />} />
               <Route path="/registration-firstname" element={<FirstName />} />
               <Route path="/registration-birth-date" element={<BirthDate />} />
               <Route path="/registration-gender" element={<Gender />} />

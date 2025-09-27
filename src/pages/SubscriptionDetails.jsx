@@ -14,15 +14,9 @@ import { setIsLoading, setIsSaving, setDateFilter,
 import { useNavigate } from 'react-router';
 import api from "../api";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-// import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function Filter() {
+export default function SubscriptionDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -31,14 +25,16 @@ export default function Filter() {
 
   const [subscription, setSubscription] = useState({});
   const [selectedPeriod, setSelectedPeriod] = useState({});
+  const [isActiveSubscription, setIsActiveSubscription] = useState(false);
 
   // Get my profile from API
   const getSubscriptionDetails = async () => {
       dispatch(setIsLoading(true));
       try {
           const res = await api.get(`get-subscription-details/${id}`);
-          console.log(`get-subscriptions`, res.data); // adjust to your API structure
+          console.log(`get-subscription-details`, res.data); // adjust to your API structure
           setSubscription(res.data.subscription)
+          setIsActiveSubscription(res.data.is_the_active_subscription)
       } catch (err) {
           console.error("Error :", err);
       }
@@ -57,15 +53,23 @@ export default function Filter() {
   
   const makePayment = () => {
       //alert('makepaiement')
+      const uuid = uuidv4()
       dispatch(piPayment({
           amount: selectedPeriod.amount,
           memo: `Subscription ${subscription.name}`,
           metadata: {
               userId: user.id,
               type: 'subscription',
+              uniqueId: uuid,
               period_subscriptions_id: selectedPeriod.id,
           },
       }));
+      navigate('/payment-verification', {
+        state: {
+          uniqueId: uuid,
+          from: "subscription",
+        }
+      })
   };
 
   if (isLoading) {
@@ -95,14 +99,14 @@ export default function Filter() {
               <div class="swiper subscription-swiper2">
                 <div className={`subscribe-box`}>
                   <h3 className="title">{subscription?.name}</h3>
-                  {/* <div className="badge">PLUS</div> */}
+                  {isActiveSubscription && (<div className="badge" style={{color: '#fb7c67'}}>Active</div>)}
                 </div>
                 <div className="swiper-btn">
                   <div className="swiper-pagination style-1 flex-1"></div>
                 </div>
               </div>
             </div>
-            <div>
+            {!isActiveSubscription && (<div>
               <div className="section-head ps-0 py-4">
                   <h5>Choose a period</h5>
               </div>
@@ -129,7 +133,7 @@ export default function Filter() {
                     ))
                   }
               </div>
-            </div>
+            </div>)}
             <div className={`subscribe-content`}>
               <ul className="pricing-data">
                 {
@@ -195,11 +199,11 @@ export default function Filter() {
                   <span>Hide Ads</span>
                 </li> */}
               </ul>
-              <div className="bottom-btn container bg-white text-center px-5">
+              {!isActiveSubscription && (<div className="bottom-btn container bg-white text-center px-5">
                 <button disabled={!selectedPeriod.id} onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
                   {selectedPeriod.amount} Pi {'=>'} {t('subscribe')}
                 </button>
-              </div>
+              </div>)}
             </div>
           </div>
         </div> 
