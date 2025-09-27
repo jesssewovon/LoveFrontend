@@ -67,7 +67,7 @@ export default function PaymentVerification() {
               showConfirmButton: true,
             });
           }
-          navigate(-1)
+          //navigate(-1)
         } catch (err) {
           console.error("Error :", err);
       }
