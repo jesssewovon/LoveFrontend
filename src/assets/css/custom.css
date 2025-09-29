@@ -60,3 +60,14 @@
   border: 1px solid #ea3d85;
   font-weight: 400;
 }
+
+.menubar-area .menubar-nav .nav-link::after{
+  z-index: -1;
+}
+.menubar-area .toolbar-inner .nav-link svg path{
+  stroke: #ff50a2;
+  stroke-width: 2.5px;
+}
+.menubar-area .toolbar-inner .nav-link.active svg path{
+  stroke: #fff;
+}

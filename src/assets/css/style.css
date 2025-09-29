@@ -11904,7 +11904,7 @@ section {
         height: 24px; }
         .menubar-area .toolbar-inner .nav-link svg path,
         .menubar-area .toolbar-inner .menu-toggler svg path {
-          fill: #7d8fab; }
+          fill: transparent; }
       .menubar-area .toolbar-inner .nav-link.active svg path,
       .menubar-area .toolbar-inner .menu-toggler.active svg path {
         fill: var(--primary); }
