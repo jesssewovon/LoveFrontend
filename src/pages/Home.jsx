@@ -32,7 +32,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
   const [reactions, setReactions] = useState([]);
   
-  const [remainingSwiping, setRemainingSwiping] = useState(false);
+  const [remainingSwiping, setRemainingSwiping] = useState(0);
   const [subscriptionData, setSubscriptionData] = useState({});
   
   const intervalRef = useRef(null);
@@ -70,6 +70,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
   useEffect(() => {
       setRemainingSwiping(user?.profile?.remainingFreeSwiping)
+      console.log("remainingSwiping", remainingSwiping)
       setSubscriptionData(user.profile?.subscriptionData)
     }, [user]);
   useActivate(() => {
@@ -149,6 +150,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     const handleSwipe = (dir, user, nb) => {
         //handleShow()
+        setRemainingSwiping(remainingSwiping-1)
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
