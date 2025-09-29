@@ -16,7 +16,7 @@ export default function Chat() {
             </div>
             <div className="mid-content d-flex align-items-center text-start">
               <a href="javascript:void(0);" className="media media-40 rounded-circle me-3">
-                <img src="../src/assets/images/user/pic1.jpg" alt="/"/>
+                <img src="/assets/images/user/pic1.jpg" alt="/"/>
               </a>
               <div>
                 <h6 className="title">Miselia,24</h6>

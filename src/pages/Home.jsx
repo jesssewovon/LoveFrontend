@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import MenuBar from '../components/MenuBar';
 import MatchModal from '../components/MatchModal';
 import Loader from "../components/Loader";
+import ScreenLoader from "../components/ScreenLoader";
 import { setIsLoading, setReloadHomePage } from "../store/userSlice";
 //import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
@@ -248,6 +249,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                 Launch demo modal
             </Button> */}
             <MatchModal show={show} onHide={handleClose}/>
+            <ScreenLoader/>
         </>
     );
 }

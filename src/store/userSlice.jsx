@@ -35,6 +35,7 @@ const userSlice = createSlice({
     dateFilter: null,
     geolocation: null,
     reloadHomePage: false,
+    showScreenLoader: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -82,6 +83,9 @@ const userSlice = createSlice({
     },
     setReloadHomePage: (state, action) => {
         state.reloadHomePage = action.payload;
+    },
+    setShowScreenLoader: (state, action) => {
+        state.showScreenLoader = action.payload;
     },
     setSettings: (state, action) => {
         state.settings = action.payload;
@@ -479,6 +483,7 @@ export const piPayment = createAsyncThunk(
 
 export const { setUser, clearUser, setIsDarkTheme, setIsLoggedIn,
   setIsLoading, loggedUserOut, hideOffcanvas, showOffcanvas, setSettings,
-  setIsSaving, setDateFilter, setGeolocation, setReloadHomePage, 
+  setIsSaving, setDateFilter, setGeolocation, setReloadHomePage,
+  setShowScreenLoader, 
 } = userSlice.actions;
 export default userSlice.reducer;
