@@ -93,11 +93,19 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     const sendReactions = async () => {
         if (reactionsRef.current.length===0) return
+        const reactionsToSend = reactionsRef.current
         console.log('reactionsRef.current', reactionsRef.current)
-        const res = await api.post(`/save-reactions`, {reactions: reactionsRef.current})
-        if (res.data.status === true) {
-            //alert('success')
+        try{
             setReactions([])
+            const res = await api.post(`/save-reactions`, {reactions: reactionsToSend})
+            if (res.data.status === true) {
+                //alert('success')
+            }else{
+                setReactions([...reactionsToSend, ...reactionsRef?.current])
+            }
+        } catch (err) {
+            setReactions([...reactionsToSend, ...reactionsRef?.current])
+            console.error("Error fetching profiles:", err);
         }
     };
 
