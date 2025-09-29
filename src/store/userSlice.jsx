@@ -250,9 +250,9 @@ export const unlockWithPiRewardedAd = createAsyncThunk(
       const userState = thunkAPI.getState().user
       const username = userState.user?.username
       //alert('In unlock-with-pi-rewarded-ad '+username+" - "+adId)
-      setIsSaving(true)
+      thunkAPI.dispatch(setIsSaving(true))
       const res = await api.post('/unlock-with-pi-rewarded-ad', {username, adId})
-      setIsSaving(false)
+      thunkAPI.dispatch(setIsSaving(false))
       if (res.data.status === true) {
         MySwal.fire({ 
           title: "Info",
