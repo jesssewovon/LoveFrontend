@@ -213,6 +213,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                               onSwipe={handleSwipe}
                               remainingFreeSwiping={remainingSwiping}
                               isSwipingUnlimited={subscriptionData['unlimited likes']}
+                              subscriptionData={subscriptionData}
                               />
                         </div>)
                         :(<div className="flex items-center justify-center h-screen bg-gray-100">

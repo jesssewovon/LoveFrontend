@@ -1,6 +1,8 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from "react-redux";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css"; // nice blur effect
 
@@ -8,7 +10,12 @@ import '../assets/scss/pages/_tinder-swiper.scss';
 
 import { navigate } from "../navigationService";
 
-export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwiping, isSwipingUnlimited }) {
+import { setIsLoading, signinPiketplace, setGeolocation,
+    changeLanguage, setIsSaving, showPiAdRewarded, 
+} from "../store/userSlice";
+
+export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwiping, isSwipingUnlimited, subscriptionData }) {
+  const dispatch = useDispatch();
   const {t} = useTranslation()
 
   const x = useMotionValue(0);
@@ -27,7 +34,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
   const [isSwiped, setIsSwiped] = useState(false);
 
   const handleDragEnd = (_, info) => {
-    if (!isSwipingUnlimited && remainingFreeSwiping <= 0) return;
+    if (!subscriptionData['unlimited likes'] && remainingFreeSwiping <= 0) return;
     if (disabled) return;
 
     if (info.offset.x > 80) {
@@ -100,7 +107,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         src={profile.imageFirst}
         alt={profile.firstname}
         effect="blur"
-        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${!isSwipingUnlimited && remainingFreeSwiping<=0?20:0}px)` }}
+        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?20:0}px)` }}
         drag={disabled ? 'false' : 'true'}
         dragconstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragelastic={0.5}
@@ -115,7 +122,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         <h2 className="text-lg font-bold">{profile.firstname}</h2>
         <p className="text-gray-600">{profile.id} years</p>
       </div> */}
-      <div className="" style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundImage: "linear-gradient(180deg, rgba(49, 70, 133, 0) 67.50%, rgba(30, 34, 46, 0.67) 84.84%, #1E222E 96.23%, #1E222E 100%)"}}>
+      <div className="dz-gallery-slider" style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundImage: "linear-gradient(180deg, rgba(49, 70, 133, 0) 67.50%, rgba(30, 34, 46, 0.67) 84.84%, #1E222E 96.23%, #1E222E 100%)"}}>
         <div className="dz-content" style={{width: "100%", display: "flex", justifyContent: "space-between", padding: "0 15px", position: "absolute", bottom: "15px"}}>
             <div onClick={() => navigate(`/profile-details/${profile.id}`)} className="left-content">
                 {profile.isNew===true?
@@ -130,12 +137,12 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                     </span>):""
                   )
                 }
-                <h4 className={`title ${!isSwipingUnlimited && remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
-                {profile.distance && (<p className={`mb-0 ${!isSwipingUnlimited && remainingFreeSwiping<=0?'text-blur':''}`}>
+                <h4 className={`title ${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
+                {profile.distance && (<p className={`mb-0 ${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?'text-blur':''}`}>
                   <i className="icon feather icon-map-pin"></i>
                   &nbsp; {profile.distance} km away
                 </p>)}
-                {/* {profile.interests?.length && (
+                {profile.interests?.length && (
                   <ul class="intrest">
                     <li><span class="badge">Photography</span></li>
                     {profile.interests?.map((name, index) => {
@@ -144,7 +151,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                         );
                     })}
                   </ul>
-                )} */}
+                )}
             </div>
             <a onClick={()=>{triggerSwipe("right")}} className="dz-icon dz-sp-like" style={{width: "50px", height: "50px", borderRadius: "50%", background :"var(--btn-gradient)", color: "#fff"}}>
                 <i className="flaticon flaticon-heart" style={{fontSize: "28px"}}></i>
@@ -183,13 +190,13 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         <span className="py-2 px-2" style={{background: "green"}}>⭐️ Super Like</span>
         
       </motion.div> */}
-      {!isSwipingUnlimited && remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
+      {!subscriptionData['unlimited likes'] && remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", zIndex: "9", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
                 <div className="" style={{width: "100%", textAlign: "center"}}>
                     <label className="my-4" style={{}}>Action needed</label>
                     <div className="" style={{}}>
-                        <button onClick={()=>{}} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
+                        <button onClick={() => dispatch(showPiAdRewarded())} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
                             {t('unlock with PiAd')}
                         </button>
                         <button onClick={() => navigate('/subscription')} className="btn btn-light w-100 btn-shadow rounded-xl my-2">

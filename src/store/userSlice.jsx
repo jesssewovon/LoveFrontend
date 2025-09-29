@@ -208,6 +208,7 @@ export const signinPiketplace = createAsyncThunk(
         //authResult.user_country = this.user_country
         authResult.geolocation = geolocation
         const locale = i18n.language
+        //alert("locale "+locale)
         const res = await api.post(`/signin`, { authResult, locale }, config)
         if (res.data.status == "success") {
           //dispatch(showPiAdRewarded())
@@ -230,6 +231,7 @@ export const signoutPiketplace = createAsyncThunk(
     }
   }
 );
+
 export const changeLanguage = createAsyncThunk(
   'auth/changeLanguage',
   async (lang, thunkAPI) => {
@@ -242,8 +244,18 @@ export const changeLanguage = createAsyncThunk(
   }
 );
 
+export const unlockWithPiRewardedAd = createAsyncThunk(
+  'auth/unlockWithPiRewardedAd',
+  async (adId, thunkAPI) => {
+      const userState = thunkAPI.getState().user
+      const username = userState.user?.username
+      alert('In unlock-with-pi-rewarded-ad '+username+" - "+adId)
+      const res = await api.post('/unlock-with-pi-rewarded-ad', {username, adId})
+  }
+);
+
 export const showPiAdRewarded = createAsyncThunk(
-  'auth/showPiAd',
+  'auth/showPiAdRewarded',
   async (_, thunkAPI) => {
     try{
       const ready = await Pi.Ads.isAdReady("rewarded");
@@ -287,13 +299,13 @@ export const showPiAdRewarded = createAsyncThunk(
           // firstly verify `adId` against Pi Platform API, then decide whether to reward the user
           // and rewarded user if the rewarded ad status is confirmed
           // e.g.:
-          // const result = await rewardUserForWatchingRewardedAd(adId);
+          const adId = showAdResponse.adId
+          dispatch(unlockWithPiRewardedAd(adId));
           // if (result.rewarded) {
           // showRewardedModal(result.reward)
           // } else {
           // showRewardFailModal(result.error)
           // }
-            let adId = showAdResponse.adId
             //const result = await this.rewardUserForWatchingRewardedAd(adId, origin);
       } else if(showAdResponse.result === "AD_CLOSED") {
           //functions.msg_box_new(this.confDialog, 'error', i18n.global.t('message.info'), i18n.global.t("message.ads_unavailable"))

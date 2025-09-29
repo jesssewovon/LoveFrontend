@@ -76,7 +76,7 @@ export default function Filter() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={"Edit profile"} showWishList={false}/>
+              <Header showBackButton={true} title={"Date filter"} showWishList={false}/>
               <div className="page-content space-top p-b65">
                   <div className="container fixed-full-area">
                       <div className="flex items-center justify-center h-screen bg-gray-100">

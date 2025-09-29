@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SwipeCard from "./SwipeCard";
 
-export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping, isSwipingUnlimited }) {
+export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping, isSwipingUnlimited, subscriptionData }) {
   const [cards, setCards] = useState(profiles);
 
   // 🔄 Sync local cards whenever parent `profiles` changes
@@ -24,6 +24,7 @@ export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping
             onSwipe={handleCardSwipe}
             remainingFreeSwiping={remainingFreeSwiping}
             isSwipingUnlimited={isSwipingUnlimited}
+            subscriptionData={subscriptionData}
             style={{ zIndex: cards.length - index }}
           />
         ))
