@@ -300,7 +300,7 @@ export const showPiAdRewarded = createAsyncThunk(
           // and rewarded user if the rewarded ad status is confirmed
           // e.g.:
           const adId = showAdResponse.adId
-          dispatch(unlockWithPiRewardedAd(adId));
+          thunkAPI.dispatch(unlockWithPiRewardedAd(adId));
           // if (result.rewarded) {
           // showRewardedModal(result.reward)
           // } else {
