@@ -31,14 +31,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
   const location = useLocation();
 
   const [reactions, setReactions] = useState([]);
-
-  const userRef = useRef(user)
-  const isSwipingUnlimitedRef = useRef({})
   
-  //const remainingSwipingRef = useRef(user?.profile?.remainingFreeSwiping??0);
-  const remainingSwipingRef = useRef(0);
-  //console.log('remainingSwipingRef start', user?.profile, remainingSwipingRef.current)
-  //alert('remainingSwipingRef '+remainingSwipingRef.current)
+  const [remainingSwiping, setRemainingSwiping] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState({});
+  
   const intervalRef = useRef(null);
 
   const reactionsRef = useRef(reactions)
@@ -46,11 +42,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
     reactionsRef.current = reactions;
   }, [reactions]);
 
-  //Execute that code on user data change
-  /* useEffect(() => {
-    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping??0;
-  }, [user?.profile?.remainingFreeSwiping]); */
-  
   const startTimer = () => {
       if (intervalRef.current) return; // already running
       intervalRef.current = setInterval(() => {
@@ -78,17 +69,13 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, [location]);
   
   useEffect(() => {
-      //isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
-      userRef.current = user
-      isSwipingUnlimitedRef.current = userRef.current?.profile?.isSwipingUnlimited;
+      setRemainingSwiping(user?.profile?.remainingFreeSwiping)
+      setSubscriptionData(user.profile?.subscriptionData)
     }, [user]);
   useActivate(() => {
-    remainingSwipingRef.current = user?.profile?.remainingFreeSwiping;
-    //isSwipingUnlimitedRef.current = user?.profile?.isSwipingUnlimited;
     startTimer()
     window.scrollTo(0, savedScroll || 0);
     return () => {
-      //console.log('onSaveScroll')
       // save scroll before unmount
       onSaveScroll(window.scrollY);
     };
@@ -104,7 +91,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
   });
 
     const sendReactions = async () => {
-        console.log('remainingFreeSwiping', remainingSwipingRef.current)
         if (reactionsRef.current.length===0) return
         console.log('reactionsRef.current', reactionsRef.current)
         const res = await api.post(`/save-reactions`, {reactions: reactionsRef.current})
@@ -131,11 +117,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
             const res = await api.get(`home-profiles-load?page=${page}`, {params: dateFilter});
             //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
             console.log('res fetchProfiles', res.data)
-            if (res.data.remainingFreeSwiping!==null) {
-                //alert('res.data.remainingFreeSwiping '+res.data.remainingFreeSwiping)
-                remainingSwipingRef.current = res.data.remainingFreeSwiping
-            }
-            isSwipingUnlimitedRef.current = res.data.isSwipingUnlimited
             setProfiles(res.data.profiles.data); // adjust to your API structure
             if (res.data.profiles.data.length==0) {
                 setPage((p) => 1);
@@ -168,7 +149,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     const handleSwipe = (dir, user, nb) => {
         //handleShow()
-        remainingSwipingRef.current--
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
@@ -231,8 +211,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
                               key={JSON.stringify(profiles)}
                               profiles={profiles}
                               onSwipe={handleSwipe}
-                              remainingFreeSwiping={remainingSwipingRef.current}
-                              isSwipingUnlimited={userRef.current?.profile?.isSwipingUnlimited}
+                              remainingFreeSwiping={remainingSwiping}
+                              isSwipingUnlimited={subscriptionData['unlimited likes']}
                               />
                         </div>)
                         :(<div className="flex items-center justify-center h-screen bg-gray-100">

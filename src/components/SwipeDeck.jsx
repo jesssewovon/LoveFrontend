@@ -14,7 +14,6 @@ export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping
     // remove swiped card from local stack
     setCards((prev) => prev.filter((c) => c.id !== profile.id));
   };
-
   return (
     <div className="" style={{position: "relative", width: "100%", height: 'calc(100vh - 140px)', overflow: "hidden", borderRadius: "20px"}}>
       {cards

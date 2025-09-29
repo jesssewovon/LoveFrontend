@@ -42,6 +42,7 @@ api.interceptors.response.use(
         return response;
     }
     if (response.data.current_user_for_automatic_update) {
+      //console.log('current_user_for_automatic_update', response.data)
       //alert('current_user_for_automatic_update')
       store.dispatch(setUser(response.data.current_user_for_automatic_update));
     }
