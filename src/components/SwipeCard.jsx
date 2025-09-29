@@ -80,7 +80,6 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
   };
 
   const messageBeforeMatching = async (profile) => {
-    navigate('/chat')
     dispatch(setShowScreenLoader(true))
     const corresponding_profile_id = profile.id
     const res = await api.post(`message-before-matching`, {corresponding_profile_id})
