@@ -113,7 +113,7 @@ export default function Subscription() {
                     className="mySwiper get-started"
                 >
                     {subscriptions?.map((subscription, index) => (
-                        <SwiperSlide key={subscription.id}>
+                        <SwiperSlide key={`slider${subscription.id}`}>
                             <div className={`subscribe-box ${index%2==0?'plus':'platinum'}`}>
                               <h3 className="title">{subscription.name}</h3>
                               {activeSubscription?.code==subscription.code && (<div className="badge">Active</div>)}
