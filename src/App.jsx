@@ -102,7 +102,7 @@ function App() {
               } />
               <Route path="/chat-list" element={<ChatList />} />
               <Route path="/explore" element={<Explore />} />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:id" element={<Chat />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/filter" element={<Filter />} />

@@ -48,7 +48,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
       intervalRef.current = setInterval(() => {
         //alert('hhh')
         sendReactions()
-        console.log("Tick... reactionsRef", reactionsRef.current, reactions);
+        //console.log("Tick... reactionsRef", reactionsRef.current, reactions);
       }, 5000);
   };
   const stopTimer = () => {
