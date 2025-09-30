@@ -20,18 +20,21 @@ export default function Chat() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { corresponding_profile_id } = useParams();
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
 
   const [reaction, setReaction] = useState({});
+  const [correspondingProfile, setCorrespondingProfile] = useState({});
   const [messages, setMessages] = useState([]);
 
   const getChatData = async () => {
+      console.log("getChatData", corresponding_profile_id)
       dispatch(setIsLoading(true));
       try {
-          const res = await api.get(`/get-chat-data/${id}`);
+          const res = await api.get(`/get-chat-data/${corresponding_profile_id}`);
           console.log(`/get-chat-data`, res.data); // adjust to your API structure
-          setReaction(res.data.reaction);
+          //setReaction(res.data.reaction);
+          setCorrespondingProfile(res.data.corresponding_profile);
           setMessages(res.data.messages.data);
       } catch (err) {
           console.error("Error fetching users:", err);
@@ -68,10 +71,10 @@ export default function Chat() {
                   </div>
                   <div className="mid-content d-flex align-items-center text-start">
                     <a href="javascript:void(0);" className="media media-40 rounded-circle me-3">
-                      <img src={reaction.receiver?.imageFirst} alt="/"/>
+                      <img src={correspondingProfile?.imageFirst} alt="/"/>
                     </a>
                     <div>
-                      <h6 className="title">{reaction.receiver?.firstname}, {reaction.receiver?.age}</h6>
+                      <h6 className="title">{correspondingProfile?.firstname}, {correspondingProfile?.age}</h6>
                       <span>Online 24m ago</span>
                     </div>  
                   </div>
