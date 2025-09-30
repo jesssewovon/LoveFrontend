@@ -148,7 +148,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
         //Code...
         if (isLoggedIn === true) {
             //Code if connected...
-            fetchProfiles()
+            //fetchProfiles()
         }
     }, [isLoggedIn]);
 
