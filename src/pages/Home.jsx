@@ -72,9 +72,9 @@ export default function Home({ savedScroll, onSaveScroll }) {
     }, [location]);
   
   useEffect(() => {
-      setRemainingSwiping(user?.profile?.remainingFreeSwiping)
+      //setRemainingSwiping(user?.profile?.remainingFreeSwiping)
       remainingSwipingRef.current = user?.profile?.remainingFreeSwiping
-      console.log("remainingSwiping", remainingSwiping)
+      //console.log("remainingSwiping", remainingSwiping)
       setSubscriptionData(user.profile?.subscriptionData)
     }, [user]);
   useActivate(() => {
@@ -162,7 +162,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     const handleSwipe = (dir, user, nb) => {
         //handleShow()
-        setRemainingSwiping(remainingSwiping-1)
+        //setRemainingSwiping(remainingSwiping-1)
         remainingSwipingRef.current--
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
