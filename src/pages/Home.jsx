@@ -38,6 +38,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
   const intervalRef = useRef(null);
 
+  const remainingSwipingRef = useRef(0)
+
   const reactionsRef = useRef(reactions)
   useEffect(() => {
     reactionsRef.current = reactions;
@@ -71,6 +73,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
   useEffect(() => {
       setRemainingSwiping(user?.profile?.remainingFreeSwiping)
+      remainingSwipingRef.current = user?.profile?.remainingFreeSwiping
       console.log("remainingSwiping", remainingSwiping)
       setSubscriptionData(user.profile?.subscriptionData)
     }, [user]);
@@ -160,6 +163,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
     const handleSwipe = (dir, user, nb) => {
         //handleShow()
         setRemainingSwiping(remainingSwiping-1)
+        remainingSwipingRef.current--
         console.log("Swiped", dir, user);
         //if (dir === "right") api.post(`/like/${user.id}`);
         //if (dir === "left") api.post(`/dislike/${user.id}`);
@@ -222,7 +226,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
                               key={JSON.stringify(profiles)}
                               profiles={profiles}
                               onSwipe={handleSwipe}
-                              remainingFreeSwiping={remainingSwiping}
+                              /* remainingFreeSwiping={remainingSwiping} */
+                              remainingFreeSwiping={remainingSwipingRef.current}
                               isSwipingUnlimited={subscriptionData['unlimited likes']}
                               subscriptionData={subscriptionData}
                               />
