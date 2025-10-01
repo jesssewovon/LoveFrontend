@@ -151,7 +151,7 @@ export default function ChatList() {
                             <p className="last-msg">{chat.last_message?.message}</p>
                           </div>
                           <div className="right-content">
-                            <span className="date">{getCorresponder(chat)?.onlineTimeAgo}</span>
+                            <span className="date">{chat.last_message?.onlineTimeAgo}</span>
                             <div className="seen-btn active dz-flex-box">
                               <i className="icon feather icon-check"></i>
                             </div>
