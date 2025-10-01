@@ -5,7 +5,7 @@ import MenuBar from '../components/MenuBar';
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { signinPiketplace, setIsLoading } from '../store/userSlice';
+import { signinPiketplace, setIsLoading, setShowScreenLoader } from '../store/userSlice';
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from 'react';
 
@@ -13,6 +13,10 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Loader from '../components/Loader';
 import MatchModal from '../components/MatchModal';
+import ScreenLoader from "../components/ScreenLoader";
+
+import { navigate } from "../navigationService";
+
 import api from "../api";
 
 export default function ProfileDetails() {
@@ -31,14 +35,31 @@ export default function ProfileDetails() {
 
   const sendReaction = async (id, type) => {
       console.log('sendReaction', id, type)
+      dispatch(setShowScreenLoader(true))
       //alert('sendReaction')
       const res = await api.post(`/save-one-reaction`, {id, type})
+      dispatch(setShowScreenLoader(false))
       if (res.data.status === true) {
           //alert('success')
+          MySwal.fire({ 
+              title: "Info!",
+              text: res.data.message,
+              icon: "success",
+              showConfirmButton: true,
+              timer: 1500
+          });
           if (res.data.is_match === true) {
             setReaction(res.data.reaction)
             handleShow()
           }
+      }else{
+          MySwal.fire({ 
+              title: "Info!",
+              text: t('an_error_occured'),
+              icon: "error",
+              showConfirmButton: true,
+              timer: 1500
+          });
       }
   };
 
@@ -57,6 +78,23 @@ export default function ProfileDetails() {
       }
       console.log('profile', profile)
       dispatch(setIsLoading(false));
+  };
+
+  const messageBeforeMatching = async () => {
+    dispatch(setShowScreenLoader(true))
+    const corresponding_profile_id = profile.id
+    const res = await api.post(`message-before-matching`, {corresponding_profile_id})
+    dispatch(setShowScreenLoader(false))
+    if (res.data.status === true) {
+      navigate(`/chat/${corresponding_profile_id}`)
+    }else{
+      MySwal.fire({ 
+          title: "Info!",
+          text: res.data.message,
+          icon: "error",
+          showConfirmButton: true,
+      });
+    }
   };
 
   // Load data on page change
@@ -96,7 +134,12 @@ export default function ProfileDetails() {
                   <h4 className="title">{profile.firstname}, {profile.age}</h4>
                   <p className="mb-0"><i className="icon feather icon-map-pin"></i> 5 miles away</p>
                 </div>
-                <a href="javascript:void(0);" className="dz-icon"><i className="flaticon flaticon-star-1"></i></a>
+                {/* <a href="javascript:void(0);" className="dz-icon">
+                  <i className="flaticon flaticon-star-1"></i>
+                </a> */}
+                <a onClick={()=>{messageBeforeMatching(profile)}} className="dz-icon" style={{width: "50px", height: "50px", borderRadius: "50%", background :"var(--btn-gradient)", color: "#fff"}}>
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22 11.5V15.5C22 19 20 20.5 17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H12" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.7" d="M7 9L10.13 11.5C11.16 12.32 12.85 12.32 13.88 11.5" stroke="#fff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.7" d="M19.4792 2.81994L19.7592 3.38993C19.8992 3.66993 20.2492 3.92994 20.5592 3.98994L20.9392 4.04994C22.0792 4.23994 22.3492 5.07994 21.5292 5.90994L21.1792 6.25993C20.9492 6.49993 20.8192 6.95993 20.8892 7.27993L20.9392 7.48994C21.2492 8.86994 20.5192 9.39993 19.3192 8.67993L19.0592 8.52993C18.7492 8.34993 18.2492 8.34993 17.9392 8.52993L17.6792 8.67993C16.4692 9.40993 15.7392 8.86994 16.0592 7.48994L16.1092 7.27993C16.1792 6.95993 16.0492 6.49993 15.8192 6.25993L15.4692 5.90994C14.6492 5.07994 14.9192 4.23994 16.0592 4.04994L16.4392 3.98994C16.7392 3.93994 17.0992 3.66993 17.2392 3.38993L17.5192 2.81994C18.0592 1.72994 18.9392 1.72994 19.4792 2.81994Z" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                </a>
               </div>
             </div>
             <div className="detail-bottom-area">
@@ -163,6 +206,7 @@ export default function ProfileDetails() {
         </div>
       </div>
       <MatchModal reaction={reaction} show={show} onHide={handleClose}/>
+      <ScreenLoader/>
     </>
   );
 }

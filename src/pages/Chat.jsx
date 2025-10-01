@@ -12,20 +12,23 @@ const MySwal = withReactContent(Swal);
 
 import Loader from '../components/Loader';
 import MatchModal from '../components/MatchModal';
+import MessageLeft from '../components/MessageLeft';
+import MessageRight from '../components/MessageRight';
 import api from "../api";
 
-import { signinPiketplace, setIsLoading } from '../store/userSlice';
+import { signinPiketplace, setIsLoading, setIsSaving } from '../store/userSlice';
 
 export default function Chat() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { corresponding_profile_id } = useParams();
-  const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
+  const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn, isSaving } = useSelector((state) => state.user);
 
   const [reaction, setReaction] = useState({});
   const [correspondingProfile, setCorrespondingProfile] = useState({});
   const [messages, setMessages] = useState([]);
+  const [messageText, setMessageText] = useState('');
 
   const getChatData = async () => {
       console.log("getChatData", corresponding_profile_id)
@@ -40,6 +43,27 @@ export default function Chat() {
           console.error("Error fetching users:", err);
       }
       dispatch(setIsLoading(false));
+  };
+  const sendMessage = async () => {
+      //alert(messageText)
+      console.log("sendMessage", corresponding_profile_id)
+      dispatch(setIsSaving(true));
+      try {
+          const res = await api.post(`/send-message`, {corresponding_profile_id, messageText});
+          console.log(`/send-message`, res.data); // adjust to your API structure
+          if (res.data.status === true) {
+            setMessageText('')
+          }
+          setCorrespondingProfile(res.data.corresponding_profile);
+          setMessages(res.data.messages.data);
+      } catch (err) {
+          console.error("Error fetching users:", err);
+      }
+      dispatch(setIsSaving(false));
+  };
+
+  const handleMessageInput = (e) => {
+      setMessageText(e.target.value)
   };
 
   // Load data on page change
@@ -91,60 +115,36 @@ export default function Chat() {
             </header>
             <div className="page-content space-top p-b60 message-content">
               <div className="container"> 
-                <div className="chat-box-area"> 
-                  <div className="chat-content">
-                    <div className="message-item">
-                      <div className="bubble">Hi Richard , thanks for adding me</div>    
-                      <div className="message-time">08:35</div>    
-                    </div>
-                  </div>
-                  <div className="chat-content user">
-                    <div className="message-item">
-                      <div className="bubble">Hi Miselia , your welcome , nice to meet you too</div>    
-                      <div className="message-time">08:40</div>    
-                    </div>
-                  </div>
-                  <div className="chat-content">
-                    <div className="message-item">
-                      <div className="bubble">I look you're singer, can you sing for me</div>    
-                      <div className="message-time">9:44 AM</div>    
-                    </div>
-                  </div>
-                  <div className="chat-content user">
-                    <div className="message-item">
-                      <div className="bubble">Sure</div>    
-                      <div className="message-time">9.30 AM</div>    
-                    </div>
-                  </div>
-                  <div className="chat-content">
-                    <div className="message-item">
-                      <div className="bubble">Really!</div>    
-                      <div className="message-time">10:44 AM</div>    
-                    </div>
-                  </div>
-                  <div className="chat-content user">
-                    <div className="message-item">
-                      <div className="bubble">Why not</div>    
-                      <div className="message-time">10:44 AM</div>    
-                    </div>
-                  </div>
+                <div className="chat-box-area">
+                  {messages?.map((message, index) => {
+                      return (
+                        <>
+                          {
+                            message.sender_profiles_id!=user.profile.id?
+                            (<MessageRight key={index} message={message.message} time={`08:35`}/>)
+                            :(<MessageLeft key={index} message={message.message} time={`08:35`}/>)
+                          }
+                        </>
+                      );
+                  }).reverse()}
                 </div>
               </div> 
             </div>
             <footer className="footer border-top fixed bg-white">
                 <div className="container p-2">
                     <div className="chat-footer">
-                        <form>
+                        <div>
                             <div className="form-group">
-                                <div className="input-wrapper message-area">
-                      <div className="append-media"></div>
-                                    <input type="text" className="form-control" placeholder="Send message..."/>
-                                    <a href="javascript:void(0);" className="btn-chat">
-                                      <i className="icon feather icon-send"></i>
-                                    </a>
+                                <div className="input-wrapper message-area" style={{display: "flex", alignItems: "center"}}>
+                                    <div className="append-media"></div>
+                                    <input value={messageText} onChange={handleMessageInput} type="text" className="form-control" placeholder="Send message..." style={{border: "0", height: "45px", marginRight: "15px"}}/>
+                                    <button disabled={messageText==''} onClick={sendMessage} className="btn-chat" style={{border: "0"}}>
+                                      {isSaving!==true?(<i className="icon feather icon-send"></i>):
+	    	                              (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="34" height="34" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" stroke="#fff" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>)}
+                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>    
                 </div>
             </footer>
