@@ -19,6 +19,14 @@ import { signinPiketplace, setIsLoading, setIsSaving } from '../store/userSlice'
 import Header from '../components/Header';
 import MenuBar from '../components/MenuBar';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import required modules
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
 export default function ChatList() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -26,6 +34,7 @@ export default function ChatList() {
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn, isSaving } = useSelector((state) => state.user);
 
   const [chatList, setChatList] = useState([]);
+  const [onlineList, setOnlineList] = useState([]);
 
   // Load data on page change
   useEffect(() => {
@@ -39,6 +48,7 @@ export default function ChatList() {
           console.log(`/get-chat-list`, res.data); // adjust to your API structure
           //setReaction(res.data.reaction);
           setChatList(res.data.chatList.data);
+          setOnlineList(res.data.onlineList);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -74,64 +84,32 @@ export default function ChatList() {
       <div className="page-content space-top p-b60">
         <div className="container">
           <div className="swiper chat-swiper">
-            <div className="swiper-wrapper">
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent active">                
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic1.jpg" alt=""/>
-                  </div>
-                  <span>Grayson</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent"> 
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic2.jpg" alt=""/>
-                  </div>
-                  <span>Tenzing</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent active">  
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic3.jpg" alt=""/>
-                  </div>
-                  <span>Elisha</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent active">  
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic4.jpg" alt=""/>
-                  </div>
-                  <span>Mitchell</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent active">  
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic5.jpg" alt=""/>
-                  </div>
-                  <span>Stephon</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent"> 
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic4.jpg" alt=""/>
-                  </div>
-                  <span>Mitchell</span>
-                </Link>
-              </div>
-              <div className="swiper-slide">
-                <Link to="/chat" className="recent"> 
-                  <div className="media media-60 rounded-circle">
-                    <img src="../src/assets/images/user/pic5.jpg" alt=""/>
-                  </div>
-                  <span>Stephon</span>
-                </Link>
-              </div>
-            </div>
+            <Swiper
+                spaceBetween={15}
+                slidesPerView={'auto'}
+                speed={500}
+                centeredSlides={true}
+                autoplay={false}
+                loop={false}
+                a11y={false}
+                freeMode={true}
+                pagination={false}
+                navigation={false}
+                modules={[Autoplay, Pagination, Navigation]}
+                className="mySwiper get-started"
+            >
+                {onlineList?.map((profile, index) => (
+                    <SwiperSlide key={`online-${profile.id}`}>
+                        <Link to="/chat" className="recent active">                
+                          <div className="media media-60 rounded-circle">
+                            <img src={profile?.imageFirst} alt={profile?.firstname}/>
+                          </div>
+                          <span>{profile?.firstname}</span>
+                        </Link>
+                    </SwiperSlide>
+                  ))
+                }
+            </Swiper>
           </div>
           <div className="title-bar">
             <h6 className="title">Message</h6>
@@ -140,7 +118,7 @@ export default function ChatList() {
             {chatList?.map((chat, index) => {
                 return (
                   <>
-                    <li>
+                    <li key={index}>
                       <Link to={`/chat/${getCorresponder(chat)?.id}`}>
                         <div className="media media-60">
                           <img src={getCorresponder(chat)?.imageFirst} alt={getCorresponder(chat)?.firstname}/>
@@ -151,7 +129,7 @@ export default function ChatList() {
                             <p className="last-msg">{chat.last_message?.message}</p>
                           </div>
                           <div className="right-content">
-                            <span className="date">{chat.last_message?.onlineTimeAgo}</span>
+                            <span className="date">{chat.last_message?.sentTimeAgo}</span>
                             <div className="seen-btn active dz-flex-box">
                               <i className="icon feather icon-check"></i>
                             </div>
@@ -162,139 +140,6 @@ export default function ChatList() {
                   </>
                 );
             })}
-            {/* <li className="active">
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic2.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Matt</h6>
-                    <p className="last-msg">Is that because we like the...</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">4m ago</span>
-                    <div className="seen-btn dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic3.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Karthik</h6>
-                    <p className="last-msg">How do you know john?</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">8h ago</span>
-                    <div className="seen-btn active dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="active">
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic4.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Elisha</h6>
-                    <p className="last-msg">Have you even been...</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">1d ago</span>
-                    <div className="seen-btn dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic5.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Wyatt</h6>
-                    <p className="last-msg">that so awesome!</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">3h ago</span>
-                    <div className="seen-btn dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic6.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Leneve</h6>
-                    <p className="last-msg">Is that because we like the...</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">5d ago</span>
-                    <div className="seen-btn active dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="active">
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic7.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Matt</h6>
-                    <p className="last-msg">Would love to!</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">2m ago</span>
-                    <div className="seen-btn active dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/chat">
-                <div className="media media-60">
-                  <img src="../src/assets/images/user/pic8.jpg" alt="image"/>
-                </div>
-                <div className="media-content">
-                  <div>
-                    <h6 className="name">Wyatt</h6>
-                    <p className="last-msg">Would love to!</p>
-                  </div>
-                  <div className="right-content">
-                    <span className="date">4m ago</span>
-                    <div className="seen-btn dz-flex-box">
-                      <i className="icon feather icon-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li> */}
           </ul>
         </div>    
       </div>
