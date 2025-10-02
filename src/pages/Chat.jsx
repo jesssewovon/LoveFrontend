@@ -16,6 +16,8 @@ import MessageLeft from '../components/MessageLeft';
 import MessageRight from '../components/MessageRight';
 import api from "../api";
 
+import moment from 'moment';
+
 import { signinPiketplace, setIsLoading, setIsSaving } from '../store/userSlice';
 
 export default function Chat() {
@@ -39,6 +41,32 @@ export default function Chat() {
           //setReaction(res.data.reaction);
           setCorrespondingProfile(res.data.corresponding_profile);
           setMessages(res.data.messages.data);
+      } catch (err) {
+          console.error("Error fetching users:", err);
+      }
+      dispatch(setIsLoading(false));
+  };
+  const getNewMessages = async () => {
+      const first_message_id = messages[messages.length-1]?.id
+      console.log("getNewMessages", corresponding_profile_id)
+      dispatch(setIsLoading(true));
+      try {
+          const res = await api.get(`/get-new-messages/${corresponding_profile_id}`, {params: {first_message_id}});
+          console.log(`/get-chat-data`, res.data); // adjust to your API structure
+          setMessages(...res.data.messages.data, ...messages);
+      } catch (err) {
+          console.error("Error fetching users:", err);
+      }
+      dispatch(setIsLoading(false));
+  };
+  const getOldMessages = async () => {
+      const last_message_id = messages[0]?.id
+      console.log("getOldMessages", corresponding_profile_id)
+      dispatch(setIsLoading(true));
+      try {
+          const res = await api.get(`/get-old-messages/${corresponding_profile_id}`, {params: {last_message_id}});
+          console.log(`/get-chat-data`, res.data); // adjust to your API structure
+          setMessages(...messages, ...res.data.messages.data);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -125,8 +153,8 @@ export default function Chat() {
                         <>
                           {
                             message.sender_profiles_id==user.profile.id?
-                            (<MessageRight key={index} message={message.message} time={`08:35`}/>)
-                            :(<MessageLeft key={index} message={message.message} time={`08:35`}/>)
+                            (<MessageRight key={`right-${index}`} message={message.message} time={moment(message.created_at).format("MMM Do YY")}/>)
+                            :(<MessageLeft key={`left-${index}`} message={message.message} time={moment(message.created_at).format()}/>)
                           }
                         </>
                       );

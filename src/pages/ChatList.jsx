@@ -27,6 +27,8 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
+import moment from 'moment';
+
 export default function ChatList() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -84,6 +86,7 @@ export default function ChatList() {
       <div className="page-content space-top p-b60">
         <div className="container">
           <div className="swiper chat-swiper">
+            {moment().format('LT')}
             <Swiper
                 spaceBetween={15}
                 slidesPerView={'auto'}
@@ -117,7 +120,7 @@ export default function ChatList() {
             {chatList?.map((chat, index) => {
                 return (
                   <>
-                    <li key={index} className={` ${getCorresponder(chat)?.isOnline?'active':''}`}>
+                    <li key={`chat-${index}`} className={` ${getCorresponder(chat)?.isOnline?'active':''}`}>
                       <Link to={`/chat/${getCorresponder(chat)?.id}`}>
                         <div className="media media-60">
                           <img src={getCorresponder(chat)?.imageFirst} alt={getCorresponder(chat)?.firstname}/>
@@ -127,15 +130,20 @@ export default function ChatList() {
                             <h6 className="name">{getCorresponder(chat)?.firstname}</h6>
                             <p className="last-msg">{chat.last_message?.message}</p>
                           </div>
-                          <div className="right-content">
-                            <span className="date">{chat.last_message?.sentTimeAgo}</span>
+                          {chat.last_message && (<div className="right-content">
+                            {/* <span className="date">
+                              {chat.last_message?.sentTimeAgo}
+                            </span> */}
+                            <span className="date">
+                              {moment(chat.last_message?.created_at).fromNow()}
+                            </span>
                             <div className="seen-btn active dz-flex-box">
                               {chat.messages_count===0?
                                 (<i className="icon feather icon-check"></i>):
                                 chat.messages_count
                               }
                             </div>
-                          </div>
+                          </div>)}
                         </div>
                       </Link>
                     </li>
