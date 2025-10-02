@@ -88,7 +88,6 @@ export default function ChatList() {
                 spaceBetween={15}
                 slidesPerView={'auto'}
                 speed={500}
-                centeredSlides={true}
                 autoplay={false}
                 loop={false}
                 a11y={false}
@@ -118,7 +117,7 @@ export default function ChatList() {
             {chatList?.map((chat, index) => {
                 return (
                   <>
-                    <li key={index}>
+                    <li key={index} className={` ${getCorresponder(chat)?.isOnline?'active':''}`}>
                       <Link to={`/chat/${getCorresponder(chat)?.id}`}>
                         <div className="media media-60">
                           <img src={getCorresponder(chat)?.imageFirst} alt={getCorresponder(chat)?.firstname}/>
