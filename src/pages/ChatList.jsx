@@ -100,7 +100,7 @@ export default function ChatList() {
             >
                 {onlineList?.map((profile, index) => (
                     <SwiperSlide key={`online-${profile.id}`}>
-                        <Link to="/chat" className="recent active">                
+                        <Link to={`/chat/${profile?.id}`} className={`recent ${profile.isOnline?'active':''}`}>                
                           <div className="media media-60 rounded-circle">
                             <img src={profile?.imageFirst} alt={profile?.firstname}/>
                           </div>
@@ -131,7 +131,10 @@ export default function ChatList() {
                           <div className="right-content">
                             <span className="date">{chat.last_message?.sentTimeAgo}</span>
                             <div className="seen-btn active dz-flex-box">
-                              <i className="icon feather icon-check"></i>
+                              {chat.messages_count===0?
+                                (<i className="icon feather icon-check"></i>):
+                                chat.messages_count
+                              }
                             </div>
                           </div>
                         </div>

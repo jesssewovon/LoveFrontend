@@ -94,12 +94,16 @@ export default function Chat() {
                     </a>
                   </div>
                   <div className="mid-content d-flex align-items-center text-start">
-                    <a href="javascript:void(0);" className="media media-40 rounded-circle me-3">
+                    <a style={{position: "relative"}} className="media media-40 rounded-circle me-3">
                       <img src={correspondingProfile?.imageFirst} alt="/"/>
+                      {correspondingProfile?.isOnline && (<span style={{position: "absolute", width: "10px", height: "10px", backgroundColor: "#55D866", bottom: "0", left: "0", borderRadius: "50%", border: "1px solid #000"}}></span>)}
                     </a>
                     <div>
                       <h6 className="title">{correspondingProfile?.firstname}, {correspondingProfile?.age}</h6>
-                      <span>Online 24m ago</span>
+                      {correspondingProfile?.isOnline ?
+                        (<span>Online</span>):
+                        (<span>{correspondingProfile.onlineTimeAgo}</span>)
+                      }
                     </div>  
                   </div>
                   <div className="right-content d-flex align-items-center">
