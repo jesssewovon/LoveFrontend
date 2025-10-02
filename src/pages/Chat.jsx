@@ -107,10 +107,10 @@ export default function Chat() {
                     </div>  
                   </div>
                   <div className="right-content d-flex align-items-center">
-                    <a href="javascript:void(0);" className="dz-icon btn btn-primary light">
+                    <a className="dz-icon btn btn-primary light">
                       <i className="fa-solid fa-phone"></i>
                     </a>
-                    <a href="javascript:void(0);" className="dz-icon me-0 btn btn-primary light">
+                    <a className="dz-icon me-0 btn btn-primary light">
                       <i className="fa-solid fa-video"></i>
                     </a>
                   </div>
@@ -124,7 +124,7 @@ export default function Chat() {
                       return (
                         <>
                           {
-                            message.sender_profiles_id!=user.profile.id?
+                            message.sender_profiles_id==user.profile.id?
                             (<MessageRight key={index} message={message.message} time={`08:35`}/>)
                             :(<MessageLeft key={index} message={message.message} time={`08:35`}/>)
                           }
