@@ -47,7 +47,19 @@ import { setNavigator } from "./navigationService";
 import { persistor } from "./store/index";
 import { useVersionCheck } from "./hooks/useVersionCheck";
 
+import moment from 'moment';
+import './moment/fr';
+import './moment/es';
+import './moment/ar';
+import './moment/zh-cn';//Simplified chinese
+import './moment/vi';//Vietnamese
+import './moment/fil';//Filipino
+import './moment/id';//Indonesian
+import './moment/ko';//Korean
+import './moment/th';//Thailand
+
 import { unstable_HistoryRouter as HistoryRouter } from "react-router";
+import i18n from './i18n';
 //import { history } from "./navigationService";
 
 function NavigatorSetter() {
@@ -69,6 +81,7 @@ function App() {
   const dispatch = useDispatch();
   const { isDarkTheme, user } = useSelector((state) => state.user);
   useEffect(() => {
+    moment.locale(i18n.language)
     dispatch(setIsDarkTheme(isDarkTheme))
     dispatch(setIsLoading(false))
     //dispatch(setIsLoggedIn(false))

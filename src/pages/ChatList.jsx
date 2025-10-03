@@ -86,7 +86,6 @@ export default function ChatList() {
       <div className="page-content space-top p-b60">
         <div className="container">
           <div className="swiper chat-swiper">
-            {moment().format('LT')}
             <Swiper
                 spaceBetween={15}
                 slidesPerView={'auto'}

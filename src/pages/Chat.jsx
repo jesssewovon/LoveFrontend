@@ -40,7 +40,7 @@ export default function Chat() {
           console.log(`/get-chat-data`, res.data); // adjust to your API structure
           //setReaction(res.data.reaction);
           setCorrespondingProfile(res.data.corresponding_profile);
-          setMessages(res.data.messages.data);
+          setMessages(res.data.messages);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -83,7 +83,7 @@ export default function Chat() {
             setMessageText('')
           }
           setCorrespondingProfile(res.data.corresponding_profile);
-          setMessages(res.data.messages.data);
+          setMessages(res.data.messages);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -152,13 +152,23 @@ export default function Chat() {
                       return (
                         <>
                           {
+                            !messages[index-1]?.created_at?.includes(message.created_at.substr(0, 10)) &&
+                            (
+                              <div style={{textAlign: "center"}}>
+                                <span className="active-date">
+                                  {moment(message.created_at).format('ll')}
+                                </span>
+                              </div>
+                            )
+                          }
+                          {
                             message.sender_profiles_id==user.profile.id?
-                            (<MessageRight key={`right-${index}`} message={message.message} time={moment(message.created_at).format("MMM Do YY")}/>)
-                            :(<MessageLeft key={`left-${index}`} message={message.message} time={moment(message.created_at).format()}/>)
+                            (<MessageRight key={`right-${index}`} message={message.message} time={moment(message.created_at).format('LT')}/>)
+                            :(<MessageLeft key={`left-${index}`} message={message.message} time={moment(message.created_at).format('LT')}/>)
                           }
                         </>
                       );
-                  }).reverse()}
+                  })}
                 </div>
               </div> 
             </div>
