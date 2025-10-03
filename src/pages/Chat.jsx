@@ -166,7 +166,7 @@ export default function Chat() {
         if (entry.isIntersecting) {
           console.log("🔼 Top visible → load older messages", messages);
           setIsTopReached(true)
-          alert('top')
+          //alert('top')
         }
       });
     }, options);
@@ -176,7 +176,7 @@ export default function Chat() {
         if (entry.isIntersecting) {
           console.log("🔽 Bottom visible → load newer messages");
           setIsBottomReached(true)
-          alert('bottom')
+          //alert('bottom')
         }
       });
     }, options);
