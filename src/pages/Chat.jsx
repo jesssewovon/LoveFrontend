@@ -166,6 +166,7 @@ export default function Chat() {
         if (entry.isIntersecting) {
           console.log("🔼 Top visible → load older messages", messages);
           setIsTopReached(true)
+          alert('top')
         }
       });
     }, options);
@@ -175,6 +176,7 @@ export default function Chat() {
         if (entry.isIntersecting) {
           console.log("🔽 Bottom visible → load newer messages");
           setIsBottomReached(true)
+          alert('bottom')
         }
       });
     }, options);
@@ -227,13 +229,12 @@ export default function Chat() {
           <div className="chat-box-area"
             ref={containerRef}
             style={{
-              minHeight: "450px",
+              //height: "80vh",
+              height: "calc(100vh - 120px)",
               /* height: "calc(400px)",
               width: "100%", */
               overflowY: "auto",
               //border: "1px solid #ccc",
-              display: "flex",
-              flexDirection: "column",
             }}
           >
             {/* top sentinel */}
