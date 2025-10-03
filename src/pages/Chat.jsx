@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import Header from '../components/Header';
 
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Swal from 'sweetalert2'
@@ -32,45 +32,57 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState('');
 
-  const getChatData = async () => {
-      console.log("getChatData", corresponding_profile_id)
-      dispatch(setIsLoading(true));
-      try {
-          const res = await api.get(`/get-chat-data/${corresponding_profile_id}`);
-          console.log(`/get-chat-data`, res.data); // adjust to your API structure
-          //setReaction(res.data.reaction);
-          setCorrespondingProfile(res.data.corresponding_profile);
-          setMessages(res.data.messages);
-      } catch (err) {
-          console.error("Error fetching users:", err);
-      }
-      dispatch(setIsLoading(false));
-  };
+  const [isLoadingNewMessages, setIsLoadingNewMessages] = useState(false);
+  const [isLoadingOldMessages, setIsLoadingOldMessages] = useState(false);
+  
+  const [isTopReached, setIsTopReached] = useState(false);
+  const [isBottomReached, setIsBottomReached] = useState(false);
+
+  const [newMessages, setNewMessages] = useState([]);
+  const [oldMessages, setOldMessages] = useState([]);
+
+  const containerRef = useRef(null);
+  const topRef = useRef(null);
+  const bottomRef = useRef(null);
+
+  
   const getNewMessages = async () => {
-      const first_message_id = messages[messages.length-1]?.id
-      console.log("getNewMessages", corresponding_profile_id)
-      dispatch(setIsLoading(true));
+      const last_message_id = messages[messages.length-1]?.id
+      if (!last_message_id) {
+        setIsBottomReached(false)
+        return
+      }
+      console.log("getNewMessages", corresponding_profile_id, last_message_id)
+      setIsLoadingNewMessages(true)
       try {
-          const res = await api.get(`/get-new-messages/${corresponding_profile_id}`, {params: {first_message_id}});
-          console.log(`/get-chat-data`, res.data); // adjust to your API structure
-          setMessages(...res.data.messages.data, ...messages);
+          const res = await api.get(`/get-new-messages/${corresponding_profile_id}`, {params: {last_message_id}});
+          console.log(`/get-new-messages`, res.data); // adjust to your API structure
+          setMessages([ ...messages, ...res.data.messages]);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
-      dispatch(setIsLoading(false));
+      setIsLoadingNewMessages(false)
   };
   const getOldMessages = async () => {
-      const last_message_id = messages[0]?.id
-      console.log("getOldMessages", corresponding_profile_id)
-      dispatch(setIsLoading(true));
+    console.log('in getOldMessages')
+      const first_message_id = messages[0]?.id
+      if (!first_message_id) {
+        setIsTopReached(false)
+        return
+      }
+      
+      console.log("getOldMessages", corresponding_profile_id, messages, first_message_id)
       try {
-          const res = await api.get(`/get-old-messages/${corresponding_profile_id}`, {params: {last_message_id}});
-          console.log(`/get-chat-data`, res.data); // adjust to your API structure
-          setMessages(...messages, ...res.data.messages.data);
+          const res = await api.get(`/get-old-messages/${corresponding_profile_id}`, {params: {first_message_id}});
+          console.log(`/get-old-messages`, res.data); // adjust to your API structure
+          setOldMessages(res.data.messages);
+          //setMessages([...res.data.messages, ...messages]);
+          console.log('get-old-messages mess', messages)
       } catch (err) {
           console.error("Error fetching users:", err);
       }
-      dispatch(setIsLoading(false));
+      setIsTopReached(false)
+      //setIsLoadingOldMessages(false)
   };
   const sendMessage = async () => {
       //alert(messageText)
@@ -96,8 +108,184 @@ export default function Chat() {
 
   // Load data on page change
   useEffect(() => {
+    const getChatData = async () => {
+        console.log("getChatData", corresponding_profile_id)
+        dispatch(setIsLoading(true));
+        try {
+            const res = await api.get(`/get-chat-data/${corresponding_profile_id}`);
+            console.log(`/get-chat-data`, res.data); // adjust to your API structure
+            //setReaction(res.data.reaction);
+            setCorrespondingProfile(res.data.corresponding_profile);
+            setMessages(res.data.messages);
+        } catch (err) {
+            console.error("Error fetching users:", err);
+        }
+        dispatch(setIsLoading(false));
+        bottomRef.current?.scrollIntoView({behaviour: "smooth"})
+    };
     getChatData();
+    bottomRef.current?.scrollIntoView({behaviour: "smooth"})
   }, []);
+  useEffect(() => {
+    //bottomRef.current?.scrollIntoView({behaviour: "smooth"})
+    /* window.scrollTo({
+      top: document.body.scrollHeight,
+      behaviour: "smooth"
+    }) */
+  }, [messages]);
+
+  useEffect(() => {
+   console.log('old loaded messages', messages)
+   //setMessages([...oldMessages, ...messages]);
+   if (isTopReached) {
+    getOldMessages();
+   }
+   //alert('loaded messages')
+  }, [isTopReached]);
+  useEffect(() => {
+   if (isBottomReached) {
+    getNewMessages();
+   }
+   //alert('loaded messages')
+  }, [isBottomReached]);
+
+  useEffect(() => {
+   console.log('old loaded messages', messages)
+   setMessages([...oldMessages, ...messages]);
+  }, [oldMessages]);
+
+  useEffect(() => {
+    const options = {
+      root: containerRef.current, // the scrollable div
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+
+    const topObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log("🔼 Top visible → load older messages", messages);
+          setIsTopReached(true)
+        }
+      });
+    }, options);
+
+    const bottomObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log("🔽 Bottom visible → load newer messages");
+          setIsBottomReached(true)
+        }
+      });
+    }, options);
+
+    if (topRef.current) topObserver.observe(topRef.current);
+    if (bottomRef.current) bottomObserver.observe(bottomRef.current);
+
+    return () => {
+      topObserver.disconnect();
+      bottomObserver.disconnect();
+    };
+  }, []);
+
+   return (
+    <>
+      <header className="header header-fixed bg-white">
+        <div className="container">
+          <div className="header-content">
+            <div className="left-content me-3">
+              <a onClick={() => navigate(-1)} className="back-btn">
+                <i className="icon feather icon-chevron-left"></i>
+              </a>
+            </div>
+            <div className="mid-content d-flex align-items-center text-start">
+              <a style={{position: "relative"}} className="media media-40 rounded-circle me-3">
+                <img src={correspondingProfile?.imageFirst} alt="/"/>
+                {correspondingProfile?.isOnline && (<span style={{position: "absolute", width: "10px", height: "10px", backgroundColor: "#55D866", bottom: "0", left: "0", borderRadius: "50%", border: "1px solid #000"}}></span>)}
+              </a>
+              <div>
+                <h6 className="title">{correspondingProfile?.firstname}, {correspondingProfile?.age}</h6>
+                {correspondingProfile?.isOnline ?
+                  (<span>Online</span>):
+                  (<span>{correspondingProfile.onlineTimeAgo}</span>)
+                }
+              </div>  
+            </div>
+            <div className="right-content d-flex align-items-center">
+              <a className="dz-icon btn btn-primary light">
+                <i className="fa-solid fa-phone"></i>
+              </a>
+              <a className="dz-icon me-0 btn btn-primary light">
+                <i className="fa-solid fa-video"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div className="page-content space-top p-b60 message-content">
+        <div className="container" style={{overflowY: "hidden"}}>
+          <div className="chat-box-area"
+            ref={containerRef}
+            style={{
+              height: "450px",
+              /* height: "calc(400px)",
+              width: "100%", */
+              overflowY: "auto",
+              //border: "1px solid #ccc",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* top sentinel */}
+            <div ref={topRef} style={{ height: 1 }} />
+
+            {messages?.map((message, index) => {
+                return (
+                  <>
+                    {
+                      !messages[index-1]?.created_at?.includes(message.created_at.substr(0, 10)) &&
+                      (
+                        <div style={{textAlign: "center"}}>
+                          <span className="active-date">
+                            {moment(message.created_at).format('ll')}
+                          </span>
+                        </div>
+                      )
+                    }
+                    {
+                      message.sender_profiles_id==user.profile.id?
+                      (<MessageRight key={`right-${index}`} message={message.message} time={moment(message.created_at).format('LT')}/>)
+                      :(<MessageLeft key={`left-${index}`} message={message.message} time={moment(message.created_at).format('LT')}/>)
+                    }
+                  </>
+                );
+            })}
+
+            {/* bottom sentinel */}
+            <div ref={bottomRef} style={{ height: 1 }} />
+          </div>
+        </div> 
+      </div>
+      <footer className="footer border-top fixed bg-white">
+          <div className="container p-2">
+              <div className="chat-footer">
+                  <div>
+                      <div className="form-group">
+                          <div className="input-wrapper message-area" style={{display: "flex", alignItems: "center"}}>
+                              <div className="append-media"></div>
+                              <input value={messageText} onChange={handleMessageInput} type="text" className="form-control" placeholder="Send message..." style={{border: "0", height: "45px", marginRight: "15px"}}/>
+                              <button disabled={messageText==''} onClick={sendMessage} className="btn-chat" style={{border: "0"}}>
+                                {isSaving!==true?(<i className="icon feather icon-send"></i>):
+                                (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="34" height="34" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" stroke="#fff" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>)}
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>    
+          </div>
+      </footer>
+    </>
+  );
 
   return (
     <>
@@ -147,7 +335,8 @@ export default function Chat() {
             </header>
             <div className="page-content space-top p-b60 message-content">
               <div className="container"> 
-                <div className="chat-box-area">
+                <div className="chat-box-area" ref={containerRef}>
+                  <div ref={topRef} style={{ height: 1 }} />
                   {messages?.map((message, index) => {
                       return (
                         <>
@@ -169,7 +358,9 @@ export default function Chat() {
                         </>
                       );
                   })}
+                  <div ref={bottomRef} style={{ height: 1 }} />
                 </div>
+                
               </div> 
             </div>
             <footer className="footer border-top fixed bg-white">
