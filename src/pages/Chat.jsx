@@ -227,7 +227,7 @@ export default function Chat() {
           <div className="chat-box-area"
             ref={containerRef}
             style={{
-              height: "450px",
+              minHeight: "450px",
               /* height: "calc(400px)",
               width: "100%", */
               overflowY: "auto",
