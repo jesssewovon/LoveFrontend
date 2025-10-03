@@ -58,7 +58,7 @@ export default function Chat() {
       try {
           const res = await api.get(`/get-new-messages/${corresponding_profile_id}`, {params: {last_message_id}});
           console.log(`/get-new-messages`, res.data); // adjust to your API structure
-          setMessages([ ...messages, ...res.data.messages]);
+          setNewMessages(res.data.messages);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -162,9 +162,12 @@ export default function Chat() {
    setMessages([...oldMessages, ...messages]);
   }, [oldMessages]);
   useEffect(() => {
-    console.log('old loaded messages', messages)
+    console.log('new loaded messages', messages)
    setMessages([...messages, ...newMessages]);
-   bottomRef.current?.scrollIntoView({behaviour: "smooth"})
+   
+   setTimeout(() => {
+      bottomRef.current?.scrollIntoView({behaviour: "smooth"})
+    }, 1000);
   }, [newMessages]);
 
   useEffect(() => {
