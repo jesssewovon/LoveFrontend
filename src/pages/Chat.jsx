@@ -72,7 +72,7 @@ export default function Chat() {
         setIsTopReached(false)
         return
       }
-      
+      setIsLoadingOldMessages(true)
       console.log("getOldMessages", corresponding_profile_id, messages, first_message_id)
       try {
           const res = await api.get(`/get-old-messages/${corresponding_profile_id}`, {params: {first_message_id}});
@@ -83,8 +83,8 @@ export default function Chat() {
       } catch (err) {
           console.error("Error fetching users:", err);
       }
+      setIsLoadingOldMessages(false)
       setIsTopReached(false)
-      //setIsLoadingOldMessages(false)
   };
   const sendMessage = async () => {
       //alert(messageText)
@@ -263,6 +263,9 @@ export default function Chat() {
               >
                 {/* top sentinel */}
                 <div ref={topRef} style={{ height: 1 }} />
+                {isLoadingOldMessages && (<div style={{width: "100%", textAlign: "center"}}>
+                  <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent", margin: "auto"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
+                </div>)}
 
                 {messages?.map((message, index) => {
                     return (
@@ -288,6 +291,9 @@ export default function Chat() {
 
                 {/* bottom sentinel */}
                 <div ref={bottomRef} style={{ height: 1 }} />
+                {isLoadingNewMessages && (<div style={{width: "100%", textAlign: "center"}}>
+                  <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent", margin: "auto"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
+                </div>)}
               </div>
             </div> 
           </div>
