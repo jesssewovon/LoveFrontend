@@ -215,7 +215,10 @@ export const signinPiketplace = createAsyncThunk(
         //alert("locale "+locale)
         const res = await api.post(`/signin`, { authResult, locale }, config)
         if (res.data.status == "success") {
-          //dispatch(showPiAdRewarded())
+          const user = res.data.user || res.data.current_user_for_automatic_update
+          if (!user?.profile?.subscriptionData['hide ads']) {
+            dispatch(showPiAdRewarded())
+          }
         }
         return res.data
       //return auth; // this goes to `fulfilled` reducer

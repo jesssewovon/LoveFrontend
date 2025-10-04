@@ -8,9 +8,14 @@ import { updateProfile } from "../store/profileFormSlice";
 import api from "../api";
 import Button from 'react-bootstrap/Button';
 import Loader from '../components/Loader';
+import Lock from '../components/Lock';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useTranslation } from 'react-i18next';
 import { navigate } from "../navigationService";
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
 
 export default function EditProfile() {
   const dispatch = useDispatch();
@@ -18,6 +23,8 @@ export default function EditProfile() {
   const { isLoggedIn, isLoading, user, settings, isSaving } = useSelector((state) => state.user);
   const profileForm = useSelector((state) => state.profileForm);
   console.log('profileForm', profileForm)
+
+  const [subscriptionData, setSubscriptionData] = useState(user.profile?.subscriptionData);
 
   const [profile, setProfile] = useState({});
   const [interestsForm, setInterestsForm] = useState([]);
@@ -31,7 +38,13 @@ export default function EditProfile() {
 
   const [showAboutmeOffCanvas, setShowAboutmeOffCanvas] = useState(false);
   const handleAboutmeOffCanvasClose = () => setShowAboutmeOffCanvas(false);
-  const handleAboutmeOffCanvasShow = () => setShowAboutmeOffCanvas(true);
+  const handleAboutmeOffCanvasShow = () => {
+    if (subscriptionData['control profile']===false) {
+      subscriptionMessage()
+      return
+    }
+    setShowAboutmeOffCanvas(true);
+  }
 
   const [showBirthdateOffCanvas, setShowBirthdateOffCanvas] = useState(false);
   const handleBirthdateOffCanvasClose = () => setShowBirthdateOffCanvas(false);
@@ -43,7 +56,13 @@ export default function EditProfile() {
   
   const [showInterestsOffCanvas, setShowInterestsOffCanvas] = useState(false);
   const handleInterestsOffCanvasClose = () => setShowInterestsOffCanvas(false);
-  const handleInterestsOffCanvasShow = () => setShowInterestsOffCanvas(true);
+  const handleInterestsOffCanvasShow = () => {
+    if (subscriptionData['control profile']===false) {
+      subscriptionMessage()
+      return
+    }
+    setShowInterestsOffCanvas(true);
+  }
   
   const [showRelationshipGoalOffCanvas, setShowRelationshipGoalOffCanvas] = useState(false);
   const handleRelationshipGoalOffCanvasClose = () => setShowRelationshipGoalOffCanvas(false);
@@ -171,6 +190,15 @@ export default function EditProfile() {
   const saveProfile = async () => {
       dispatch(updateProfile(profile));
   };
+  
+  const subscriptionMessage = async () => {
+      MySwal.fire({ 
+          title: "Info!",
+          text: t('subscribe to have full control on profile'),
+          icon: "error",
+          showConfirmButton: true,
+      });
+  };
 
   if (isLoading) {
       return (
@@ -218,10 +246,13 @@ export default function EditProfile() {
                         <label htmlFor="imageUpload2"></label>
                       </div>
                     </div>
+                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                     <Lock/>
+                    </div>)}
                   </div>
                 </div>
                 <div className="col-12">
-                  <div className="dz-drop-box style-2">
+                  <div className="dz-drop-box style-2" style={{overflow: "hidden"}}>
                     <img src="/images/recent-pic/drop-bx.png" alt=""/>
                     <div className="drop-bx">
                       <div className="imagePreview" style={{backgroundImage: `url(${displayProfileImage('image3')})`}}>
@@ -230,6 +261,9 @@ export default function EditProfile() {
                         <label htmlFor="imageUpload3"></label>
                       </div>
                     </div>
+                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                     <Lock/>
+                    </div>)}
                   </div>
                 </div>
               </div>
@@ -255,7 +289,15 @@ export default function EditProfile() {
             <div className="card-body">
               <a onClick={handleAboutmeOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom">
                 <span>{profile.about_me}</span>
-                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+                {
+                  subscriptionData['control profile']===false?
+                  (
+                    <i className="dz-flex-box  ms-auto"><Lock/></i>
+                  ):
+                  (
+                    <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+                  )
+                }
               </a>
             </div>
           </div>
@@ -291,7 +333,15 @@ export default function EditProfile() {
             <div className="card-body">
               <a onClick={handleInterestsOffCanvasShow} className="setting-input" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1" aria-controls="offcanvasBottom3">
                 <span>{displayInterests()}</span>
-                <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+                {
+                  subscriptionData['control profile']===false?
+                  (
+                    <i className="dz-flex-box  ms-auto"><Lock/></i>
+                  ):
+                  (
+                    <i className="icon feather dz-flex-box icon-chevron-right ms-auto me-0"></i>
+                  )
+                }
               </a>
             </div>
           </div>

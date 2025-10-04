@@ -91,7 +91,7 @@ export default function Profile() {
                     <div className="card-body">
                       <Link to="/" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"> 
                         <div className="card-icon">
-                          <i className="flaticon flaticon-star-1"></i>
+                          <i className="fa fa-heart"></i>
                         </div>
                         <div className="card-content">
                           <p>0 Super Likes</p>
