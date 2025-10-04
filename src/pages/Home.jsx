@@ -131,7 +131,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
 
     // fetch profiles from API
     const fetchProfiles = async () => {
-        if(loading===true) return
         console.log('fetchProfiles', page, dateFilter)
         setLoading(true);
         try {
