@@ -22,6 +22,7 @@ const MySwal = withReactContent(Swal);
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
+  const {refresh} = useAliveController()
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
   //const { reactions } = useSelector((state) => state.profileForm);
   const [profiles, setProfiles] = useState([]);
@@ -74,6 +75,12 @@ export default function Home({ savedScroll, onSaveScroll }) {
       //console.log("remainingSwiping", remainingSwiping)
       setSubscriptionData(user?.profile?.subscriptionData)
     }, [user]);
+  
+    useEffect(() => {
+      if (isLoggedIn === true) {
+        page==1?fetchProfiles():setPage((p) => 1);
+      }
+    }, [isLoggedIn]);
   useActivate(() => {
     startTimer()
     window.scrollTo(0, savedScroll || 0);

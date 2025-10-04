@@ -97,7 +97,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/home" element={
-                <KeepAlive id="home">
+                <KeepAlive id="homeKeepAlive">
                   <Home savedScroll={scrollY} onSaveScroll={setScrollY} />
                 </KeepAlive>
               } />
