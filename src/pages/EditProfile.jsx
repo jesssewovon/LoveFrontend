@@ -209,7 +209,7 @@ export default function EditProfile() {
             <div className="col-4">
               <div className="row g-3">
                 <div className="col-12">
-                  <div className="dz-drop-box style-2">
+                  <div className="dz-drop-box style-2" style={{overflow: "hidden"}}>
                     <img src="/images/recent-pic/drop-bx.png" alt=""/>
                     <div className="drop-bx">
                       <div className="imagePreview" style={{backgroundImage: `url(${displayProfileImage('image2')})`}}>
