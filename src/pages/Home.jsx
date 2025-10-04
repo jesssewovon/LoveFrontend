@@ -22,7 +22,6 @@ const MySwal = withReactContent(Swal);
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
-  const {refresh} = useAliveController()
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
   //const { reactions } = useSelector((state) => state.profileForm);
   const [profiles, setProfiles] = useState([]);
