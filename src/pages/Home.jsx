@@ -75,9 +75,12 @@ export default function Home({ savedScroll, onSaveScroll }) {
       setSubscriptionData(user?.profile?.subscriptionData)
     }, [user]);
   
+    // Code to execute on isLoggedIn change
     useEffect(() => {
       if (isLoggedIn === true) {
-        page==1?fetchProfiles():setPage((p) => 1);
+        //page==1?fetchProfiles():setPage((p) => 1);
+      }else{
+        setPage(null)
       }
     }, [isLoggedIn]);
   useActivate(() => {
@@ -149,15 +152,6 @@ export default function Home({ savedScroll, onSaveScroll }) {
     useEffect(() => {
       fetchProfiles();
     }, [page]);
-    
-    // Code to execute on isLoggedIn change
-    useEffect(() => {
-        //Code...
-        if (isLoggedIn === true) {
-            //Code if connected...
-            //fetchProfiles()
-        }
-    }, [isLoggedIn]);
 
     //Load once
     useEffect(() => {
