@@ -246,7 +246,7 @@ export default function EditProfile() {
                         <label htmlFor="imageUpload2"></label>
                       </div>
                     </div>
-                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center"}}>
                      <Lock/>
                     </div>)}
                   </div>
@@ -261,7 +261,7 @@ export default function EditProfile() {
                         <label htmlFor="imageUpload3"></label>
                       </div>
                     </div>
-                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                    {subscriptionData['control profile']===false && (<div onClick={()=>subscriptionMessage()} className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center"}}>
                      <Lock/>
                     </div>)}
                   </div>
