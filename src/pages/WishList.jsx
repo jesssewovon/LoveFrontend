@@ -67,7 +67,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
           //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
           setCrushes([...crushes, ...res.data.list.data]); // adjust to your API structure
           setPastPage(res.data.list.last_page)
-          window.scrollTo(0, savedScroll || 0);
+          //window.scrollTo(0, savedScroll || 0);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -152,7 +152,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
       <div className="page-content space-top p-b65">
         <div className="container">
           <div style={{width: "100%", textAlign: "center"}}>
-            <button onClick={() => reload()} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
+            <button onClick={() => reload()} className="btn mb-2 me-2 btn-light btn-shadow rounded-xl">
                 {t('reload')}
             </button>
           </div>
