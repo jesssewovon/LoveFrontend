@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import SwipeDeck from "../components/SwipeDeck";
 import { useSelector } from "react-redux";
 import { useTranslation } from 'react-i18next';
-import { useActivate, useUnactivate } from "react-activation";
+import { useActivate, useUnactivate, useAliveController } from "react-activation";
 
 import api from "../api";
 import Header from "../components/Header";
@@ -22,6 +22,7 @@ const MySwal = withReactContent(Swal);
 
 export default function Home({ savedScroll, onSaveScroll }) {
   const {t} = useTranslation()
+  const {drop} = useAliveController()
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
   //const { reactions } = useSelector((state) => state.profileForm);
   const [profiles, setProfiles] = useState([]);
@@ -77,10 +78,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
     // Code to execute on isLoggedIn change
     useEffect(() => {
-      if (isLoggedIn === true) {
-        //page==1?fetchProfiles():setPage((p) => 1);
-      }else{
-        setPage(null)
+        //Kill all alive components on Logging out
+      if (isLoggedIn === false) {
+        drop('home')
+        drop('wishlist')
       }
     }, [isLoggedIn]);
   useActivate(() => {
