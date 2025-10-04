@@ -79,7 +79,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
     // Code to execute on isLoggedIn change
     useEffect(() => {
         //Kill all alive components on Logging out
-      if (isLoggedIn === true) {
+      if (isLoggedIn === true && loading === false) {
         setReload(true)
       }
     }, [isLoggedIn]);
