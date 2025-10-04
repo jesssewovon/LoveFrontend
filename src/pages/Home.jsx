@@ -79,9 +79,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
     // Code to execute on isLoggedIn change
     useEffect(() => {
         //Kill all alive components on Logging out
-      if (isLoggedIn === false) {
-        drop('home')
-        drop('wishlist')
+      if (isLoggedIn === true) {
+        setReload(true)
       }
     }, [isLoggedIn]);
   useActivate(() => {
@@ -224,7 +223,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
                               profiles={profiles}
                               onSwipe={handleSwipe}
                               remainingFreeSwiping={remainingSwiping}
-                              isSwipingUnlimited={subscriptionData['unlimited likes']}
+                              isSwipingUnlimited={subscriptionData?subscriptionData['unlimited likes']:false}
                               subscriptionData={subscriptionData}
                               />
                         </div>)
