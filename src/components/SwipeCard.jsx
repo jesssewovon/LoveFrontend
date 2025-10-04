@@ -132,7 +132,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         src={profile.imageFirst}
         alt={profile.firstname}
         effect="blur"
-        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?20:0}px)` }}
+        style={{ x, y, rotate, opacity, objectFit: 'cover', width: '100%', height: '100%', filter: `blur(${(!subscriptionData || !subscriptionData['unlimited likes']) && remainingFreeSwiping<=0?20:0}px)` }}
         drag={disabled ? 'false' : 'true'}
         dragconstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragelastic={0.5}
@@ -162,8 +162,8 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                     </span>):""
                   )
                 }
-                <h4 className={`title ${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
-                {profile.distance && (<p className={`mb-0 ${!subscriptionData['unlimited likes'] && remainingFreeSwiping<=0?'text-blur':''}`}>
+                <h4 className={`title ${(!subscriptionData || !subscriptionData['unlimited likes']) && remainingFreeSwiping<=0?'text-blur':''}`} style={{color: 'white'}}><a>{profile.firstname} , {profile.age} </a></h4>
+                {profile.distance && (<p className={`mb-0 ${(!subscriptionData || !subscriptionData['unlimited likes']) && remainingFreeSwiping<=0?'text-blur':''}`}>
                   <i className="icon feather icon-map-pin"></i>
                   &nbsp; {profile.distance} km away
                 </p>)}
@@ -218,7 +218,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
         <span className="py-2 px-2" style={{background: "green"}}>⭐️ Super Like</span>
         
       </motion.div> */}
-      {!subscriptionData['unlimited likes'] && remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", zIndex: "9", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
+      {(!subscriptionData || !subscriptionData['unlimited likes']) && remainingFreeSwiping <= 0 && (<div className="p-1" style={{position: "absolute", zIndex: "9", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.7)"}}>
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="" style={{width: "100%", height: "70vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
                 <div className="" style={{width: "100%", textAlign: "center"}}>

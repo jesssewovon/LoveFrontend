@@ -80,7 +80,10 @@ export default function Home({ savedScroll, onSaveScroll }) {
     useEffect(() => {
         //Kill all alive components on Logging out
       if (isLoggedIn === true) {
-        setReload(true)
+        //setReload(true)
+      }
+      if (isLoggedIn === false) {
+        drop('home')
       }
     }, [isLoggedIn]);
   useActivate(() => {
@@ -149,9 +152,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   
     // Load data on page change
     useEffect(() => {
-      if (!loading) {
         fetchProfiles();
-      }
     }, [page]);
 
     //Load once
