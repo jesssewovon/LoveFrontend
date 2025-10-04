@@ -57,7 +57,7 @@ api.interceptors.response.use(
       // Example: redirect to login
       store.dispatch(loggedUserOut());
       //window.location.href = "/profile";
-      navigate("/profile");  // ✅ redirect on 401
+      navigate("/");  // ✅ redirect on 401
       try {
         await axios.post("/signin", {}, { withCredentials: true });
         return api(error.config); // retry original request

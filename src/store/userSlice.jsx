@@ -153,6 +153,7 @@ const userSlice = createSlice({
         console.log('fulfilled signoutPiketplace', state, action.payload);
         const data = action.payload
         if (data.status=='success') {
+            navigate('/')
             state.isLoggedIn = false;
             state.token = "";
             state.user = null;
@@ -164,7 +165,7 @@ const userSlice = createSlice({
               showConfirmButton: false,
               timer: 1500
             }); */
-            navigate('/')
+            
         }
       })
       .addCase(signoutPiketplace.rejected, (state, action) => {
