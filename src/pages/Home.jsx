@@ -72,7 +72,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
       setRemainingSwiping(user?.profile?.remainingFreeSwiping-reactions?.length)
       //console.log("remainingSwiping", remainingSwiping)
-      setSubscriptionData(user.profile?.subscriptionData)
+      setSubscriptionData(user?.profile?.subscriptionData)
     }, [user]);
   useActivate(() => {
     startTimer()
