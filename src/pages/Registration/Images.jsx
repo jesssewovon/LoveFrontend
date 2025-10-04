@@ -94,6 +94,7 @@ export default function Images() {
 
     return (
         <>
+          <div className="content-body bg-gray-color" style={{height: "100vh"}}>
             <div className="page-content p-b70">
                 <div className="container">
                     <div className="account-area">
@@ -190,6 +191,7 @@ export default function Images() {
                     </button>
                 </div>
             </div>
+          </div>
         </>
     );
 }

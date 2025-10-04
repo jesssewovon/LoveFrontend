@@ -23,6 +23,7 @@ export default function InterestedGender() {
 
     return (
         <>
+          <div className="content-body bg-gray-color" style={{height: "100vh"}}>
             <div className="page-content">
                 <div className="container">
                     <div className="account-area">
@@ -94,6 +95,7 @@ export default function InterestedGender() {
                     <button disabled={profileForm.interested_gender==""} onClick={() => navigate('/registration-relationship-goal')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
+          </div>
         </>
     );
 }

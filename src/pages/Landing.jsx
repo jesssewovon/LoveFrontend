@@ -33,6 +33,8 @@ export default function Landing() {
     const handleLanguageOffCanvasClose = () => {setShowLanguageOffCanvas(false)};
     
     const findSomeone = async () => {
+        /* navigate('/registration-firstname')
+        return */
         //updateLanguage()
         dispatch(signinPiketplace(geolocation));
     };
@@ -70,7 +72,7 @@ export default function Landing() {
 
     return (
         <>
-            <div className="content-body">
+            <div className="content-body bg-gray-color">
                 <div className="welcome-area bg-image">
                     <div className="welcome-inner">
                         <div className="dz-media">

@@ -22,6 +22,7 @@ export default function Gender() {
 
     return (
         <>
+          <div className="content-body bg-gray-color" style={{height: "100vh"}}>
             <div className="page-content">
                 <div className="container">
                     <div className="account-area">
@@ -93,6 +94,7 @@ export default function Gender() {
                     <button disabled={profileForm?.gender==""} onClick={() => navigate('/registration-sexual-orientation')} className="btn btn-lg btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">Next</button>
                 </div>
             </div>
+          </div>
         </>
     );
 }

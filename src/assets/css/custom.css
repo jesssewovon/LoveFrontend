@@ -71,3 +71,10 @@
 .menubar-area .toolbar-inner .nav-link.active svg path{
   stroke: #fff;
 }
+
+.bg-gray-color{
+  background-color: #fff;
+}
+.theme-dark .bg-gray-color{
+  background-color: #2c2f39;
+}
