@@ -152,13 +152,19 @@ export default function ProfileDetails() {
                   className="mySwiper get-started"
               >
                   <SwiperSlide key={`slider1`}>
+                    <div className="dz-media">
                       <img src={profile?.images?.image1} alt={``}/>
+                    </div>
                   </SwiperSlide>
                   {profile?.images?.image2 && (<SwiperSlide key={`slider2`}>
+                    <div className="dz-media">
                       <img src={profile?.images?.image2} alt={``}/>
+                    </div>
                   </SwiperSlide>)}
                   {profile?.images?.image3 && (<SwiperSlide key={`slider3`}>
+                    <div className="dz-media">
                       <img src={profile?.images?.image3} alt={``}/>
+                    </div>
                   </SwiperSlide>)}
               </Swiper>
               </div>
