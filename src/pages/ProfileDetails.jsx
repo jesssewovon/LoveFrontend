@@ -134,7 +134,7 @@ export default function ProfileDetails() {
         <div className="container">
           <div className="detail-area">
             <div className="dz-media-card style-2">
-              <div className="dz-media">
+              <div className="dz-media_ swiper subscription-swiper2">
                 {/* <img src={profile?.imageFirst} alt={profile.firstname}/> */}
                 <Swiper
                   spaceBetween={30}
@@ -150,7 +150,7 @@ export default function ProfileDetails() {
                   navigation={false}
                   modules={[Autoplay, Pagination, Navigation]}
                   className="mySwiper get-started"
-              >
+                >
                   <SwiperSlide key={`slider1`}>
                     <div className="dz-media">
                       <img src={profile?.images?.image1} alt={``}/>
@@ -166,12 +166,28 @@ export default function ProfileDetails() {
                       <img src={profile?.images?.image3} alt={``}/>
                     </div>
                   </SwiperSlide>)}
-              </Swiper>
+                </Swiper>
+                <div className="swiper-btn">
+                  <div className="swiper-pagination style-1 flex-1" style={{position: "relative!important"}}></div>
+                </div>
               </div>
               <div className="dz-content">
                 <div className="left-content">
                   <h4 className="title">{profile.firstname}, {profile.age}</h4>
-                  <p className="mb-0"><i className="icon feather icon-map-pin"></i> 5 miles away</p>
+                  {profile.distance && (<p className={`mb-0 ${(!subscriptionData || !subscriptionData['unlimited likes']) && remainingFreeSwiping<=0?'text-blur':''}`}>
+                    <i className="icon feather icon-map-pin"></i>
+                    &nbsp; {profile.distance} km away
+                  </p>)}
+                  {profile.interests?.length && (
+                    <ul class="intrest">
+                      <li><span class="badge">Photography</span></li>
+                      {profile.interests?.map((name, index) => {
+                          return (
+                              <li key={index}><span class="badge">{name}</span></li>
+                          );
+                      })}
+                    </ul>
+                  )}
                 </div>
                 {/* <a href="javascript:void(0);" className="dz-icon">
                   <i className="flaticon flaticon-star-1"></i>
