@@ -19,6 +19,14 @@ import { navigate } from "../navigationService";
 
 import api from "../api";
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import required modules
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
 export default function ProfileDetails() {
   const MySwal = withReactContent(Swal);
   const { id } = useParams();
@@ -127,7 +135,32 @@ export default function ProfileDetails() {
           <div className="detail-area">
             <div className="dz-media-card style-2">
               <div className="dz-media">
-                <img src={profile?.imageFirst} alt={profile.firstname}/>
+                {/* <img src={profile?.imageFirst} alt={profile.firstname}/> */}
+                <Swiper
+                  spaceBetween={30}
+                  speed={1500}
+                  centeredSlides={true}
+                  autoplay={{
+                      delay: 3000,
+                      disableOnInteraction: true,
+                  }}
+                  pagination={{
+                      clickable: true,
+                  }}
+                  navigation={false}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className="mySwiper get-started"
+              >
+                  <SwiperSlide key={`slider1`}>
+                      <img src={profile?.images?.image1} alt={``}/>
+                  </SwiperSlide>
+                  {profile?.images?.image2 && (<SwiperSlide key={`slider2`}>
+                      <img src={profile?.images?.image2} alt={``}/>
+                  </SwiperSlide>)}
+                  {profile?.images?.image3 && (<SwiperSlide key={`slider3`}>
+                      <img src={profile?.images?.image3} alt={``}/>
+                  </SwiperSlide>)}
+              </Swiper>
               </div>
               <div className="dz-content">
                 <div className="left-content">
