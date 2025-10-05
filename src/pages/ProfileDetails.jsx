@@ -134,14 +134,14 @@ export default function ProfileDetails() {
         <div className="container">
           <div className="detail-area">
             <div className="dz-media-card style-2">
-              <div className="dz-media_ swiper subscription-swiper2">
+              <div className="dz-media swiper subscription-swiper2">
                 {/* <img src={profile?.imageFirst} alt={profile.firstname}/> */}
                 <Swiper
                   spaceBetween={30}
                   speed={1500}
                   centeredSlides={true}
                   autoplay={{
-                      delay: 3000,
+                      delay: 2000,
                       disableOnInteraction: true,
                   }}
                   pagination={{
@@ -168,7 +168,7 @@ export default function ProfileDetails() {
                   </SwiperSlide>)}
                 </Swiper>
                 <div className="swiper-btn">
-                  <div className="swiper-pagination style-1 flex-1" style={{position: "relative!important"}}></div>
+                  <div className="swiper-pagination style-1 flex-1"></div>
                 </div>
               </div>
               <div className="dz-content">
