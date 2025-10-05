@@ -37,6 +37,8 @@ export default function ProfileDetails() {
   const [profile, setProfile] = useState({});
   const [reaction, setReaction] = useState({});
 
+  const [subscriptionData, setSubscriptionData] = useState(user?.profile?.subscriptionData);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -202,27 +204,29 @@ export default function ProfileDetails() {
                 <h6 className="title">About me</h6>
                 <p className="para-text">{profile.about_me}</p>					
               </div>)}
-              <div className="intrests mb-3">
-                <h6 className="title">Interests</h6>
-                <ul className="dz-tag-list">
-                  {/* <li> 
-                    <div className="dz-tag">
-                      <i className="icon feather icon-camera"></i>
-                      <span>Photography</span>
-                    </div>
-                  </li> */}
-                  {profile.interests?.map((name, index) => {
-                      return (
-                          <li key={index}>
-                            <div className="dz-tag">
-                              {/* <i className="icon feather icon-camera"></i> */}
-                              <span>{t(name)}</span>
-                            </div>
-                          </li>
-                      );
-                  })}
-                </ul>
-              </div>
+              {profile.interests?.length && (
+                <div className="intrests mb-3">
+                  <h6 className="title">Interests</h6>
+                  <ul className="dz-tag-list">
+                    {/* <li> 
+                      <div className="dz-tag">
+                        <i className="icon feather icon-camera"></i>
+                        <span>Photography</span>
+                      </div>
+                    </li> */}
+                    {profile.interests?.map((name, index) => {
+                        return (
+                            <li key={index}>
+                              <div className="dz-tag">
+                                {/* <i className="icon feather icon-camera"></i> */}
+                                <span>{t(name)}</span>
+                              </div>
+                            </li>
+                        );
+                    })}
+                  </ul>
+                </div>
+              )}
               <div className="languages mb-3">
                 <h6 className="title">Languages</h6>
                 <ul className="dz-tag-list">
