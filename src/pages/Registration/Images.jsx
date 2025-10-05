@@ -63,6 +63,14 @@ export default function Images() {
             //console.log(res.data)
             dispatch(setIsSaving(false))
             if (res.data.status === true) {
+                dispatch(setUser(res.data.user))
+                /////////////////SHOW PI AD//////////////////
+                const user = res.data.user || res.data.current_user_for_automatic_update
+                const hideAd = user?.profile?.subscriptionData && user?.profile?.subscriptionData['hide ads']===true
+                if (user?.has_profile===true && !hideAd) {
+                    dispatch(showPiAdRewarded())
+                }
+                //////////////////////////////////////////////
                 MySwal.fire({
                     title: "Info",
                     text: res.data.message,
@@ -70,7 +78,6 @@ export default function Images() {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                dispatch(setUser(res.data.user))
                 navigate('/home')
             }else{
                 MySwal.fire({ 
