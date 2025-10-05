@@ -219,7 +219,7 @@ export const signinPiketplace = createAsyncThunk(
           const user = res.data.user || res.data.current_user_for_automatic_update
           const hideAd = user?.profile?.subscriptionData && user?.profile?.subscriptionData['hide ads']===true
           if (user?.has_profile===true && !hideAd) {
-            dispatch(showPiAdRewarded())
+            dispatch(showPiAdRewarded("after-login"))
           }
         }
         return res.data
@@ -255,12 +255,12 @@ export const changeLanguage = createAsyncThunk(
 
 export const unlockWithPiRewardedAd = createAsyncThunk(
   'auth/unlockWithPiRewardedAd',
-  async (adId, thunkAPI) => {
+  async ({adId, type}, thunkAPI) => {
       const userState = thunkAPI.getState().user
       const username = userState.user?.username
       //alert('In unlock-with-pi-rewarded-ad '+username+" - "+adId)
       thunkAPI.dispatch(setIsSaving(true))
-      const res = await api.post('/unlock-with-pi-rewarded-ad', {username, adId})
+      const res = await api.post('/unlock-with-pi-rewarded-ad', {username, adId, type})
       thunkAPI.dispatch(setIsSaving(false))
       if (res.data.status === true) {
         if (res.data.message) {
@@ -286,7 +286,7 @@ export const unlockWithPiRewardedAd = createAsyncThunk(
 
 export const showPiAdRewarded = createAsyncThunk(
   'auth/showPiAdRewarded',
-  async (_, thunkAPI) => {
+  async (type, thunkAPI) => {
     try{
       const ready = await Pi.Ads.isAdReady("rewarded");
       //alert("ready "+JSON.stringify(ready))
@@ -330,7 +330,7 @@ export const showPiAdRewarded = createAsyncThunk(
           // and rewarded user if the rewarded ad status is confirmed
           // e.g.:
           const adId = showAdResponse.adId
-          thunkAPI.dispatch(unlockWithPiRewardedAd(adId));
+          thunkAPI.dispatch(unlockWithPiRewardedAd(adId, type));
           // if (result.rewarded) {
           // showRewardedModal(result.reward)
           // } else {
