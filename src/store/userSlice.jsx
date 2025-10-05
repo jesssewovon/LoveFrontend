@@ -263,13 +263,15 @@ export const unlockWithPiRewardedAd = createAsyncThunk(
       const res = await api.post('/unlock-with-pi-rewarded-ad', {username, adId})
       thunkAPI.dispatch(setIsSaving(false))
       if (res.data.status === true) {
-        MySwal.fire({ 
-          title: "Info",
-          text: res.data.message,
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500
-        });
+        if (res.data.message) {
+          MySwal.fire({
+            title: "Info",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: true,
+            timer: 1500
+          });
+        }
       }else{
         MySwal.fire({ 
           title: "Info",
