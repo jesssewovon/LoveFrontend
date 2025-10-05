@@ -14,7 +14,7 @@ import { setIsLoading, setReloadHomePage } from "../store/userSlice";
 //import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
 
-import { useLocation } from "react-router";
+import { replace, useLocation, useNavigate } from "react-router";
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -29,6 +29,8 @@ export default function Home({ savedScroll, onSaveScroll }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
+
+  const nnavigate = useNavigate();
 
   const location = useLocation();
 
@@ -59,6 +61,7 @@ export default function Home({ savedScroll, onSaveScroll }) {
   useEffect(() => {
       console.log('location href', location)
       if (location?.state?.reloadHome === true) {
+        nnavigate(location.pathname, {replace: true, state: null})//Remove filter in memory
         MySwal.fire({ 
             title: "Info!",
             text: "Filter application ...",
