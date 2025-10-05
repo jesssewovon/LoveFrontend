@@ -94,7 +94,7 @@ export default function Profile() {
                           <i className="fa fa-heart"></i>
                         </div>
                         <div className="card-content">
-                          <p>0 Super Likes</p>
+                          <p>{user?.profile?.matchData?.nbLikes} Likes</p>
                         </div>
                         <i className="icon feather icon-plus"></i>
                       </Link>
@@ -104,13 +104,15 @@ export default function Profile() {
                 <div className="col-4">
                   <div className="card style-2">
                     <div className="card-body">
-                      <div className="card-icon">
-                        <i className="flaticon flaticon-shuttle"></i>
-                      </div>
-                      <div className="card-content">
-                        <p>My Boosts</p>
-                      </div>
-                      <i className="icon feather icon-plus"></i>
+                      <Link to="/" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"> 
+                        <div className="card-icon">
+                          <i className="fa fa-times" style={{color: "red"}}></i>
+                        </div>
+                        <div className="card-content">
+                          <p>{user?.profile?.matchData?.nbDislikes} Dislikes</p>
+                        </div>
+                        <i className="icon feather icon-plus"></i>
+                      </Link>
                     </div>
                   </div>
                 </div>

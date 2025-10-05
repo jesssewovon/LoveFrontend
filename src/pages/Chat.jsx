@@ -227,7 +227,7 @@ export default function Chat() {
                     <i className="icon feather icon-chevron-left"></i>
                   </a>
                 </div>
-                <div className="mid-content d-flex align-items-center text-start">
+                <div onClick={() => navigate(`/profile-details/${profile.id}`)} className="mid-content d-flex align-items-center text-start">
                   <a style={{position: "relative"}} className="media media-40 rounded-circle me-3">
                     <img src={correspondingProfile?.imageFirst} alt="/"/>
                     {correspondingProfile?.isOnline && (<span style={{position: "absolute", width: "10px", height: "10px", backgroundColor: "#55D866", bottom: "0", left: "0", borderRadius: "50%", border: "1px solid #000"}}></span>)}
@@ -240,14 +240,14 @@ export default function Chat() {
                     }
                   </div>  
                 </div>
-                <div className="right-content d-flex align-items-center">
+                {/* <div className="right-content d-flex align-items-center">
                   <a className="dz-icon btn btn-primary light">
                     <i className="fa-solid fa-phone"></i>
                   </a>
                   <a className="dz-icon me-0 btn btn-primary light">
                     <i className="fa-solid fa-video"></i>
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </header>
