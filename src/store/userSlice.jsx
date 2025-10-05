@@ -256,7 +256,6 @@ export const changeLanguage = createAsyncThunk(
 export const unlockWithPiRewardedAd = createAsyncThunk(
   'auth/unlockWithPiRewardedAd',
   async ({adId, type}, thunkAPI) => {
-      alert(type)
       const userState = thunkAPI.getState().user
       const username = userState.user?.username
       //alert('In unlock-with-pi-rewarded-ad '+username+" - "+adId)
@@ -288,7 +287,6 @@ export const unlockWithPiRewardedAd = createAsyncThunk(
 export const showPiAdRewarded = createAsyncThunk(
   'auth/showPiAdRewarded',
   async (type, thunkAPI) => {
-    alert(type)
     try{
       const ready = await Pi.Ads.isAdReady("rewarded");
       //alert("ready "+JSON.stringify(ready))
