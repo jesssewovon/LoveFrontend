@@ -2,7 +2,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import api from "../../api";
-import { setIsLoading, signinPiketplace, setUser, setIsSaving } from "../../store/userSlice";
+import { setIsLoading, signinPiketplace, setUser,
+    setIsSaving, showPiAdRewarded 
+} from "../../store/userSlice";
 import { navigate } from "../../navigationService";
 
 import { updateField, resetForm } from "../../store/profileFormSlice";
