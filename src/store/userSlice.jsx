@@ -256,7 +256,6 @@ export const changeLanguage = createAsyncThunk(
 export const unlockWithPiRewardedAd = createAsyncThunk(
   'auth/unlockWithPiRewardedAd',
   async ({adId, type}, thunkAPI) => {
-      alert(type)
       const userState = thunkAPI.getState().user
       const username = userState.user?.username
       //alert('In unlock-with-pi-rewarded-ad '+username+" - "+adId)
@@ -331,7 +330,7 @@ export const showPiAdRewarded = createAsyncThunk(
           // and rewarded user if the rewarded ad status is confirmed
           // e.g.:
           const adId = showAdResponse.adId
-          thunkAPI.dispatch(unlockWithPiRewardedAd(adId, type));
+          thunkAPI.dispatch(unlockWithPiRewardedAd({adId, type}));
           // if (result.rewarded) {
           // showRewardedModal(result.reward)
           // } else {
