@@ -288,6 +288,7 @@ export const unlockWithPiRewardedAd = createAsyncThunk(
 export const showPiAdRewarded = createAsyncThunk(
   'auth/showPiAdRewarded',
   async (type, thunkAPI) => {
+    alert(type)
     try{
       const ready = await Pi.Ads.isAdReady("rewarded");
       //alert("ready "+JSON.stringify(ready))
