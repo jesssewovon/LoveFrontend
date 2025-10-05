@@ -251,7 +251,7 @@ export default function Chat() {
               </div>
             </div>
           </header>
-          <div className="page-content space-top p-b60 message-content">
+          <div className="page-content space-top p-b60 message-content bg-gray-color">
             <div className="container" style={{overflowY: "hidden"}}>
               <div className="chat-box-area"
                 ref={containerRef}
