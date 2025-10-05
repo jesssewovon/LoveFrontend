@@ -138,7 +138,7 @@ export const updateProfile = createAsyncThunk(
           }else{
             MySwal.fire({ 
                 title: "Info",
-                text: res.data.message+' gnnng jess 1',
+                text: res.data.message,
                 icon: "error",
                 showConfirmButton: false,
             });
@@ -147,7 +147,7 @@ export const updateProfile = createAsyncThunk(
       }).catch(error => {
           MySwal.fire({ 
             title: "Info",
-            text: t('an_error_occured')+' gnnng jess',
+            text: t('an_error_occured'),
             icon: "error",
             showConfirmButton: false,
             timer: 1500

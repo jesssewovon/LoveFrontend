@@ -217,7 +217,8 @@ export const signinPiketplace = createAsyncThunk(
         const res = await api.post(`/signin`, { authResult, locale }, config)
         if (res.data.status == "success") {
           const user = res.data.user || res.data.current_user_for_automatic_update
-          if (!user?.profile?.subscriptionData['hide ads']) {
+          const hideAd = user?.profile?.subscriptionData && user?.profile?.subscriptionData['hide ads']===true
+          if (user?.has_profile===true && !hideAd) {
             dispatch(showPiAdRewarded())
           }
         }
