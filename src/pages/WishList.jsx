@@ -152,7 +152,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
       <div className="page-content space-top p-b65">
         <div className="container">
           <div style={{width: "100%", textAlign: "center"}}>
-            <button onClick={() => reload()} className="btn mb-2 me-2 btn-light btn-shadow rounded-xl">
+            <button onClick={() => reload()} className="btn mb-2 me-2 btn-light rounded-xl">
                 {t('reload')}
             </button>
           </div>
@@ -183,9 +183,13 @@ export default function WishList({ savedScroll, onSaveScroll }) {
             {loading && (<div style={{width: "100%", textAlign: "center"}}>
               <svg className="loader-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent", margin: "auto"}} width="50" height="50" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>
             </div>)}
-            {!loading && lastPage && lastPage<=page && (<div style={{width: "100%", textAlign: "center"}}>
-              No more elements
-            </div>)}
+            {
+              !loading && crushes.length==0 ? (<div style={{width: "100%", textAlign: "center"}}>
+                No likes
+              </div>):!loading && lastPage && lastPage<=page && (<div style={{width: "100%", textAlign: "center"}}>
+                No more likes
+              </div>)
+            }
             {/* bottom sentinel */}
             <div ref={bottomRef} style={{ height: 1 }} />
           </div>
