@@ -404,7 +404,7 @@ export default function EditProfile() {
                 <i class="icon feather icon-map-pin"></i>
               </div> */}
             </div>
-            <input type="text" class="form-control" value={profile.firstname} onChange={handleFirstnameChange}/>
+            <input type="text" class="form-control" value={profile.firstname} onChange={handleFirstnameChange} maxLength={10}/>
           </div>
           <button onClick={handleFirstnameOffCanvasClose} class="btn btn-gradient w-100 dz-flex-box btn-shadow rounded-xl">
             {t('close')}

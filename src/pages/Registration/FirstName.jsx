@@ -41,7 +41,7 @@ export default function FirstName() {
                                     <i className="icon feather icon-user"></i>
                                 </div>
                             </div>
-                            <input type="text" value={profileForm.firstname} name="firstname" onChange={handleChange} className="form-control" placeholder="Enter first name"/>								
+                            <input type="text" value={profileForm.firstname} name="firstname" maxLength={10} onChange={handleChange} className="form-control" placeholder="Enter first name"/>								
                         </div>
                     </div>
                 </div>
