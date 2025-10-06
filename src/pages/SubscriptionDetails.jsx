@@ -23,7 +23,7 @@ export default function SubscriptionDetails() {
   const {t} = useTranslation()
   const { isLoggedIn, isLoading, user, dateFilter } = useSelector((state) => state.user);
 
-  const [subscription, setSubscription] = useState({});
+  const [subscription, setSubscription] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [isActiveSubscription, setIsActiveSubscription] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -58,7 +58,7 @@ export default function SubscriptionDetails() {
       const uuid = uuidv4()
       dispatch(piPayment({
           amount: selectedPeriod?.amount,
-          memo: `Subscription ${subscription.name}`,
+          memo: `Subscription ${subscription?.name}`,
           metadata: {
               userId: user.id,
               type: 'subscription',
@@ -77,7 +77,7 @@ export default function SubscriptionDetails() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={`${subscription?.name} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
+              <Header showBackButton={true} title={`${subscription?subscription.name:''} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
               <div className="content-body bg-gray-color" style={{height: "100vh"}}>
                 <div className="page-content space-top p-b65">
                     <div className="container fixed-full-area">
@@ -95,7 +95,7 @@ export default function SubscriptionDetails() {
 
   return (
     <>
-      <Header showBackButton={true} title={`${subscription?.name} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
+      <Header showBackButton={true} title={`${subscription?subscription.name:''} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
       <div className="content-body bg-gray-color" style={{height: "100vh"}}>
         <div class="page-content space-top p-b60">
           <div class="container"> 
@@ -111,7 +111,7 @@ export default function SubscriptionDetails() {
                   </div>
                 </div>
               </div>
-              {subscription.upgradable_to===true && (<div>
+              {subscription?.upgradable_to===true && (<div>
                 <div className="section-head ps-0 py-4">
                     <h5>Choose a period</h5>
                 </div>
