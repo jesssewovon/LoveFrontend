@@ -116,7 +116,7 @@ export default function ProfileDetails() {
       return (
           <>
               <Header showBackButton={true} title={"Profile Details"} showWishList={false}/>
-              <div className="content-body bg-gray-color" style={{minHeight: "500px"}}>
+              <div className="content-body bg-gray-color" style={{minHeight: "100vh"}}>
                 <div className="page-content space-top p-b65">
                     <div className="container fixed-full-area">
                         <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -134,7 +134,7 @@ export default function ProfileDetails() {
   return (
     <>
       <Header showBackButton={true} title={"Profile Details"} showWishList={false} classes={"bg-white"}/>
-      <div className="content-body bg-gray-color" style={{minHeight: "500px"}}>
+      <div className="content-body bg-gray-color" style={{minHeight: "100vh"}}>
         <div className="page-content space-top p-b40">
           <div className="container">
             <div className="detail-area">
