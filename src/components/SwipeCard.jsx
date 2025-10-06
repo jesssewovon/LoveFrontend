@@ -85,7 +85,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
     const res = await api.post(`/message-before-matching`, {corresponding_profile_id})
     dispatch(setShowScreenLoader(false))
     if (res.data.status === true) {
-      if (res.data.can_message_before_matching === true) {
+      if (res.data.can_message === true) {
         navigate(`/chat/${corresponding_profile_id}`)
       }else{
         MySwal.fire({ 
