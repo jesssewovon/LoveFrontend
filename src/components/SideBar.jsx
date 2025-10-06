@@ -142,11 +142,11 @@ export default function SideBar() {
 									</a>
 								</li>
 								<li>
-									<Link to="/subscription" onClick={handleClickOnLink} className="nav-link">
+									<Link to="/subscriptions" onClick={handleClickOnLink} className="nav-link">
 										<span className="dz-icon">
 											<i className="icon feather icon-list"></i>
 										</span>
-										<span>{t('side_menu.subscription')}</span>
+										<span>{t('side_menu.subscriptions')}</span>
 									</Link>
 								</li>
 								<li>

@@ -22,7 +22,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-export default function Subscription() {
+export default function Subscriptions() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {t} = useTranslation()
@@ -30,7 +30,7 @@ export default function Subscription() {
 
   const swiperRef = useRef();
   const [subscriptions, setSubscriptions] = useState([]);
-  const [activeSubscription, setActiveSubscription] = useState({});
+  const [activeSubscription, setActiveSubscription] = useState(null);
   const [subscriptionIndex, setSubscriptionIndex] = useState(0);
 
   // Get my profile from API
@@ -144,11 +144,14 @@ export default function Subscription() {
                         ))
                       }
                     </ul>
-                    {activeSubscription?.code!==subscription.code && (<div className="bottom-btn container bg-white text-center px-5">
-                      <Link to={`/subscription-details/${subscription.id}`} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
-                      {t('subscribe')}
-                      </Link>
-                    </div>)}
+                    {(activeSubscription===null || subscription.upgradable_to === true) && (
+                        <div className="bottom-btn container bg-white text-center px-5">
+                          <Link to={`/subscription-details/${subscription.id}`} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl">
+                          {activeSubscription===null?t('subscribe'):t('upgrade')}
+                          </Link>
+                        </div>
+                      )
+                    }
                   </div>)
                 ))
               }

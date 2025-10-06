@@ -24,8 +24,9 @@ export default function SubscriptionDetails() {
   const { isLoggedIn, isLoading, user, dateFilter } = useSelector((state) => state.user);
 
   const [subscription, setSubscription] = useState({});
-  const [selectedPeriod, setSelectedPeriod] = useState({});
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [isActiveSubscription, setIsActiveSubscription] = useState(false);
+  const [profile, setProfile] = useState(null);
 
   // Get my profile from API
   const getSubscriptionDetails = async () => {
@@ -33,6 +34,7 @@ export default function SubscriptionDetails() {
       try {
           const res = await api.get(`get-subscription-details/${id}`);
           console.log(`get-subscription-details`, res.data); // adjust to your API structure
+          setProfile(res.data.my_profile)
           setSubscription(res.data.subscription)
           setIsActiveSubscription(res.data.is_the_active_subscription)
       } catch (err) {
@@ -55,13 +57,13 @@ export default function SubscriptionDetails() {
       //alert('makepaiement')
       const uuid = uuidv4()
       dispatch(piPayment({
-          amount: selectedPeriod.amount,
+          amount: selectedPeriod?.amount,
           memo: `Subscription ${subscription.name}`,
           metadata: {
               userId: user.id,
               type: 'subscription',
               uniqueId: uuid,
-              period_subscriptions_id: selectedPeriod.id,
+              period_subscriptions_id: selectedPeriod?.id,
           },
       }));
       navigate('/payment-verification', {
@@ -109,19 +111,19 @@ export default function SubscriptionDetails() {
                   </div>
                 </div>
               </div>
-              {!isActiveSubscription && (<div>
+              {subscription.upgradable_to===true && (<div>
                 <div className="section-head ps-0 py-4">
                     <h5>Choose a period</h5>
                 </div>
                 <div className="radio style-2">
                     {
-                      subscription?.periods?.map((period, index) => (
+                      subscription?.periods?.filter(x=>x.upgradable_to===true)?.map((period, index) => (
                         <label key={index} className="radio-label" htmlFor={period.period_interval}>
                             <input type="radio" name="period" value={period.id}
                                 id={period.period_interval} 
                                 checked={
                                     period.id ===
-                                    selectedPeriod.id
+                                    selectedPeriod?.id
                                 }
                                 onChange={() =>
                                     handleRadioChange(
@@ -202,11 +204,11 @@ export default function SubscriptionDetails() {
                     <span>Hide Ads</span>
                   </li> */}
                 </ul>
-                {!isActiveSubscription && (<div className="bottom-btn container bg-white text-center px-5">
-                  <button disabled={!selectedPeriod.id} onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
-                    {selectedPeriod.amount} Pi {'=>'} {t('subscribe')}
+                <div className="bottom-btn container bg-white text-center px-5">
+                  <button disabled={!selectedPeriod?.id} onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
+                    {profile?.hasActiveSubscription?`add ${selectedPeriod?selectedPeriod?.amount-profile?.active_subscription?.amount:0} for ${t('upgrade')}`:`${selectedPeriod?.amount} Pi => ${t('subscribe')}`}
                   </button>
-                </div>)}
+                </div>
               </div>
             </div>
           </div> 

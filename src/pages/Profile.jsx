@@ -22,6 +22,8 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
+import moment from 'moment'
+
 export default function Profile() {
   const MySwal = withReactContent(Swal);
   const { t, i18n } = useTranslation();
@@ -136,36 +138,49 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="swiper subscription-swiper">
-                <Swiper
-                    spaceBetween={30}
-                    speed={1500}
-                    centeredSlides={true}
-                    autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    }}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    navigation={false}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="mySwiper get-started"
-                >
-                    {settings?.subscriptions?.map((subscription, index) => (
-                        <SwiperSlide key={subscription.id}>
-                            <div className="dz-content">
-                              <h5 className="title">{subscription.name}</h5>
-                              <p>{subscription.description}</p>
-                              <Link to={`/subscription-details/${subscription.id}`} className="btn rounded-xl">
-                                {t('subscribe')}
-                              </Link>
-                            </div>
-                        </SwiperSlide>
-                      ))
-                    }
-                </Swiper>
-              </div>
+              { !user.profile?.hasActiveSubscription?
+                (
+                  <div className="swiper subscription-swiper">
+                    <Swiper
+                        spaceBetween={30}
+                        speed={1500}
+                        centeredSlides={true}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        navigation={false}
+                        modules={[Autoplay, Pagination, Navigation]}
+                        className="mySwiper get-started"
+                    >
+                        {settings?.subscriptions?.map((subscription, index) => (
+                            <SwiperSlide key={subscription.id}>
+                                <div className="dz-content">
+                                  <h5 className="title">{subscription.name}</h5>
+                                  <p>{subscription.description}</p>
+                                  <Link to={`/subscription-details/${subscription.id}`} className="btn rounded-xl">
+                                    {t('subscribe')}
+                                  </Link>
+                                </div>
+                            </SwiperSlide>
+                          ))
+                        }
+                    </Swiper>
+                  </div>
+                ):
+                (
+                    <div className="dz-content" style={{textAlign: "center"}}>
+                      <h5 className="title">{user.profile?.active_subscription.name}<div className="badge" style={{backgroundColor: "#fff", color: '#fb7c67'}}>Active</div></h5>
+                      <p>Subscribed for 1 month, expiration: {moment(user.profile?.active_subscription?.expires_at).fromNow()}</p>
+                      <Link to={`/subscriptions`} className="btn rounded-xl" style={{border: "1px solid"}}>
+                        {t('upgrade')}
+                      </Link>
+                    </div>
+                )
+              }
             </div>):
             (
               <div className="profile-area">

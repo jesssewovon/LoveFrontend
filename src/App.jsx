@@ -18,7 +18,7 @@ import Settings from './pages/Settings';
 import Filter from './pages/Filter';
 import ProfileDetails from './pages/ProfileDetails';
 import Donation from './pages/Donation';
-import Subscription from './pages/Subscription';
+import Subscriptions from './pages/Subscriptions';
 import SubscriptionDetails from './pages/SubscriptionDetails';
 import PaymentVerification from './pages/PaymentVerification';
 
@@ -121,7 +121,7 @@ function App() {
               <Route path="/filter" element={<Filter />} />
               <Route path="/profile-details/:id" element={<ProfileDetails />} />
               <Route path="/donation" element={<Donation />} />
-              <Route path="/subscription" element={<Subscription />} />
+              <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/subscription-details/:id" element={<SubscriptionDetails />} />
               <Route path="/payment-verification" element={<PaymentVerification />} />
               <Route path="/registration-firstname" element={<FirstName />} />
