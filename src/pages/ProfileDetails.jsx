@@ -115,7 +115,7 @@ export default function ProfileDetails() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={"Profile Details"} showWishList={false}/>
+              <Header showBackButton={true} title={"Profile Details"} showWishList={false} classes={"bg-white"}/>
               <div className="content-body bg-gray-color" style={{minHeight: "100vh"}}>
                 <div className="page-content space-top p-b65">
                     <div className="container fixed-full-area">
