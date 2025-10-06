@@ -15,7 +15,7 @@ export default function SwipeDeck({ profiles = [], onSwipe, remainingFreeSwiping
     setCards((prev) => prev.filter((c) => c.id !== profile.id));
   };
   return (
-    <div className="" style={{position: "relative", width: "100%", height: 'calc(100vh - 140px)', overflow: "hidden", borderRadius: "20px"}}>
+    <div className="" style={{position: "relative", width: "100%", height: 'calc(100vh - 150px)', overflow: "hidden", borderRadius: "20px"}}>
       {cards
         .map((profile, index) => (
           <SwipeCard
