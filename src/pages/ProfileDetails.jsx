@@ -250,26 +250,6 @@ export default function ProfileDetails() {
                     </li>
                   </ul>
                 </div>
-                <div className="languages mb-3">
-                  <h6 className="title">Languages</h6>
-                  <ul className="dz-tag-list">
-                    <li> 
-                      <div className="dz-tag">
-                        <span>English</span>
-                      </div>
-                    </li>
-                    <li> 
-                      <div className="dz-tag">
-                        <span>Spanish</span>
-                      </div>
-                    </li>
-                    <li> 
-                      <div className="dz-tag">
-                        <span>German</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
