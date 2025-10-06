@@ -77,7 +77,7 @@ export default function SubscriptionDetails() {
   if (isLoading) {
       return (
           <>
-              <Header showBackButton={true} title={"Subscriptions"} showWishList={false} classes={`bg-gray-color`} />
+              <Header showBackButton={true} title={`${subscription?.name} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
               <div className="content-body bg-gray-color" style={{height: "100vh"}}>
                 <div className="page-content space-top p-b65">
                     <div className="container fixed-full-area">
@@ -95,7 +95,7 @@ export default function SubscriptionDetails() {
 
   return (
     <>
-      <Header showBackButton={true} title={"Subscriptions"} showWishList={false} classes={`bg-gray-color`} />
+      <Header showBackButton={true} title={`${subscription?.name} | Subscriptions`} showWishList={false} classes={`bg-gray-color`} />
       <div className="content-body bg-gray-color" style={{height: "100vh"}}>
         <div class="page-content space-top p-b60">
           <div class="container"> 
