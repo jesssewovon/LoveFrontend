@@ -117,7 +117,7 @@ export default function Subscriptions() {
                   >
                       {subscriptions?.map((subscription, index) => (
                           <SwiperSlide key={`slider${subscription.id}`}>
-                              <div className={`subscribe-box ${index%2==0?'plus':'platinum'}`}>
+                              <div className={`subscribe-box ${subscription?.code}`}>
                                 <h3 className="title">{subscription.name}</h3>
                                 {activeSubscription?.code==subscription.code && (<div className="badge">Active</div>)}
                               </div>
@@ -131,7 +131,7 @@ export default function Subscriptions() {
                 </div>
               </div>
               {subscriptions?.map((subscription, index) => (
-                  subscriptionIndex === index && (<div key={subscription.id} className={`subscribe-content ${index%2==0?'plus':'platinum'}`}>
+                  subscriptionIndex === index && (<div key={subscription.id} className={`subscribe-content ${subscription?.code}`}>
                     <ul className="pricing-data">
                       {
                         subscription?.contents?.map((content, index1) => (

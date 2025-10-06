@@ -102,7 +102,7 @@ export default function SubscriptionDetails() {
             <div class="dz-subscribe-area">
               <div class="subscribe-area-top">
                 <div class="swiper subscription-swiper2">
-                  <div className={`subscribe-box`}>
+                  <div className={`subscribe-box ${subscription?.code}`}>
                     <h3 className="title">{subscription?.name}</h3>
                     {isActiveSubscription && (<div className="badge" style={{color: '#fb7c67'}}>Active</div>)}
                   </div>
@@ -139,7 +139,7 @@ export default function SubscriptionDetails() {
                     }
                 </div>
               </div>)}
-              <div className={`subscribe-content`}>
+              <div className={`subscribe-content ${subscription?.code}`}>
                 <ul className="pricing-data">
                   {
                     subscription?.contents?.map((content, index) => (
