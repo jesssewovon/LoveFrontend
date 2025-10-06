@@ -19,7 +19,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn } = useSelector((state) => state.user);
   const [crushes, setCrushes] = useState([]);
   const [page, setPage] = useState(1);
-  const [lastPage, setPastPage] = useState(null);
+  const [lastPage, setLastPage] = useState(null);
   const [openLoading, setOpenLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [subscriptionData, setSubscriptionData] = useState({});
@@ -66,7 +66,7 @@ export default function WishList({ savedScroll, onSaveScroll }) {
           const res = await api.get(`get-wish-list?page=${pageNum}`, {params: {}});
           //const res = await api.get(`https://testnet-backend.piketplace.com/api/v1/index-loading?page=${page}`);
           setCrushes([...crushes, ...res.data.list.data]); // adjust to your API structure
-          setPastPage(res.data.list.last_page)
+          setLastPage(res.data.list.last_page)
           //window.scrollTo(0, savedScroll || 0);
       } catch (err) {
           console.error("Error fetching users:", err);

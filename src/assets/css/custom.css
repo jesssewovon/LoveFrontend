@@ -78,10 +78,10 @@
 .theme-dark .bg-gray-color{
   background-color: #2c2f39;
 }
-#message-icon path#Shape{
+#message-icon path#Shape, #event-icon path{
   fill: #141124;
 }
-.theme-dark #message-icon path#Shape{
+.theme-dark #message-icon path#Shape, .theme-dark #event-icon path{
   fill: #fff;
 }
 .subscription{
