@@ -128,7 +128,7 @@ export default function ChatList() {
                               <div className="media-content">
                                 <div>
                                   <h6 className="name">{getCorresponder(chat)?.firstname}</h6>
-                                  <p className="last-msg" style={{width: "25vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-block"}}>{chat.last_message?.message}</p>
+                                  <p className="last-msg" style={{width: "28vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-block"}}>{chat.last_message?.message}</p>
                                 </div>
                                 {/* .break-word-customer{
                                     width: 120px;
