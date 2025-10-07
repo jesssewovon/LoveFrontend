@@ -87,3 +87,10 @@
 .subscription{
   .st0{fill:#647EFF;} .st1{fill:#FFFFFF;} .st2{fill:#FFD77A;}
 }
+.last-msg{
+  width: 35vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
