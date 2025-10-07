@@ -1,15 +1,27 @@
 import { Link } from 'react-router';
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from "react-redux";
 import Header from '../components/Header';
 import MenuBar from '../components/MenuBar';
 
 import api from "../api";
-import Loader from "../components/Loader";
-import { setIsLoading, setReloadHomePage } from "../store/userSlice";
+import ScreenLoader from "../components/ScreenLoader";
+import { setIsLoading, setShowScreenLoader, setReloadHomePage } from "../store/userSlice";
 //import { setReactions } from "../store/profileFormSlice";
 import { navigate } from "../navigationService";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
+
 export default function Explore() {
+  const dispatch = useDispatch();
+  const {t} = useTranslation()
+
+  const { isLoading, dateFilter, reloadHomePage,
+    user, isLoggedIn, showScreenLoader
+  } = useSelector((state) => state.user);
 
   const [openLoading, setOpenLoading] = useState(true);
   const [loading, setLoading] = useState([]);
@@ -36,6 +48,45 @@ export default function Explore() {
       console.log('events', events)
       setLoading(false);
       setOpenLoading(false);
+  };
+  
+  const joinEvent = async (event, index) => {
+      dispatch(setShowScreenLoader(true));
+      try {
+          const events_id = event.id
+          const res = await api.post(`/join-event`, {events_id});
+          if (res.data.status === true) {
+            setEvents(prev=>{
+              const newArray = [...prev]
+              newArray.splice(index, 1)
+              return newArray
+            })
+            MySwal.fire({ 
+              title: "Info!",
+              text: res.data.message,
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }else{
+            MySwal.fire({ 
+              title: "Info!",
+              text: res.data.message,
+              icon: "error",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+      } catch (err) {
+          MySwal.fire({ 
+            title: "Info!",
+            text: t('an_error_occured'),
+            icon: "error",
+            showConfirmButton: false,
+          });
+          console.error("Error fetching users:", err);
+      }
+      dispatch(setShowScreenLoader(false));
   };
 
   useEffect(() => {
@@ -95,7 +146,9 @@ export default function Explore() {
                     <div className="dz-content">
                       <h3 className="title">{event.title}</h3>
                       <p>{event.description}</p>
-                      <a className="btn btn-light rounded-xl">JOIN NOW</a>
+                      <a onClick={()=>joinEvent(event, index)} className="btn btn-light rounded-xl">
+                        JOIN NOW
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -185,6 +238,7 @@ export default function Explore() {
           </div>
         </div>
       </div>
+      <ScreenLoader/>
     </>
   );
 }
