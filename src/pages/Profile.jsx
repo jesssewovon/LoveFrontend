@@ -174,7 +174,7 @@ export default function Profile() {
                 (
                     <div className="dz-content" style={{textAlign: "center"}}>
                       <h5 className="title">{user.profile?.active_subscription.name}<div className="badge" style={{backgroundColor: "#fff", color: '#fb7c67'}}>Active</div></h5>
-                      <p>Subscribed for 1 month, expiration: {moment(user.profile?.active_subscription?.expires_at).fromNow()}</p>
+                      <p>Subscribed for {`${user.profile?.active_subscription.nb_period} ${user.profile?.active_subscription.period}`}, expiration: {moment(user.profile?.active_subscription?.expires_at).fromNow()}</p>
                       <Link to={`/subscriptions`} className="btn rounded-xl" style={{border: "1px solid"}}>
                         {t('upgrade')}
                       </Link>

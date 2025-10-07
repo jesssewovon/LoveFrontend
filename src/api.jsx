@@ -35,19 +35,19 @@ api.interceptors.request.use(
 // Response Interceptor
 api.interceptors.response.use(
   (response) => {
-    console.log('interceptors api', response.data)
-    if(response.data.redirectTo) {
-        //alert('redirectTo')
-        navigate(response.data.redirectTo);
-        return response;
+    //console.log('interceptors api', response.data)
+    if (response.data.settings_user) {
+      store.dispatch(setSettings(response.data.settings_user));
     }
     if (response.data.current_user_for_automatic_update) {
       //console.log('current_user_for_automatic_update', response.data)
       //alert('current_user_for_automatic_update')
       store.dispatch(setUser(response.data.current_user_for_automatic_update));
     }
-    if (response.data.settings_user) {
-      store.dispatch(setSettings(response.data.settings_user));
+    if(response.data.redirectTo) {
+        //alert('redirectTo')
+        navigate(response.data.redirectTo);
+        return response;
     }
     return response;
   },

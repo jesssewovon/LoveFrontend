@@ -40,6 +40,7 @@ export default function Images() {
         //alert('creatProfile')
         const formData = new FormData();
 		
+		//formData.append("about_me", "I am good boy");
 		formData.append("firstname", profileForm.firstname);
 		formData.append("birthdate", profileForm.birthdate);
 		formData.append("gender", profileForm.gender);

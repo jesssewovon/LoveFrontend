@@ -40,7 +40,7 @@ export default function Subscriptions() {
           const res = await api.get(`get-subscriptions`);
           console.log(`get-subscriptions`, res.data); // adjust to your API structure
           setSubscriptions(res.data.subscriptions)
-          setActiveSubscription(res.data.active_subscription)
+          setActiveSubscription(res.data.my_profile?.active_subscription)
       } catch (err) {
           console.error("Error :", err);
       }

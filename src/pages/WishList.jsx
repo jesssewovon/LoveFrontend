@@ -171,11 +171,11 @@ export default function WishList({ savedScroll, onSaveScroll }) {
                         <span className="about" style={{filter: `blur(${!subscriptionData['see who likes you']?4:0}px)`}}>{reaction.sender?.about_me}</span> 
                       </div>
                     </a>
-                    <div style={{position: "absolute", top: "40%", width: "100%", padding: "20px"}}>
-                    <button onClick={() => navigate('/subscription')} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
-                      {t('subscribe')}
-                    </button>
-                    </div>
+                    {subscriptionData['see who likes you'] === false && (<div style={{position: "absolute", top: "40%", width: "100%", padding: "20px"}}>
+                      <button onClick={() => navigate('/subscription')} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
+                        {t('subscribe')}
+                      </button>
+                    </div>)}
                   </div>
                 </div>
               ))

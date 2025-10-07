@@ -55,13 +55,22 @@ export default function SubscriptionDetails() {
   
   const makePayment = () => {
       //alert('makepaiement')
+      const amount = profile?.hasActiveSubscription===true?
+        selectedPeriod?.amount-profile?.active_subscription?.amount:
+        selectedPeriod?.amount
+      const type = profile?.hasActiveSubscription===true?"subscription_upgrade":"subscription"
+        selectedPeriod?.amount-profile?.active_subscription?.amount
+      const memo = profile?.hasActiveSubscription===true?
+        `Subscription upgrade from ${profile?.active_subscription?.name} to ${subscription?.name}`:
+        `Subscription for ${subscription?.name}`
+
       const uuid = uuidv4()
       dispatch(piPayment({
-          amount: selectedPeriod?.amount,
-          memo: `Subscription ${subscription?.name}`,
+          amount: amount,
+          memo: memo,
           metadata: {
               userId: user.id,
-              type: 'subscription',
+              type: type,
               uniqueId: uuid,
               period_subscriptions_id: selectedPeriod?.id,
           },

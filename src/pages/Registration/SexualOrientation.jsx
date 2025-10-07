@@ -9,7 +9,7 @@ import { updateField, resetForm } from "../../store/profileFormSlice";
 
 export default function SexualOrientation() {
     const dispatch = useDispatch();
-    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
+    const { isLoading, isLoggedIn, settings } = useSelector((state) => state.user);
     var profileForm = useSelector((state) => state.profileForm);
     
     const [checkedState, setCheckedState] = useState(profileForm.sexual_orientation);
@@ -36,6 +36,15 @@ export default function SexualOrientation() {
         //navigate('/home')
       }
     });
+    useEffect(() => {
+      const res = JSON.parse(settings.sexual_orientations)?.
+        map((val)=>{return {name:val, value: false}})
+      if (checkedState.length==0) {
+        setCheckedState(res)
+        dispatch(updateField({ field: "sexual_orientation", value: res }));
+      }
+      //console.log('ressssssssssss', res)
+    }, []);
 
     return (
         <>

@@ -33,7 +33,7 @@ export default function PaymentVerification() {
     dispatch(setIsSaving(true))
     setTimeout(() => {
       dispatch(setIsSaving(false))
-    }, 5000);
+    }, 10000);
     return () => {
       verifyPayment()
       //alert('unmounting')
@@ -75,19 +75,21 @@ export default function PaymentVerification() {
 
   return (
     <>
-      <Header showBackButton={true} title={"Payment verification"} showWishList={false}/>
-      <div class="page-content space-top p-b60">
-        <div class="container"> 
-          <div class="dz-subscribe-area">
-            <div className={`subscribe-content`}>
-              <div className="bottom-btn container bg-white text-center px-5" style={{top: "50%"}}>
-                <button disabled={isSaving} onClick={() => navigate(-1)} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
-                  {t('close')} <Loader/>
-                </button>
+      <Header showBackButton={true} title={"Payment verification"} showWishList={false} classes={` bg-gray-color`}/>
+      <div className="content-body bg-gray-color" style={{height: "100vh"}}>
+        <div class="page-content space-top p-b60">
+          <div class="container"> 
+            <div class="dz-subscribe-area">
+              <div className={`subscribe-content`}>
+                <div className="bottom-btn container bg-white text-center px-5" style={{top: "50%"}}>
+                  <button disabled={isSaving} onClick={() => navigate(-1)} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
+                    {t('close')} <Loader/>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div> 
+          </div> 
+        </div>
       </div>
     </>
   );

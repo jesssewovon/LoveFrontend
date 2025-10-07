@@ -12,7 +12,7 @@ export const initialState = {
   firstname: "",
   birthdate: "",
   gender: "",
-  sexual_orientation: [
+  /* sexual_orientation: [
       {name: "straight", value: false},
       {name: "gay", value: false},
       {name: "lesbian", value: false},
@@ -48,7 +48,8 @@ export const initialState = {
       {name: "walking", value: false},
       {name: "running", value: false},
       {name: "manga", value: false},
-  ],
+  ], */
+  sexual_orientation: [],
   interested_gender: "",
   relationship_goal: "",
   images: {},

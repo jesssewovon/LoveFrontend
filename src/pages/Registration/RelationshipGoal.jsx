@@ -9,14 +9,26 @@ import { updateField, resetForm } from "../../store/profileFormSlice";
 
 export default function RelationshipGoal() {
     const dispatch = useDispatch();
-    const { isLoading, isLoggedIn } = useSelector((state) => state.user);
+    const { isLoading, isLoggedIn, settings } = useSelector((state) => state.user);
     const profileForm = useSelector((state) => state.profileForm);
+
+    const [relationshipGoals, setRelationshipGoals] = useState([])
     
     useEffect(() => {
       if (isLoggedIn) {
         //navigate('/home')
       }
     });
+    useEffect(() => {
+      console.log("settings", settings)
+      setRelationshipGoals(buildRelationshipFormList(settings))
+    }, []);
+    const buildRelationshipFormList = (settings) => {
+        const list = JSON.parse(settings.relationship_goals)
+        return list.map((val)=>{
+            return {name: val, value: false}
+        })
+    };
     const handleRadioChange = (value) => {
         //console.log('test', value)
         dispatch(updateField({ field: "relationship_goal", value: value }));
@@ -35,7 +47,7 @@ export default function RelationshipGoal() {
                             <h3>What are you looking for right now ?</h3>
                         </div>
                         <div className="radio style-2">
-                            {profileForm.relationships.map(({ name }, index) => {
+                            {relationshipGoals.map(({ name }, index) => {
                                 return (
                                     <label key={index} className="radio-label" htmlFor={name}>
                                         <input type="radio" name="radio2" value={name}
@@ -56,109 +68,6 @@ export default function RelationshipGoal() {
                                     </label>
                                 );
                             })}
-                            {/* <label className="radio-label" htmlFor="women">
-                                <input type="radio" name="radio2" value="women"
-                                    id="women" 
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "long_term_partner"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "long_term_partner"
-                                        )
-                                    }/>
-                                <span className="checkmark">						
-                                    <span className="text">Long-term partner</span>
-                                    <span className="check"></span>							
-                                </span>
-                            </label>
-                            <label className="radio-label" htmlFor="long_term_open_to_short">
-                                <input
-                                    type="radio" name="radio2" value="long_term_open_to_short"
-                                    id="long_term_open_to_short"
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "long_term_open_to_short"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "long_term_open_to_short"
-                                        )
-                                    }/>
-                                <span className="checkmark">
-                                    <span className="text">Long-term, open to short</span>
-                                    <span className="check"></span>							
-                                </span>
-                            </label>
-                            <label className="radio-label">
-                                <input type="radio" name="radio2" value="short_term_open_to_long"
-                                    id="short_term_open_to_long"
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "short_term_open_to_long"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "short_term_open_to_long"
-                                        )
-                                    }/>
-                                <span className="checkmark">
-                                    <span className="text">Short-term, open to long</span>	
-                                    <span className="check"></span>							
-                                </span>
-                            </label>
-                            <label className="radio-label">
-                                <input type="radio" name="radio2" value="short_term_fun"
-                                    id="short_term_fun"
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "short_term_fun"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "short_term_fun"
-                                        )
-                                    }/>
-                                <span className="checkmark">
-                                    <span className="text">Short-term fun</span>	
-                                    <span className="check"></span>							
-                                </span>
-                            </label>
-                            <label className="radio-label">
-                                <input type="radio" name="radio2" value="new_friends"
-                                    id="new_friends"
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "new_friends"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "new_friends"
-                                        )
-                                    }/>
-                                <span className="checkmark">
-                                    <span className="text">New friends</span>	
-                                    <span className="check"></span>							
-                                </span>
-                            </label>
-                            <label className="radio-label">
-                                <input type="radio" name="radio2" value="still_figuring_it_out"
-                                    id="still_figuring_it_out"
-                                    checked={
-                                        profileForm.relationship_goal ===
-                                        "still_figuring_it_out"
-                                    }
-                                    onChange={() =>
-                                        handleRadioChange(
-                                            "still_figuring_it_out"
-                                        )
-                                    }/>
-                                <span className="checkmark">
-                                    <span className="text">Stil figuring it out</span>	
-                                    <span className="check"></span>							
-                                </span>
-                            </label> */}
                         </div>
                     </div>
                 </div>
