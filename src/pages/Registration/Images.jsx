@@ -9,6 +9,7 @@ import { navigate } from "../../navigationService";
 
 import { updateField, resetForm } from "../../store/profileFormSlice";
 import Loader from "../../components/Loader";
+import Lock from "../../components/Lock";
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -26,6 +27,9 @@ export default function Images() {
       }
     });
     const onFileChange = (event) => {
+        if (event.target.name=="image2" || event.target.name=="image3") {
+            return
+        }
 		//console.log("onFileChange", event.target.name, event.target.files[0], typeof event.target.files[0]);
         const profileFormImagesUpdate = {...profileForm.images,
             [event.target.name]: event.target.files[0],
@@ -130,11 +134,14 @@ export default function Images() {
                                     <div className="col-12">
                                         <div className="dz-drop-box">
                                             <img src="/images/recent-pic/drop-bx.png" alt=""/>
-                                            <div className="drop-bx">
+                                            <div className="drop-bx" style={{overflow: "hidden"}}>
                                                 <div className="imagePreview" style={{backgroundImage: `url(${typeof profileForm.images?.image2 === "object"?(URL.createObjectURL(profileForm.images?.image2)):''})`}}>
                                                     <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
                                                     <input type='file' onChange={onFileChange} name="image2" className="form-control d-none imageUpload" id="imageUpload2" accept=".png, .jpg, .jpeg"/>
                                                     <label htmlFor="imageUpload2"></label>
+                                                </div>
+                                                <div className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                                    <Lock/>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,53 +149,20 @@ export default function Images() {
                                     <div className="col-12">
                                         <div className="dz-drop-box">
                                             <img src="/images/recent-pic/drop-bx.png" alt=""/>
-                                            <div className="drop-bx">
+                                            <div className="drop-bx" style={{overflow: "hidden"}}>
                                                 <div className="imagePreview" style={{backgroundImage: `url(${typeof profileForm.images?.image3 === "object"?(URL.createObjectURL(profileForm.images?.image3)):''})`}}>
                                                     <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
                                                     <input type='file' onChange={onFileChange} name="image3" className="form-control d-none imageUpload" id="imageUpload3" accept=".png, .jpg, .jpeg"/>
                                                     <label htmlFor="imageUpload3"></label>
+                                                </div>
+                                                <div className={``} style={{position: "absolute", top: "0", width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                                    <Lock/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           {/*  <div className="col-4">
-                                <div className="dz-drop-box">
-                                    <img src="/images/recent-pic/drop-bx.png" alt=""/>
-                                    <div className="drop-bx">
-                                        <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
-                                            <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                            <input type='file' className="form-control d-none imageUpload"  id="imageUpload4" accept=".png, .jpg, .jpeg"/>
-                                            <label htmlFor="imageUpload4"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4">
-                                <div className="dz-drop-box">
-                                    <img src="/images/recent-pic/drop-bx.png" alt=""/>
-                                    <div className="drop-bx">
-                                        <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
-                                            <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                            <input type='file' className="form-control d-none imageUpload"  id="imageUpload5" accept=".png, .jpg, .jpeg"/>
-                                            <label htmlFor="imageUpload5"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4">
-                                <div className="dz-drop-box">
-                                    <img src="/images/recent-pic/drop-bx.png" alt=""/>
-                                    <div className="drop-bx">
-                                        <div className="imagePreview" style={{backgroundImage: "url(/images/recent-pic/drop-bx.png)"}}>
-                                            <div  className="remove-img remove-btn d-none"><i className="icon feather icon-x"></i></div>
-                                            <input type='file' className="form-control d-none imageUpload"  id="imageUpload6" accept=".png, .jpg, .jpeg"/>
-                                            <label htmlFor="imageUpload6"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                 </div>
