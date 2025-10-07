@@ -28,7 +28,8 @@ export default function Chat() {
   const { isLoading, dateFilter, reloadHomePage, user, isLoggedIn, isSaving } = useSelector((state) => state.user);
 
   const [reaction, setReaction] = useState({});
-  const [correspondingProfile, setCorrespondingProfile] = useState({});
+  const [profile, setProfile] = useState(null);
+  const [correspondingProfile, setCorrespondingProfile] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState('');
 
@@ -42,7 +43,8 @@ export default function Chat() {
   const [oldMessages, setOldMessages] = useState([]);
   const [hasOldMessages, setHasOldMessages] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [hasNewPendingMessages, setHasNewPendingMessages] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
+  const [hasNewUnreadMessages, setHasNewUnreadMessages] = useState(false);
   const lastMessageIdRef = useRef(null);
 
   const intervalRef = useRef(null);
@@ -107,11 +109,7 @@ export default function Chat() {
           const res = await api.get(`/get-old-messages/${corresponding_profile_id}`, {params: {first_message_id}});
           //console.log(`/get-old-messages`, res.data); // adjust to your API structure
           setOldMessages(res.data.messages);
-          if (res.data.messages.length==0) {
-            setHasOldMessages(false)
-          }
-          //setMessages([...res.data.messages, ...messages]);
-          //console.log('get-old-messages mess', messages)
+          setHasOldMessages(res.data.hasOldMessages);
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -127,9 +125,11 @@ export default function Chat() {
           console.log(`/send-message`, res.data); // adjust to your API structure
           if (res.data.status === true) {
             setMessageText('')
+            setMessageSent(true)
           }
           setCorrespondingProfile(res.data.corresponding_profile);
-          setMessages(res.data.messages);
+          //setNewMessages(res.data.newMessages);
+          getNewMessages()
       } catch (err) {
           console.error("Error fetching users:", err);
       }
@@ -141,7 +141,7 @@ export default function Chat() {
   };
   
   const setMessagesRead = (e) => {
-      setHasNewPendingMessages(false);
+      setHasNewUnreadMessages(false);
       scrollToBottom()
   };
 
@@ -152,8 +152,10 @@ export default function Chat() {
           const res = await api.get(`/get-chat-data/${corresponding_profile_id}`);
           console.log(`/get-chat-data`, res.data); // adjust to your API structure
           //setReaction(res.data.reaction);
+          setProfile(res.data.my_profile);
           setCorrespondingProfile(res.data.corresponding_profile);
           setMessages(res.data.messages);
+          setHasOldMessages(res.data.hasOldMessages);
           if (res.data.messages.length) {
             lastMessageIdRef.current = res.data.messages[res.data.messages.length-1]?.id;
           }
@@ -178,6 +180,13 @@ export default function Chat() {
    console.log('old loaded messages', messages)
    setMessages([...oldMessages, ...messages]);
   }, [oldMessages]);
+  
+  useEffect(() => {
+   if (messageSent) {
+    setMessageSent(false)
+    scrollToBottom()
+   }
+  }, [messageSent]);
 
   useEffect(() => {
     //console.log('new loaded messages', newMessages[0], messages)
@@ -186,7 +195,13 @@ export default function Chat() {
    
    if (newMessages.length) {
     //scrollToBottom()
-    setHasNewPendingMessages(true)
+    setHasNewUnreadMessages(false)
+    newMessages.some((val) => {
+      if (val.sender_profiles_id!=profile.id) {
+        setHasNewUnreadMessages(true)
+        return true
+      }
+    })
    }
   }, [newMessages]);
 
@@ -233,7 +248,7 @@ export default function Chat() {
                       <i className="icon feather icon-chevron-left"></i>
                     </a>
                   </div>
-                  <div onClick={() => navigate(`/profile-details/${correspondingProfile.id}`)} className="mid-content d-flex align-items-center text-start">
+                  <div onClick={() => navigate(`/profile-details/${correspondingProfile?.id}`)} className="mid-content d-flex align-items-center text-start">
                     <a style={{position: "relative"}} className="media media-40 rounded-circle me-3">
                       <img src={correspondingProfile?.imageFirst} alt="/"/>
                       {correspondingProfile?.isOnline && (<span style={{position: "absolute", width: "10px", height: "10px", backgroundColor: "#55D866", bottom: "0", left: "0", borderRadius: "50%", border: "1px solid #000"}}></span>)}
@@ -242,7 +257,7 @@ export default function Chat() {
                       <h6 className="title">{correspondingProfile?.firstname}, {correspondingProfile?.age}</h6>
                       {correspondingProfile?.isOnline ?
                         (<span>Online</span>):
-                        (<span>{correspondingProfile.onlineTimeAgo}</span>)
+                        (<span>{correspondingProfile?.onlineTimeAgo}</span>)
                       }
                     </div>  
                   </div>
@@ -257,7 +272,7 @@ export default function Chat() {
                 </div>
               </div>
             </header>
-            <div className="page-content space-top p-b60 message-content bg-gray-color">
+            <div className="page-content space-top p-b60 message-content bg-gray-color" style={{minHeight: "100vh"}}>
               <div className="container" style={{overflowY: "hidden"}}>
                 <div className="chat-box-area"
                   style={{
@@ -333,7 +348,7 @@ export default function Chat() {
                                       {isSaving!==true?(<i className="icon feather icon-send"></i>):
                                       (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{shaperendering: "auto", display: "block", background: "transparent"}} width="34" height="34" xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle strokeDasharray="164.93361431346415 56.97787143782138" r="35" strokeWidth="10" stroke="#fff" fill="none" cy="50" cx="50"><animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform></circle><g></g></g></svg>)}
                                     </button>
-                                    {hasNewPendingMessages && (<span onClick={()=>{setMessagesRead()}} style={{position: "absolute", left: "0", top: "-15px", backgroundColor: "red", width: "20px", height: "20px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%"}}>
+                                    {hasNewUnreadMessages && (<span onClick={()=>{setMessagesRead()}} style={{position: "absolute", left: "0", top: "-15px", backgroundColor: "red", width: "20px", height: "20px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%"}}>
                                       1
                                     </span>)}
                                 </div>
