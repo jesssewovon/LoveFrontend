@@ -215,7 +215,7 @@ export default function SubscriptionDetails() {
                 </ul>
                 <div className="bottom-btn container bg-white text-center px-5">
                   <button disabled={!selectedPeriod?.id} onClick={() => makePayment()} className="btn btn-gradient dz-flex-box btn-shadow rounded-xl w-100">
-                    {profile?.hasActiveSubscription?`add ${selectedPeriod?selectedPeriod?.amount-profile?.active_subscription?.amount:0} for ${t('upgrade')}`:`${selectedPeriod?.amount} Pi => ${t('subscribe')}`}
+                    {profile?.hasActiveSubscription?`add ${selectedPeriod?selectedPeriod?.amount-profile?.active_subscription?.amount:0} for ${t('upgrade')}`:`${selectedPeriod?.amount??0} Pi => ${t('subscribe')}`}
                   </button>
                 </div>
               </div>
