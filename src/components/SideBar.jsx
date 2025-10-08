@@ -15,7 +15,7 @@ export default function SideBar() {
 	const {t} = useTranslation()
 	const { isSideBarOpen, setSideBarStatus } = useTheme();
 	const dispatch = useDispatch();
-    const { isDarkTheme, user, isLoggedIn, isLoading } = useSelector((state) => state.user);
+    const { isDarkTheme, user, isLoggedIn, isLoading, settings } = useSelector((state) => state.user);
 
 	const [showLanguageOffCanvas, setShowLanguageOffCanvas] = useState(false);
 	const handleLanguageOffCanvasShow = () => {
@@ -195,8 +195,12 @@ export default function SideBar() {
 							</li>
 						</ul>
 						<div className="app-info">
-							<h6 className="name"> - Dating App</h6>
-							<span className="ver-info">App Version 1.0.0</span>
+							<h6 className="name"> - {settings?.app_name??''}</h6>
+							<div style={{display: "flex", justifyContent: "space-between"}}>
+								<span className="ver-info">ToS</span>
+								<span className="ver-info">Privacy Policy</span>
+							</div>
+							
 						</div>
 					</div>
 				</div>
