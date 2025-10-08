@@ -1,162 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Service | [App Name]</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy Policy — HeartLink Dating</title>
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #fafafa;
-      margin: 40px auto;
-      max-width: 850px;
-      padding: 20px;
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#7c3aed;
+      --accent-2:#06b6d4;
+      --text:#e6eef8;
+      --maxw:900px;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    h1, h2 {
-      color: #e63946;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2.2em;
-      margin-bottom: 10px;
-    }
-    h2 {
-      font-size: 1.3em;
-      margin-top: 30px;
-    }
-    p {
-      margin: 10px 0;
-    }
-    ul {
-      margin-left: 25px;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    a {
-      color: #e63946;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #666;
-    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071026 0%, #071833 100%);color:var(--text)}
+    .wrap{max-width:var(--maxw);margin:48px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.7);}
+    header{display:flex;gap:18px;align-items:center;margin-bottom:20px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:white}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin:6px 0 22px}
+    hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--muted),transparent);margin:22px 0}
+    section{margin-bottom:18px}
+    h2{font-size:16px;margin:0 0 8px}
+    p, li{color:var(--text);line-height:1.5;margin:0 0 10px}
+    ul{padding-left:20px;margin:0 0 10px}
+    .box{background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);padding:14px;border-radius:10px}
+    .muted{color:var(--muted);font-size:14px}
+    .actions{display:flex;gap:10px;margin-top:12px}
+    .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+    footer{margin-top:20px;color:var(--muted);font-size:13px}
+    @media (max-width:720px){.wrap{margin:20px;padding:18px}}
   </style>
 </head>
 <body>
-  <h1>Terms of Service</h1>
-  <p><strong>Last Updated:</strong> [Insert Date]<br>
-  <strong>Effective Date:</strong> [Insert Date]</p>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">HL</div>
+      <div>
+        <h1>Privacy Policy</h1>
+        <p class="lead">Last updated: October 8, 2025 — This policy explains how HeartLink Dating ("we", "us", "our") collects, uses, and shares your information.</p>
+      </div>
+    </header>
 
-  <p>Welcome to <strong>[App Name]</strong> (“we,” “our,” “us”). These Terms of Service (“Terms”) govern your access to and use of our mobile application, website, and related services (collectively, the “Service”). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree, please do not use the Service.</p>
+    <section class="box" aria-labelledby="intro">
+      <h2 id="intro">1. Introduction</h2>
+      <p>HeartLink Dating is committed to protecting your privacy. This Privacy Policy applies to our mobile app, website, and related services (collectively, the "Service"). By using the Service you agree to the collection and use of information described in this policy.</p>
+    </section>
 
-  <h2>1. Eligibility</h2>
-  <p>To use <strong>[App Name]</strong>, you must:</p>
-  <ul>
-    <li>Be at least <strong>18 years old</strong> (or the age of majority in your jurisdiction).</li>
-    <li>Have the legal capacity to enter into a binding contract.</li>
-    <li>Not be prohibited from using our Service under any applicable law.</li>
-  </ul>
-  <p>We may refuse access to anyone at any time for any reason.</p>
+    <section aria-labelledby="what-we-collect">
+      <h2 id="what-we-collect">2. Information We Collect</h2>
+      <p class="muted">We collect information you provide directly, information from your use of the Service, and information from third parties.</p>
+      <ul>
+        <li><strong>Account & Profile Data:</strong> name, username, email, phone number (if provided), profile photos, bio, gender, preferences, and other profile fields.</li>
+        <li><strong>Messages & Content:</strong> messages, likes, matches, and content you share with other users. Note: while messages between users may be encrypted, we may temporarily store message metadata to deliver and moderate the Service.</li>
+        <li><strong>Payment Info:</strong> billing information and receipts for purchases (payments are processed by third‑party providers — we do not store full credit card numbers).</li>
+        <li><strong>Device & Usage Data:</strong> device type, operating system, app version, IP address, language, timestamps, features used, and crash reports.</li>
+        <li><strong>Location Data:</strong> approximate location derived from IP and optional precise location if you enable location services to use location-based features.</li>
+        <li><strong>Third‑Party Data:</strong> profile information or social graph if you sign in with third‑party services (e.g., Apple, Google, Facebook) and permit us to access that data.</li>
+      </ul>
+    </section>
 
-  <h2>2. Account Registration</h2>
-  <p>You must create an account to use most features of <strong>[App Name]</strong>. You agree to:</p>
-  <ul>
-    <li>Provide accurate and current information.</li>
-    <li>Maintain the confidentiality of your login credentials.</li>
-    <li>Be responsible for all activities under your account.</li>
-  </ul>
-  <p>You must not create an account using false information or impersonate another person.</p>
+    <section aria-labelledby="how-we-use">
+      <h2 id="how-we-use">3. How We Use Your Information</h2>
+      <ul>
+        <li>To provide, maintain, and improve the Service, including matching, messaging, recommendations, and personalized content.</li>
+        <li>To process transactions and send receipts or communications related to purchases.</li>
+        <li>To detect, prevent, and address technical issues, abuse, fraud, and other harmful activity.</li>
+        <li>To send administrative messages, security alerts, and support responses.</li>
+        <li>With your consent, to send marketing and promotional communications (you can opt out at any time).</li>
+      </ul>
+    </section>
 
-  <h2>3. User Content</h2>
-  <p>You may upload photos, text, and other materials (“User Content”) to your profile. By submitting User Content, you grant <strong>[App Name]</strong> a <em>worldwide, non-exclusive, royalty-free, transferable license</em> to use, display, reproduce, and distribute such content for operating and promoting the Service.</p>
-  <p>You represent that:</p>
-  <ul>
-    <li>You own or have the right to share the content you upload.</li>
-    <li>Your content does not violate any law or third-party rights.</li>
-    <li>Your content complies with our <a href="#">Community Guidelines</a>.</li>
-  </ul>
-  <p>We may remove any content at any time if it violates these Terms or is deemed inappropriate.</p>
+    <section aria-labelledby="sharing">
+      <h2 id="sharing">4. Sharing & Disclosure</h2>
+      <p>We may share information in the following circumstances:</p>
+      <ul>
+        <li><strong>Other Users:</strong> profile information, photos, and public fields when you interact (e.g., likes, matches, messages) are visible to other users as part of the Service.</li>
+        <li><strong>Service Providers:</strong> vendors who perform services on our behalf (payments, analytics, hosting, push notifications). They only receive the data necessary to perform their service.</li>
+        <li><strong>Safety & Legal:</strong> to comply with legal obligations, respond to lawful requests, protect rights, safety, property, or prevent fraud or illegal activity.</li>
+        <li><strong>Business Transfers:</strong> in connection with a merger, sale, reorganization, or acquisition — users will be notified and data will remain subject to this policy or the purchaser's policies.</li>
+      </ul>
+    </section>
 
-  <h2>4. Acceptable Use</h2>
-  <p>You agree <strong>not to:</strong></p>
-  <ul>
-    <li>Use the Service for any unlawful purpose.</li>
-    <li>Harass, threaten, or defraud other users.</li>
-    <li>Post sexually explicit, violent, or hateful content.</li>
-    <li>Use bots, scrapers, or any automated means to access the Service.</li>
-    <li>Collect or misuse personal data from other users.</li>
-  </ul>
-  <p>Violation of these rules may lead to suspension or termination of your account.</p>
+    <section aria-labelledby="cookies">
+      <h2 id="cookies">5. Cookies & Tracking</h2>
+      <p>We and our partners use cookies, local storage, and similar technologies to operate the Service, analyze usage, and deliver targeted content. You can control cookies through your browser or device settings, but disabling some cookies may affect functionality.</p>
+    </section>
 
-  <h2>5. Safety and Interactions</h2>
-  <p><strong>[App Name]</strong> is not responsible for user conduct. You are solely responsible for your interactions, both online and offline. Exercise caution when meeting others and never share sensitive financial information.</p>
-  <p>We do not perform criminal background checks, but we reserve the right to do so where legally permitted.</p>
+    <section aria-labelledby="data-retention">
+      <h2 id="data-retention">6. Data Retention</h2>
+      <p>We retain your information as long as necessary to provide the Service, comply with legal obligations, resolve disputes, and enforce agreements. You can request deletion of your account and data — see Section 9.</p>
+    </section>
 
-  <h2>6. Paid Features and Subscriptions</h2>
-  <p>Certain features may require payment or a subscription. By purchasing a subscription:</p>
-  <ul>
-    <li>You authorize us to charge your selected payment method.</li>
-    <li>Fees are non-refundable except where required by law.</li>
-    <li>Auto-renewal applies unless canceled before the next billing cycle.</li>
-  </ul>
-  <p>All prices are subject to change with notice.</p>
+    <section aria-labelledby="security">
+      <h2 id="security">7. Security</h2>
+      <p>We use administrative, technical, and physical safeguards designed to protect your data. However no system is completely secure — you should take care when sharing personal information online.</p>
+    </section>
 
-  <h2>7. Termination</h2>
-  <p>You may delete your account at any time. We may suspend or terminate your account without notice if:</p>
-  <ul>
-    <li>You violate these Terms.</li>
-    <li>Your activity risks harm to us or other users.</li>
-  </ul>
-  <p>Termination does not affect any accrued rights or obligations.</p>
+    <section aria-labelledby="children">
+      <h2 id="children">8. Children</h2>
+      <p>The Service is not intended for children under 16. We do not knowingly collect personal information from children under 16; if we learn we have collected such data we will take steps to delete it.</p>
+    </section>
 
-  <h2>8. Privacy</h2>
-  <p>Your use of the Service is also governed by our <a href="#">Privacy Policy</a>, which describes how we collect, use, and share your information.</p>
+    <section aria-labelledby="rights">
+      <h2 id="rights">9. Your Rights & Choices</h2>
+      <ul>
+        <li><strong>Access & Portability:</strong> You may request a copy of certain personal data we hold about you.</li>
+        <li><strong>Correction:</strong> Update or correct your profile information at any time via account settings.</li>
+        <li><strong>Deletion:</strong> You can delete your account from the app settings or by contacting us; deletion may not remove content shared with other users (e.g., messages they saved).</li>
+        <li><strong>Marketing Opt‑Out:</strong> Opt out of promotional emails by using the unsubscribe link in those emails or via account settings.</li>
+      </ul>
+      <p class="muted">To exercise these rights, contact us (see Section 12) and we will respond within applicable legal timeframes.</p>
+    </section>
 
-  <h2>9. Intellectual Property</h2>
-  <p>All content, trademarks, and software associated with <strong>[App Name]</strong> are owned by or licensed to us. You are granted a limited, non-transferable, revocable license to use the Service for personal, non-commercial purposes.</p>
+    <section aria-labelledby="international">
+      <h2 id="international">10. International Transfers</h2>
+      <p>We operate globally and may transfer and store your information in servers located in other countries. Where required, we apply appropriate safeguards to protect your information.</p>
+    </section>
 
-  <h2>10. Disclaimer of Warranties</h2>
-  <p>The Service is provided <strong>“as is”</strong> and <strong>“as available”</strong> without warranties of any kind, whether express or implied. We do not guarantee:</p>
-  <ul>
-    <li>That the Service will always be secure or error-free.</li>
-    <li>That matches or relationships will result from the Service.</li>
-  </ul>
-  <p>Use of the Service is at your own risk.</p>
+    <section aria-labelledby="changes">
+      <h2 id="changes">11. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy. If changes are material, we will provide notice via the app, email, or prominent notice on our site, and update the "Last updated" date above.</p>
+    </section>
 
-  <h2>11. Limitation of Liability</h2>
-  <p>To the maximum extent permitted by law, <strong>[App Name]</strong> and its affiliates shall not be liable for:</p>
-  <ul>
-    <li>Any indirect, incidental, or consequential damages.</li>
-    <li>Any loss of data, profits, or reputation.</li>
-    <li>Any damages resulting from your use or inability to use the Service.</li>
-  </ul>
+    <section aria-labelledby="contact">
+      <h2 id="contact">12. Contact Us</h2>
+      <p>If you have questions, requests, or concerns about this policy or our practices, please contact us:</p>
+      <div class="box">
+        <p>Email: <a href="mailto:privacy@heartlink.example" style="color:var(--accent)">privacy@heartlink.example</a></p>
+        <p>Address: 123 Heart St., Suite 200, Example City</p>
+      </div>
+    </section>
 
-  <h2>12. Indemnification</h2>
-  <p>You agree to defend, indemnify, and hold harmless <strong>[App Name]</strong>, its officers, directors, employees, and partners from any claims arising from your use of the Service or violation of these Terms.</p>
-
-  <h2>13. Governing Law</h2>
-  <p>These Terms are governed by the laws of <strong>[Your Country/State]</strong>, without regard to conflict of law principles. You agree that any disputes shall be resolved exclusively in the courts located in <strong>[City, Country]</strong>.</p>
-
-  <h2>14. Changes to These Terms</h2>
-  <p>We may modify these Terms at any time. Updates will be posted with a new “Last Updated” date. Continued use of the Service after such changes constitutes your acceptance.</p>
-
-  <h2>15. Contact Us</h2>
-  <p>If you have questions about these Terms, please contact us at:</p>
-  <p>
-    📧 <a href="mailto:support@appname.com">support@appname.com</a><br>
-    📍 <strong>[Company Name, Address, City, Country]</strong>
-  </p>
-
-  <footer>
-    <p>&copy; [Year] [App Name]. All rights reserved.</p>
-  </footer>
+    <hr />
+    <footer>
+      <p>Thank you for trusting HeartLink Dating. Use the Service safely — share thoughtfully and report suspicious behavior to our support team.</p>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="window.print()">Print</button>
+        <button class="btn btn-ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
