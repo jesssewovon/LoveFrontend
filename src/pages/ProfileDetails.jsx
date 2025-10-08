@@ -96,7 +96,16 @@ export default function ProfileDetails() {
     const res = await api.post(`message-before-matching`, {corresponding_profile_id})
     dispatch(setShowScreenLoader(false))
     if (res.data.status === true) {
-      navigate(`/chat/${corresponding_profile_id}`)
+      if (res.data.can_message === true) {
+        navigate(`/chat/${corresponding_profile_id}`)
+      }else{
+        MySwal.fire({ 
+            title: "Info!",
+            text: res.data.message,
+            icon: "error",
+            showConfirmButton: true,
+        });
+      }
     }else{
       MySwal.fire({ 
           title: "Info!",
