@@ -196,7 +196,7 @@ export default function SideBar() {
 						</ul>
 						<div className="app-info">
 							<h6 className="name"> - {settings?.app_name??''}</h6>
-							<div style={{display: "flex", justifyContent: "space-between"}}>
+							<div style={{display: "flex", justifyContent: "space-between", paddingTop: "10px", fontSize: "16px"}}>
 								<a onClick={()=>Pi.openUrlInSystemBrowser(settings?.tos_url)} className="ver-info">ToS</a>
 								<a onClick={()=>Pi.openUrlInSystemBrowser(settings?.privacy_policy_url)} className="ver-info">Privacy Policy</a>
 							</div>
