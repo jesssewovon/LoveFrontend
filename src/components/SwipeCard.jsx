@@ -236,7 +236,7 @@ export default function SwipeCard({ profile, onSwipe, disabled, remainingFreeSwi
                         <button onClick={() => dispatch(showPiAdRewarded("unlock-swiping"))} className="btn btn-gradient w-100 btn-shadow rounded-xl my-2">
                             {t('unlock with PiAd')} <Loader/>
                         </button>
-                        <button onClick={() => navigate('/subscription')} className="btn btn-light w-100 btn-shadow rounded-xl my-2">
+                        <button onClick={() => navigate('/subscriptions')} className="btn btn-light w-100 btn-shadow rounded-xl my-2">
                             {t('subsrcibe to unlock')}
                         </button>
                     </div>
