@@ -37,8 +37,7 @@ export default function SexualOrientation() {
       }
     });
     useEffect(() => {
-      const res = JSON.parse(settings.sexual_orientations)?.
-        map((val)=>{return {name:val, value: false}})
+      const res = JSON.parse(settings.sexual_orientations)?.map((val)=>{return {name:val, value: false}})
       if (checkedState.length==0) {
         setCheckedState(res)
         dispatch(updateField({ field: "sexual_orientation", value: res }));
